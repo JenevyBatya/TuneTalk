@@ -5,6 +5,7 @@ on:
     branches:
       - master
       - main
+      - feature-e2e
     types: [opened, synchronize]
 
 jobs:
