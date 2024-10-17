@@ -5,6 +5,7 @@ on:
     branches:
       - master
       - main
+      - G3.6-pr-merge-e2e-tests-check
     types: [opened, synchronize]
 
 jobs:
