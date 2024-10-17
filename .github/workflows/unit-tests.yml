@@ -5,6 +5,7 @@ on:
     branches:
       - master
       - main
+      - G3.4-pr-merge-unit-tests-check
     types: [opened, synchronize]
 
 jobs:
