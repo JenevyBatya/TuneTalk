@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="10b453ac-f984-4108-9889-3435e19ffe05" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -55,6 +58,25 @@
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\theal\Desktop\ITMO\webapp\TuneTalk\.github\PULL_REQUEST_TEMPLATE" />
     </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="adds 1 + 2 to equal 3" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="TEST" />
+      <test-file value="$PROJECT_DIR$/tests/unit/example.test.js" />
+      <test-names>
+        <test-name value="adds 1 + 2 to equal 3" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Jest.adds 1 + 2 to equal 3" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
