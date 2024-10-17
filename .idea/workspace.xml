@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="10b453ac-f984-4108-9889-3435e19ffe05" name="Changes" comment="" />
+    <list default="true" id="10b453ac-f984-4108-9889-3435e19ffe05" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.github/workflows/e2e-tests.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/e2e-tests.yml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -20,10 +25,10 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "customColor": "",
-  "associatedIndex": 8
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 8
+}</component>
   <component name="ProjectId" id="2nZuwPVzAXXYlhRbh2Oz8NSeywD" />
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="1" id="Add" />
@@ -36,7 +41,7 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "develop",
+    "git-widget-placeholder": "G3.6-pr-merge-e2e-tests-check",
     "last_opened_file_path": "C:/Users/theal/Desktop/ITMO/webapp/TuneTalk/tests",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -55,6 +60,27 @@
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\theal\Desktop\ITMO\webapp\TuneTalk\.github\PULL_REQUEST_TEMPLATE" />
     </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="all tests in example.cy.js" type="JavaScriptTestRunnerCypress" temporary="true">
+      <node-interpreter value="project" />
+      <cypress-package value="$PROJECT_DIR$/node_modules/cypress" />
+      <working-dir value="$PROJECT_DIR$" />
+      <cypress-options value="-q" />
+      <envs />
+      <scope-kind value="TEST" />
+      <test-file value="$PROJECT_DIR$/cypress/integration/example.cy.js" />
+      <test-names>
+        <test-name value="My First Test" />
+        <test-name value="Visits the static index.html" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Cypress.all tests in example.cy.js" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
