@@ -9,7 +9,7 @@ on:
       - G3.3-unit-test-coverage
 
 jobs:
-  test:
+  test-coverage:
     runs-on: ubuntu-latest
 
     steps:
