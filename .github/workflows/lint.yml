@@ -6,7 +6,7 @@ on:
       - main
       - feature/*
       - bugfix/*
-      - developer
+      - develop
       - G3.8-pr-merge-eslint-prettier-checks
 
 jobs:
