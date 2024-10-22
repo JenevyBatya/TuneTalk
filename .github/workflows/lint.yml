@@ -6,6 +6,8 @@ on:
       - main
       - feature/*
       - bugfix/*
+      - developer
+      - G3.8-pr-merge-eslint-prettier-checks
 
 jobs:
   lint:
