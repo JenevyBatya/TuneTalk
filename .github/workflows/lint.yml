@@ -26,6 +26,8 @@ jobs:
 
       - name: Run ESLint
         run: npm run lint
+        id: eslint_status
 
       - name: Run Prettier
         run: npm run format -- --check
+        id: prettier_status
