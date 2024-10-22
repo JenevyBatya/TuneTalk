@@ -5,6 +5,7 @@ on:
     branches:
       - master
       - main
+      - develop
       - G3.2-e2e-test-setup
     types: [opened, synchronize]
 
