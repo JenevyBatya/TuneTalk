@@ -7,7 +7,7 @@ on:
       - feature/*
       - bugfix/*
       - develop
-      - G3.8-pr-merge-eslint-prettier-checks
+      - G3.7-code-standards-eslint-prettier
 
 jobs:
   lint:
