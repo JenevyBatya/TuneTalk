@@ -1,0 +1,33 @@
+name: Linting
+
+on:
+  pull_request:
+    branches:
+      - main
+      - feature/*
+      - bugfix/*
+      - develop
+      - G3.7-code-standards-eslint-prettier
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "16"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run ESLint
+        run: npm run lint
+        id: eslint_status
+
+      - name: Run Prettier
+        run: npm run format -- --check
+        id: prettier_status
