@@ -21,5 +21,8 @@ function App() {
     </div>
   );
 }
-
+function testLintError() {
+  var unusedVar = 42; // Используем var вместо let или const
+  console.log('ESLint will flag this!');
+}
 export default App;
