@@ -3,10 +3,10 @@ import {Card, CardContent, Typography, Button, Chip, Avatar, Box} from '@mui/mat
 import {styled} from '@mui/system';
 
 
-const StyledButton = styled(Button)(({theme}) => ({
+export const StyledButton = styled(Button)(({theme}) => ({
     backgroundColor: '#173E47',
     color: '#fff',
-    borderRadius: '1.3vh',
+    borderRadius: '10px',
     marginTop: theme.spacing(2),
     '&:hover': {
         backgroundColor: '#173E47',
