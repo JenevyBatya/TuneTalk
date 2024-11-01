@@ -1,13 +1,15 @@
 import React from 'react';
-import {BrowserRouter as Router, Route, Routes, Link} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Routes, Link, useLocation} from 'react-router-dom';
 import {Button, Container} from '@mui/material';
-import ProfilePage from './page/profile'; // Импорт компонента профиля
+import ProfilePage from './page/profile';
 
 function App() {
+    const location = useLocation();
+
     return (
-        <Router>
-            <Container>
-                {/* Кнопка для перехода на страницу ProfilePage */}
+        <Container>
+            {/* Кнопка для перехода на страницу ProfilePage, отображается только на главной странице */}
+            {location.pathname !== '/profile' && (
                 <Button
                     variant="contained"
                     color="primary"
@@ -17,14 +19,14 @@ function App() {
                 >
                     Перейти на страницу профиля
                 </Button>
+            )}
 
-                {/* Настройка маршрутов */}
-                <Routes>
-                    <Route path="/" element={<Home/>}/>
-                    <Route path="/profile" element={<ProfilePage/>}/>
-                </Routes>
-            </Container>
-        </Router>
+            {/* Настройка маршрутов */}
+            <Routes>
+                <Route path="/" element={<Home/>}/>
+                <Route path="/profile" element={<ProfilePage/>}/>
+            </Routes>
+        </Container>
     );
 }
 
@@ -38,4 +40,10 @@ function Home() {
     );
 }
 
-export default App;
+export default function AppWrapper() {
+    return (
+        <Router>
+            <App />
+        </Router>
+    );
+}
