@@ -96,7 +96,7 @@ const playlists = [
 export default function ProfilePage() {
     return (
         <Container maxWidth="md"
-                   sx={{bgcolor: '#f5f5f5', pt: 10, pl: 0}}> {/* Увеличен верхний отступ для содержимого */}
+                   sx={{bgcolor: '#ffffff', pt: 10, pl: 0}}> {/* Увеличен верхний отступ для содержимого */}
             <AppBar position="fixed" sx={{bgcolor: '#adcac8'}} elevation={0}>
                 <Toolbar sx={{height: 20}}/>
             </AppBar>
@@ -228,11 +228,11 @@ function renderPlaylistCards(likedStatus) {
                                     <Box display="flex" alignItems="center">
                                         <Button
                                             variant="contained"
-                                            color="secondary"
                                             sx={{
                                                 width: {xs: '80px', sm: '100px', md: '150px'},
                                                 height: {xs: '40px', sm: '45px', md: '50px'},
                                                 borderRadius: 2,
+                                                bgcolor: "#173e47"
                                             }}
                                         >
                                             <Typography sx={{
@@ -343,11 +343,11 @@ function renderPodcastCards(likedStatus) {
                                 <Box display="flex" alignItems="center">
                                     <Button
                                         variant="contained"
-                                        color="secondary"
                                         sx={{
                                             width: {xs: '80px', sm: '100px', md: '150px'},
                                             height: {xs: '40px', sm: '45px', md: '50px'},
                                             borderRadius: 2,
+                                            bgcolor: "#173e47"
                                         }}
                                     >
                                         <Typography sx={{
@@ -420,8 +420,8 @@ function ButtonGroup() {
         width: {xs: '90px', sm: '100px', md: '150px'},
         height: {xs: '30px', sm: '35px', md: '40px'},
         zIndex: 1,
-        bgcolor: activeButton === button ? 'orange' : '#ffffff',
-        color: activeButton === button ? 'white' : 'black',
+        bgcolor: activeButton === button ? '#fd7510' : '#ffffff',
+        color: 'black',
         borderRadius: 4,
     });
 
@@ -429,12 +429,12 @@ function ButtonGroup() {
         width: {xs: '35px', sm: '100px', md: '150px'},
         height: {xs: '30px', sm: '35px', md: '40px'},
         zIndex: 1,
-        bgcolor: activeButton === button ? 'orange' : '#ffffff',
-        color: activeButton === button ? 'white' : 'black', // Оранжевый цвет для активной кнопки
+        bgcolor: activeButton === button ? '#fd7510' : '#ffffff',
+        color: 'black', // Оранжевый цвет для активной кнопки
         borderRadius: 4,
         '&:hover': {
             bgcolor: activeButton === button ? 'orange' : '#ffffff', // Отключаем изменение цвета при наведении
-            color: activeButton === button ? 'white' : 'black',
+            color:'black',
         },
     });
 
@@ -442,7 +442,7 @@ function ButtonGroup() {
         position: 'absolute',
         width: {xs: '90px', sm: '100px', md: '150px'},
         height: {xs: '30px', sm: '35px', md: '40px'},
-        bgcolor: 'orange',
+        bgcolor: '#fd7510',
         opacity: activeButton === button ? 0 : 1, // Если кнопка активна, делаем бокс прозрачным
         zIndex: 0,
     });
@@ -450,7 +450,7 @@ function ButtonGroup() {
         position: 'absolute',
         width: {xs: '35px', sm: '100px', md: '150px'},
         height: {xs: '30px', sm: '35px', md: '40px'},
-        bgcolor: 'orange',
+        bgcolor: '#fd7510',
         opacity: activeButton === button ? 0 : 1, // Если кнопка активна, делаем бокс прозрачным
         zIndex: 0,
     });
@@ -539,7 +539,7 @@ function UnderlinedButtons() {
         backgroundColor: 'transparent',
         boxShadow: 'none',
         padding: '10px 20px',
-        borderBottom: activeButton === button ? '2px solid orange' : 'none', // Подчеркнуть активную кнопку
+        borderBottom: activeButton === button ? '2px solid #fd7510' : 'none', // Подчеркнуть активную кнопку
         '&:hover': {
             backgroundColor: 'transparent', // Отключаем цвет при наведении
         }
