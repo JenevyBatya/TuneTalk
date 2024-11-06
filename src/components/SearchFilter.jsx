@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {TextField, InputAdornment, Typography} from '@mui/material';
-import searchIcon from '../assets/searchIcon.svg';
+import searchIcon from '../assets/icons/searchIcon.svg';
 import {Grid} from "@mui/system";
 
 const SearchFilter = ({data = [], searchFields = [], onSearch}) => {

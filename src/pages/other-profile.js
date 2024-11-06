@@ -20,8 +20,8 @@ import LockIcon from '@mui/icons-material/Lock';
 import Star from '@mui/icons-material/Star';
 import Link from '@mui/icons-material/Link';
 
-import ava from "../img/ava.jpg";
-import playlistImage from "../img/playlist.jpg";
+import ava from "../assets/cardPhoto.svg";
+import playlistImage from "../assets/playlist.jpg";
 
 const podcasts = [
     {
@@ -93,7 +93,7 @@ const playlists = [
     },
 ];
 
-export default function ProfilePage() {
+export default function OtherProfilePage() {
     return (
         <Container maxWidth="md"
                    sx={{bgcolor: '#ffffff', pt: 10, pl: 0}}> {/* Увеличен верхний отступ для содержимого */}
@@ -408,10 +408,7 @@ function ButtonGroup() {
                 return renderWholePart("Новый подкаст", renderPodcastCards())
             case 'плейлист':
                 return renderWholePart("Новый плейлист", renderPlaylistCards())
-            case 'избранное':
-                return renderWholePart("избранное", renderPlaylistCards())
-            case 'закладки':
-                return renderWholePart("", renderPodcastCards())
+
 
         }
     }
@@ -457,7 +454,7 @@ function ButtonGroup() {
 
     return (
         <Box>
-            <Box display="flex" justifyContent="space-between" alignItems="center" gap={2} mb={2} width="100%">
+            <Box display="flex" justifyContent="start" alignItems="center" gap={2} mb={2} width="100%">
                 {/* Кнопка подкасты */}
                 <Box sx={{position: 'relative', height: {xs: '30px', sm: '35px', md: '40px'}}}>
                     <Box sx={boxStyle('подкасты')}/>
@@ -477,20 +474,20 @@ function ButtonGroup() {
                 </Box>
 
                 {/* Иконка Favorite */}
-                <Box sx={{position: 'relative', height: {xs: '30px', sm: '35px', md: '40px'}}}>
-                    <Box sx={boxIconStyle('избранное')}/>
-                    <IconButton sx={iconButtonStyle('избранное')} onClick={() => handleButtonClick('избранное')}>
-                        <FavoriteBorderIcon sx={{fontSize: {xs: '1rem', sm: '1.5rem', md: '2rem'}}}/>
-                    </IconButton>
-                </Box>
+                {/*<Box sx={{position: 'relative', height: {xs: '30px', sm: '35px', md: '40px'}}}>*/}
+                {/*    <Box sx={boxIconStyle('избранное')}/>*/}
+                {/*    <IconButton sx={iconButtonStyle('избранное')} onClick={() => handleButtonClick('избранное')}>*/}
+                {/*        <FavoriteBorderIcon sx={{fontSize: {xs: '1rem', sm: '1.5rem', md: '2rem'}}}/>*/}
+                {/*    </IconButton>*/}
+                {/*</Box>*/}
 
-                {/* Иконка Bookmark */}
-                <Box sx={{position: 'relative', height: {xs: '30px', sm: '35px', md: '40px'}}}>
-                    <Box sx={boxIconStyle('закладки')}/>
-                    <IconButton sx={iconButtonStyle('закладки')} onClick={() => handleButtonClick('закладки')}>
-                        <BookmarkBorderIcon sx={{fontSize: {xs: '1rem', sm: '1.5rem', md: '2rem'}}}/>
-                    </IconButton>
-                </Box>
+                {/*/!* Иконка Bookmark *!/*/}
+                {/*<Box sx={{position: 'relative', height: {xs: '30px', sm: '35px', md: '40px'}}}>*/}
+                {/*    <Box sx={boxIconStyle('закладки')}/>*/}
+                {/*    <IconButton sx={iconButtonStyle('закладки')} onClick={() => handleButtonClick('закладки')}>*/}
+                {/*        <BookmarkBorderIcon sx={{fontSize: {xs: '1rem', sm: '1.5rem', md: '2rem'}}}/>*/}
+                {/*    </IconButton>*/}
+                {/*</Box>*/}
             </Box>
             {renderContent()}
         </Box>
@@ -498,32 +495,10 @@ function ButtonGroup() {
 }
 
 function renderWholePart(buttonText, func) {
-    if (buttonText === "избранное") {
-        console.log("exp");
-        return <UnderlinedButtons/>;
-    }
-    if (!buttonText) {
-        return (
-            <Box>
-                {func}
-            </Box>
-        );
-    }
-
+    
     return (
         <Box>
-            <Box display="flex" justifyContent="center" mb={3}>
-                <Button
-                    variant="contained"
-                    sx={{
-                        bgcolor: '#173e47',
-                        width: {xs: "100%", sm: "80%", md: "70%"},
-                        borderRadius: 10
-                    }}
-                >
-                    {buttonText}
-                </Button>
-            </Box>
+
             {func}
         </Box>
     );
