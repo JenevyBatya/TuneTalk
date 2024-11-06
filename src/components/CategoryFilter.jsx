@@ -10,7 +10,7 @@ import DurationSlider from "./DurationSlider";
 import {styled} from "@mui/system";
 import CheckIcon from '@mui/icons-material/Check';
 import {StyledButton} from "./CustomCard";
-import filterIcon from "../assets/filterIcon.svg";
+import filterIcon from "../assets/icons/filterIcon.svg";
 
 
 

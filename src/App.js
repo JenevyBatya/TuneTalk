@@ -1,11 +1,11 @@
 import React from 'react';
 import {BrowserRouter as Router, Route, Routes, Link, useLocation} from 'react-router-dom';
 import {Button, Container} from '@mui/material';
-import ProfilePage from './page/profile';
-import OtherProfilePage from "./page/other-profile";
+import ProfilePage from './pages/profile';
+import OtherProfilePage from "./pages/other-profile";
 
 
-function App() {
+export function App() {
     const location = useLocation();
 
     return (
