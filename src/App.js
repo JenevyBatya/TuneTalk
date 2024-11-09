@@ -3,6 +3,7 @@ import {BrowserRouter as Router, Route, Routes, Link, useLocation} from 'react-r
 import {Button, Container} from '@mui/material';
 import ProfilePage from './pages/profile';
 import OtherProfilePage from "./pages/other-profile";
+import TestProfilePage from "./pages/test-profile";
 
 
 export function App() {
@@ -45,7 +46,7 @@ export function App() {
             {/* Настройка маршрутов */}
             <Routes>
                 <Route path="/" element={<Home/>}/>
-                <Route path="/otherprofile" element={<OtherProfilePage/>}/>
+                <Route path="/otherprofile" element={<TestProfilePage/>}/>
             </Routes>
         </Container>
 

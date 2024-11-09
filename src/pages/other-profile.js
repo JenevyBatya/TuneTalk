@@ -23,6 +23,7 @@ import Link from '@mui/icons-material/Link';
 import ava from "../assets/cardPhoto.svg";
 import playlistImage from "../assets/playlist.jpg";
 
+let subscription = false;
 const podcasts = [
     {
         id: 1,
@@ -30,6 +31,7 @@ const podcasts = [
         description: "Подборка треков для продуктивной работы и сосредоточения.",
         author: "Кака",
         episodes: 45,
+        subscribed: false
     },
     {
         id: 2,
@@ -37,6 +39,7 @@ const podcasts = [
         description: "Энергичные треки для бодрого и успешного начала дня.",
         author: "Кика",
         episodes: 30,
+        subscribed: false
     },
     {
         id: 3,
@@ -44,6 +47,8 @@ const podcasts = [
         description: "Лучшие произведения классической музыки для полного релакса и вдохновения.",
         author: "Кока",
         episodes: 70,
+        subscribed: true
+
     },
     {
         id: 4,
@@ -51,6 +56,8 @@ const podcasts = [
         description: "Старые добрые хиты 80-х и 90-х, которые всегда в моде.",
         author: "Кука",
         episodes: 50,
+        subscribed: true
+
     },
     {
         id: 5,
@@ -58,6 +65,8 @@ const podcasts = [
         description: "Интересные подкасты на разные темы, которые развлекают и вдохновляют.",
         author: "Кека",
         episodes: 100,
+        subscribed: true
+
     },
 ];
 const playlists = [
@@ -129,26 +138,26 @@ export default function OtherProfilePage() {
                                 display="flex" gap={1}>
                         <Link/> vk.com/user
                     </Typography>
-                    <Box sx={{position: 'relative', height: {xs: '30px', sm: '35px', md: '40px'},}}>
-                        <Box sx={{
-                            position: 'absolute',
-                            width: {xs: '140px', sm: '140px', md: '150px'},
-                            height: {xs: '30px', sm: '35px', md: '40px'},
-                            bgcolor: 'black',
-                            zIndex: 0,
-                        }}/>
-                        <Button variant="contained"
-                                sx={{
-                                    width: {xs: '140px', sm: '140px', md: '150px'},
-                                    height: {xs: '30px', sm: '35px', md: '40px'},
-                                    zIndex: 1,
-                                    bgcolor: '#ffffff',
-                                    borderRadius: 10
-                                }}>
-                            <Typography sx={{fontSize: {xs: '0.6rem', sm: '0.8rem', md: '1rem', color: "black"}}}>Изменить
-                                профиль</Typography>
-                        </Button>
-                    </Box>
+                    {/*<Box sx={{position: 'relative', height: {xs: '30px', sm: '35px', md: '40px'},}}>*/}
+                    {/*    <Box sx={{*/}
+                    {/*        position: 'absolute',*/}
+                    {/*        width: {xs: '140px', sm: '140px', md: '150px'},*/}
+                    {/*        height: {xs: '30px', sm: '35px', md: '40px'},*/}
+                    {/*        bgcolor: 'black',*/}
+                    {/*        zIndex: 0,*/}
+                    {/*    }}/>*/}
+                    {/*<Button variant="contained"*/}
+                    {/*        sx={{*/}
+                    {/*            width: {xs: '140px', sm: '140px', md: '150px'},*/}
+                    {/*            height: {xs: '30px', sm: '35px', md: '40px'},*/}
+                    {/*            zIndex: 1,*/}
+                    {/*            bgcolor: '#ffffff',*/}
+                    {/*            borderRadius: 10*/}
+                    {/*        }}>*/}
+                    {/*    <Typography sx={{fontSize: {xs: '0.6rem', sm: '0.8rem', md: '1rem', color: "black"}}}>отписаться</Typography>*/}
+                    {/*</Button>*/}
+                    {ButtonSubscribe()}
+                    {/*</Box>*/}
                 </Box>
             </Box>
 
@@ -259,7 +268,7 @@ function renderPlaylistCards(likedStatus) {
                                     alt="Плейлист обложка"
                                 />
                                 <IconButton>
-                                    {likedStatus === 'yes' ? <FavoriteIcon /> : <LockIcon />}
+                                    {likedStatus === 'yes' ? <FavoriteIcon/> : <LockIcon/>}
                                 </IconButton>
                             </Box>
                         </Box>
@@ -280,6 +289,262 @@ function renderPlaylistCards(likedStatus) {
         )
             ;
     });
+}
+
+
+// function renderPodcastCards() {
+//     const truncateDescription = (text, wordLimit) => {
+//         const words = text.split(" ");
+//         if (words.length <= wordLimit) return text;
+//         return words.slice(0, wordLimit).join(" ") + "...";
+//     };
+//
+//     const handleLikeButtonClick = (event) => {
+//         const button = event.target;
+//
+//         // Переключаем цвет кнопки
+//         if (button.classList.contains("liked")) {
+//             button.classList.remove("liked");
+//             button.style.backgroundColor = ""; // Сбрасываем цвет
+//         } else {
+//             button.classList.add("liked");
+//             button.style.backgroundColor = "red"; // Цвет при нажатии
+//         }
+//     };
+//
+//     if (!podcasts.length) {
+//         return <Typography variant="h6" sx={{ mt: 2 }} textAlign="center">У вас пока нету подкастов</Typography>;
+//     }
+//
+//     return podcasts.map((item) => (
+//         <Box position="relative" mb={2} key={item.id}>
+//             <Card sx={{ position: 'relative', zIndex: 1, mb: 2, borderRadius: 10 }}>
+//                 <Box display="flex" flexDirection="row" alignItems="center" justifyContent="space-between" p={0}>
+//                     <CardContent>
+//                         <Box sx={{ flexDirection: 'column', height: { xs: 150, sm: 180, md: 200 } }} display="flex" justifyContent="space-between">
+//                             <Box>
+//                                 <Typography variant="h6" sx={{ fontSize: { xs: '1rem', sm: '1.2rem', md: '1.5rem' }, lineHeight: 1.2, height: { xs: '40px', sm: '65px', md: '70px' } }}>
+//                                     {item.title}
+//                                 </Typography>
+//
+//                                 <Typography variant="body2" color="textSecondary" sx={{ fontSize: { xs: '0.7rem', sm: '0.8rem' }, height: { xs: '40px', sm: '65px', md: '70px' }, lineHeight: 1.2 }}>
+//                                     {truncateDescription(item.description, 2)}
+//                                 </Typography>
+//                                 <Typography variant="body2" color="textSecondary" sx={{ fontSize: { xs: '0.7rem', sm: '0.8rem' } }}>
+//                                     {item.author}
+//                                 </Typography>
+//                                 <Typography variant="body2" color="textSecondary" sx={{ fontSize: { xs: '0.7rem', sm: '0.8rem' } }}>
+//                                     {item.episodes} выпуска
+//                                 </Typography>
+//                             </Box>
+//                             <Box display="flex" alignItems="center">
+//                                 <Button
+//                                     variant="contained"
+//                                     sx={{
+//                                         width: { xs: '80px', sm: '100px', md: '150px' },
+//                                         height: { xs: '40px', sm: '45px', md: '50px' },
+//                                         borderRadius: 10,
+//                                         bgcolor: "#173e47"
+//                                     }}
+//                                 >
+//                                     <Typography sx={{ fontSize: { xs: '0.6rem', sm: '0.8rem', md: '1rem' } }}>Слушать</Typography>
+//                                 </Button>
+//                                 <IconButton><ShareIcon /></IconButton>
+//                             </Box>
+//                         </Box>
+//                     </CardContent>
+//                     <Box display="flex" alignItems="start">
+//                         <CardMedia
+//                             component="img"
+//                             sx={{
+//                                 width: { xs: 120, sm: 150, md: 200 },
+//                                 height: { xs: 140, sm: 150, md: 200 },
+//                                 borderRadius: 10,
+//                             }}
+//                             image={item.image} // Убедитесь, что путь к изображению правильный
+//                             alt="Плейлист обложка"
+//                         />
+//                         <IconButton onClick={handleLikeButtonClick}>
+//                             {likedStatus === 'yes' ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+//                         </IconButton>
+//                     </Box>
+//                 </Box>
+//             </Card>
+//         </Box>
+//     ));
+// }
+
+
+function ButtonSubscribe(id) {
+    // Состояние подписки (по умолчанию false — не подписан)
+    const [isSubscribed, setIsSubscribed] = useState(false);
+
+    // Обработчик клика для изменения состояния
+    const handleSubscriptionToggle = () => {
+        setIsSubscribed(prevState => !prevState);
+    };
+
+    return (
+        <Box sx={{position: 'relative', height: {xs: '30px', sm: '35px', md: '40px'},}}>
+            <Box sx={{
+                position: 'absolute',
+                width: {xs: '140px', sm: '140px', md: '150px'},
+                height: {xs: '30px', sm: '35px', md: '40px'},
+                bgcolor: 'black',
+                zIndex: 0,
+                opacity: isSubscribed ? 1 : 0
+            }}/>
+            <Button
+                variant="contained"
+                onClick={handleSubscriptionToggle}
+                sx={{
+                    width: {xs: '140px', sm: '140px', md: '150px'},
+                    height: {xs: '30px', sm: '35px', md: '40px'},
+                    zIndex: 1,
+                    bgcolor: isSubscribed ? '#ffffff' : '#173e47', // Синий для "отписаться", черный для "подписаться"
+                    borderRadius: 10,
+
+                    // '&:hover': {
+                    //     bgcolor: isSubscribed ? '#1976d2' : '#333333' // Изменение цвета при наведении
+                    // }
+                }}
+            >
+                <Typography sx={{
+                    fontSize: {xs: '0.6rem', sm: '0.8rem', md: '1rem'},
+                    color: isSubscribed ? '#000000' : '#ffffff'
+                }}>
+                    {isSubscribed ? 'отписаться' : 'подписаться'}
+                </Typography>
+            </Button>
+        </Box>
+
+    );
+}
+
+function ButtonGroup() {
+    const [activeButton, setActiveButton] = useState('подкасты');
+
+    const handleButtonClick = (button) => {
+        setActiveButton(button);
+    };
+
+    const renderContent = () => {
+        switch (activeButton) {
+            case 'подкасты':
+                return renderWholePart("Новый подкаст", renderPodcastCards())
+            case 'плейлист':
+                return renderWholePart("Новый плейлист", renderPlaylistCards())
+
+
+        }
+    }
+
+    const buttonStyle = (button) => ({
+        width: {xs: '90px', sm: '100px', md: '150px'},
+        height: {xs: '30px', sm: '35px', md: '40px'},
+        zIndex: 1,
+        bgcolor: activeButton === button ? '#fd7510' : '#ffffff',
+        color: 'black',
+        borderRadius: 10,
+    });
+
+    const boxStyle = (button) => ({
+        position: 'absolute',
+        width: {xs: '90px', sm: '100px', md: '150px'},
+        height: {xs: '30px', sm: '35px', md: '40px'},
+        bgcolor: '#fd7510',
+        opacity: activeButton === button ? 0 : 1, // Если кнопка активна, делаем бокс прозрачным
+        zIndex: 0,
+    });
+    const boxIconStyle = (button) => ({
+        position: 'absolute',
+        width: {xs: '35px', sm: '100px', md: '150px'},
+        height: {xs: '30px', sm: '35px', md: '40px'},
+        bgcolor: '#fd7510',
+        opacity: activeButton === button ? 0 : 1, // Если кнопка активна, делаем бокс прозрачным
+        zIndex: 0,
+    });
+
+    return (
+        <Box>
+            <Box display="flex" justifyContent="start" alignItems="center" gap={2} mb={2} width="100%">
+                {/* Кнопка подкасты */}
+                <Box sx={{position: 'relative', height: {xs: '30px', sm: '35px', md: '40px'}}}>
+                    <Box sx={boxStyle('подкасты')}/>
+                    <Button variant="contained" sx={buttonStyle('подкасты')}
+                            onClick={() => handleButtonClick('подкасты')}>
+                        <Typography sx={{fontSize: {xs: '0.6rem', sm: '0.8rem', md: '1rem'}}}>подкасты</Typography>
+                    </Button>
+                </Box>
+
+                {/* Кнопка плейлист */}
+                <Box sx={{position: 'relative', height: {xs: '30px', sm: '35px', md: '40px'}}}>
+                    <Box sx={boxStyle('плейлист')}/>
+                    <Button variant="contained" sx={buttonStyle('плейлист')}
+                            onClick={() => handleButtonClick('плейлист')}>
+                        <Typography sx={{fontSize: {xs: '0.6rem', sm: '0.8rem', md: '1rem'}}}>плейлист</Typography>
+                    </Button>
+                </Box>
+            </Box>
+            {renderContent()}
+        </Box>
+    );
+}
+
+function renderWholePart(buttonText, func) {
+
+    return (
+        <Box>
+
+            {func}
+        </Box>
+    );
+}
+
+
+function UnderlinedButtons() {
+    const [activeButton, setActiveButton] = useState('button1'); // По умолчанию выбрана первая кнопка
+
+    // Стили для кнопок
+    const buttonStyle = (button) => ({
+        color: 'black',
+        backgroundColor: 'transparent',
+        boxShadow: 'none',
+        padding: '10px 20px',
+        borderBottom: activeButton === button ? '2px solid #fd7510' : 'none', // Подчеркнуть активную кнопку
+        '&:hover': {
+            backgroundColor: 'transparent', // Отключаем цвет при наведении
+        }
+    });
+    const renderContentFavor = () => {
+        switch (activeButton) {
+            case 'button2':
+                return renderWholePart("", renderPlaylistCards("yes"))
+            case 'button1':
+                return renderWholePart("", renderPodcastCards("yes"));
+
+
+        }
+    }
+    return (
+        <Box>
+            <Box display="flex" justifyContent="center" gap={2}>
+                <Button
+                    sx={buttonStyle('button1')}
+                    onClick={() => setActiveButton('button1')}
+                >
+                    Подкасты
+                </Button>
+                <Button
+                    sx={buttonStyle('button2')}
+                    onClick={() => setActiveButton('button2')}
+                >
+                    Плейлисты
+                </Button>
+            </Box>
+            {renderContentFavor()}
+        </Box>
+    );
 }
 
 function renderPodcastCards(likedStatus) {
@@ -349,6 +614,7 @@ function renderPodcastCards(likedStatus) {
                                             borderRadius: 10,
                                             bgcolor: "#173e47"
                                         }}
+
                                     >
                                         <Typography sx={{
                                             fontSize: {
@@ -374,7 +640,7 @@ function renderPodcastCards(likedStatus) {
                                 alt="Плейлист обложка"
                             />
                             <IconButton>
-                                {likedStatus === 'yes' ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+                                {likedStatus === 'yes' ? <FavoriteIcon/> : <FavoriteBorderIcon/>}
                             </IconButton>
                         </Box>
                     </Box>
@@ -393,161 +659,6 @@ function renderPodcastCards(likedStatus) {
             </Box>
         );
     });
-}
-
-function ButtonGroup() {
-    const [activeButton, setActiveButton] = useState('подкасты');
-
-    const handleButtonClick = (button) => {
-        setActiveButton(button);
-    };
-
-    const renderContent = () => {
-        switch (activeButton) {
-            case 'подкасты':
-                return renderWholePart("Новый подкаст", renderPodcastCards())
-            case 'плейлист':
-                return renderWholePart("Новый плейлист", renderPlaylistCards())
-
-
-        }
-    }
-
-    const buttonStyle = (button) => ({
-        width: {xs: '90px', sm: '100px', md: '150px'},
-        height: {xs: '30px', sm: '35px', md: '40px'},
-        zIndex: 1,
-        bgcolor: activeButton === button ? '#fd7510' : '#ffffff',
-        color: 'black',
-        borderRadius: 10,
-    });
-
-    const iconButtonStyle = (button) => ({
-        width: {xs: '35px', sm: '100px', md: '150px'},
-        height: {xs: '30px', sm: '35px', md: '40px'},
-        zIndex: 1,
-        bgcolor: activeButton === button ? '#fd7510' : '#ffffff',
-        color: 'black', // Оранжевый цвет для активной кнопки
-        borderRadius: 10,
-        '&:hover': {
-            bgcolor: activeButton === button ? 'orange' : '#ffffff', // Отключаем изменение цвета при наведении
-            color:'black',
-        },
-    });
-
-    const boxStyle = (button) => ({
-        position: 'absolute',
-        width: {xs: '90px', sm: '100px', md: '150px'},
-        height: {xs: '30px', sm: '35px', md: '40px'},
-        bgcolor: '#fd7510',
-        opacity: activeButton === button ? 0 : 1, // Если кнопка активна, делаем бокс прозрачным
-        zIndex: 0,
-    });
-    const boxIconStyle = (button) => ({
-        position: 'absolute',
-        width: {xs: '35px', sm: '100px', md: '150px'},
-        height: {xs: '30px', sm: '35px', md: '40px'},
-        bgcolor: '#fd7510',
-        opacity: activeButton === button ? 0 : 1, // Если кнопка активна, делаем бокс прозрачным
-        zIndex: 0,
-    });
-
-    return (
-        <Box>
-            <Box display="flex" justifyContent="start" alignItems="center" gap={2} mb={2} width="100%">
-                {/* Кнопка подкасты */}
-                <Box sx={{position: 'relative', height: {xs: '30px', sm: '35px', md: '40px'}}}>
-                    <Box sx={boxStyle('подкасты')}/>
-                    <Button variant="contained" sx={buttonStyle('подкасты')}
-                            onClick={() => handleButtonClick('подкасты')}>
-                        <Typography sx={{fontSize: {xs: '0.6rem', sm: '0.8rem', md: '1rem'}}}>подкасты</Typography>
-                    </Button>
-                </Box>
-
-                {/* Кнопка плейлист */}
-                <Box sx={{position: 'relative', height: {xs: '30px', sm: '35px', md: '40px'}}}>
-                    <Box sx={boxStyle('плейлист')}/>
-                    <Button variant="contained" sx={buttonStyle('плейлист')}
-                            onClick={() => handleButtonClick('плейлист')}>
-                        <Typography sx={{fontSize: {xs: '0.6rem', sm: '0.8rem', md: '1rem'}}}>плейлист</Typography>
-                    </Button>
-                </Box>
-
-                {/* Иконка Favorite */}
-                {/*<Box sx={{position: 'relative', height: {xs: '30px', sm: '35px', md: '40px'}}}>*/}
-                {/*    <Box sx={boxIconStyle('избранное')}/>*/}
-                {/*    <IconButton sx={iconButtonStyle('избранное')} onClick={() => handleButtonClick('избранное')}>*/}
-                {/*        <FavoriteBorderIcon sx={{fontSize: {xs: '1rem', sm: '1.5rem', md: '2rem'}}}/>*/}
-                {/*    </IconButton>*/}
-                {/*</Box>*/}
-
-                {/*/!* Иконка Bookmark *!/*/}
-                {/*<Box sx={{position: 'relative', height: {xs: '30px', sm: '35px', md: '40px'}}}>*/}
-                {/*    <Box sx={boxIconStyle('закладки')}/>*/}
-                {/*    <IconButton sx={iconButtonStyle('закладки')} onClick={() => handleButtonClick('закладки')}>*/}
-                {/*        <BookmarkBorderIcon sx={{fontSize: {xs: '1rem', sm: '1.5rem', md: '2rem'}}}/>*/}
-                {/*    </IconButton>*/}
-                {/*</Box>*/}
-            </Box>
-            {renderContent()}
-        </Box>
-    );
-}
-
-function renderWholePart(buttonText, func) {
-    
-    return (
-        <Box>
-
-            {func}
-        </Box>
-    );
-}
-
-
-function UnderlinedButtons() {
-    const [activeButton, setActiveButton] = useState('button1'); // По умолчанию выбрана первая кнопка
-
-    // Стили для кнопок
-    const buttonStyle = (button) => ({
-        color: 'black',
-        backgroundColor: 'transparent',
-        boxShadow: 'none',
-        padding: '10px 20px',
-        borderBottom: activeButton === button ? '2px solid #fd7510' : 'none', // Подчеркнуть активную кнопку
-        '&:hover': {
-            backgroundColor: 'transparent', // Отключаем цвет при наведении
-        }
-    });
-    const renderContentFavor = () => {
-        switch (activeButton) {
-            case 'button2':
-                return renderWholePart("", renderPlaylistCards("yes"))
-            case 'button1':
-                return renderWholePart("", renderPodcastCards("yes"));
-
-
-        }
-    }
-    return (
-        <Box>
-            <Box display="flex" justifyContent="center" gap={2}>
-                <Button
-                    sx={buttonStyle('button1')}
-                    onClick={() => setActiveButton('button1')}
-                >
-                    Подкасты
-                </Button>
-                <Button
-                    sx={buttonStyle('button2')}
-                    onClick={() => setActiveButton('button2')}
-                >
-                    Плейлисты
-                </Button>
-            </Box>
-            {renderContentFavor()}
-        </Box>
-    );
 }
 
 
