@@ -46,7 +46,7 @@ export function App() {
             {/* Настройка маршрутов */}
             <Routes>
                 <Route path="/" element={<Home/>}/>
-                <Route path="/otherprofile" element={<TestProfilePage/>}/>
+                <Route path="/otherprofile" element={<OtherProfilePage/>}/>
             </Routes>
         </Container>
 
