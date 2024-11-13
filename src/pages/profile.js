@@ -323,7 +323,7 @@ function renderPlaylistCards(likedStatus) {
                                             variant="contained"
                                             sx={{
                                                 width: {xs: '80px', sm: '100px', md: '150px'},
-                                                height: {xs: '40px', sm: '45px', md: '50px'},
+                                                height: {xs: '30px', sm: '45px', md: '50px'},
                                                 borderRadius: 10,
                                                 bgcolor: "#173e47"
                                             }}

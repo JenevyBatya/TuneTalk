@@ -219,7 +219,7 @@ function PlaylistCard({item}) {
                                     variant="contained"
                                     sx={{
                                         width: {xs: '80px', sm: '100px', md: '150px'},
-                                        height: {xs: '40px', sm: '45px', md: '50px'},
+                                        height: {xs: '30px', sm: '45px', md: '50px'},
                                         borderRadius: 10,
                                         bgcolor: "#173e47"
                                     }}
@@ -281,6 +281,8 @@ function ButtonSubscribe({item}) {
     // Обработчик клика для изменения состояния
     const handleSubscriptionToggle = () => {
         setIsSubscribed(prevState => !prevState);
+        item.subscribed = !item.subscribed;
+        console.log(item.subscribed)
     };
 
     return (
