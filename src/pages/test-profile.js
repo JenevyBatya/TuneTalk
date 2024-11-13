@@ -25,6 +25,7 @@ import playlistImage from "../assets/playlist.jpg";
 
 const userStatus =
     {
+        user: true,
         subscribed: true
     }
 
@@ -110,10 +111,11 @@ const playlists = [
 export default function TestProfilePage() {
     return (
         <Container maxWidth="md"
-                   sx={{bgcolor: '#ffffff', pt: 10, pl: 0}}> {/* Увеличен верхний отступ для содержимого */}
-            <AppBar position="fixed" sx={{bgcolor: '#adcac8'}} elevation={0}>
-                <Toolbar sx={{height: 20}}/>
-            </AppBar>
+                   sx={{bgcolor: '#ffffff', pt: 3, pl: 0}}
+        > {/* Увеличен верхний отступ для содержимого */}
+            {/*<AppBar position="fixed" sx={{bgcolor: '#adcac8'}} elevation={0}>*/}
+            {/*    <Toolbar sx={{height: 20}}/>*/}
+            {/*</AppBar>*/}
 
             <Box display="flex" alignItems="center" mb={3}>
                 <Avatar
@@ -242,7 +244,7 @@ function PlaylistCard({item}) {
                             alt="Плейлист обложка"
                         />
                         <IconButton>
-                            <LockIcon/>
+                            <FavoriteBorderIcon/>
                         </IconButton>
                     </Box>
                 </Box>
@@ -285,7 +287,11 @@ function ButtonSubscribe({item}) {
         <Box sx={{position: 'relative', height: {xs: '30px', sm: '35px', md: '40px'},}}>
             <Box sx={{
                 position: 'absolute',
-                width: {xs: '140px', sm: '140px', md: '150px'},
+                width: item.user === true ? {xs: '120px', sm: '140px', md: '150px'} : {
+                    xs: '100px',
+                    sm: '140px',
+                    md: '150px'
+                },
                 height: {xs: '30px', sm: '35px', md: '40px'},
                 bgcolor: 'black',
                 zIndex: 0,
@@ -295,15 +301,16 @@ function ButtonSubscribe({item}) {
                 variant="contained"
                 onClick={handleSubscriptionToggle}
                 sx={{
-                    width: {xs: '140px', sm: '140px', md: '150px'},
+                    width: item.user === true ? {xs: '120px', sm: '140px', md: '150px'} : {
+                        xs: '100px',
+                        sm: '140px',
+                        md: '150px'
+                    },
                     height: {xs: '30px', sm: '35px', md: '40px'},
                     zIndex: 1,
                     bgcolor: isSubscribed ? '#ffffff' : '#173e47', // Синий для "отписаться", черный для "подписаться"
                     borderRadius: 10,
 
-                    // '&:hover': {
-                    //     bgcolor: isSubscribed ? '#1976d2' : '#333333' // Изменение цвета при наведении
-                    // }
                 }}
             >
                 <Typography sx={{
@@ -376,61 +383,6 @@ function ButtonGroup() {
     );
 }
 
-function RenderWholePart(buttonText, func) {
-
-    return (
-        <Box>
-
-            {func}
-        </Box>
-    );
-}
-
-
-function UnderlinedButtons() {
-    const [activeButton, setActiveButton] = useState('button1'); // По умолчанию выбрана первая кнопка
-
-    // Стили для кнопок
-    const buttonStyle = (button) => ({
-        color: 'black',
-        backgroundColor: 'transparent',
-        boxShadow: 'none',
-        padding: '10px 20px',
-        borderBottom: activeButton === button ? '2px solid #fd7510' : 'none', // Подчеркнуть активную кнопку
-        '&:hover': {
-            backgroundColor: 'transparent', // Отключаем цвет при наведении
-        }
-    });
-    const RenderContentFavor = () => {
-        switch (activeButton) {
-            case 'button2':
-                return RenderWholePart("", RenderPlaylistCards("yes"))
-            case 'button1':
-                return RenderWholePart("", RenderPodcastCards("yes"));
-
-
-        }
-    }
-    return (
-        <Box>
-            <Box display="flex" justifyContent="center" gap={2}>
-                <Button
-                    sx={buttonStyle('button1')}
-                    onClick={() => setActiveButton('button1')}
-                >
-                    Подкасты
-                </Button>
-                <Button
-                    sx={buttonStyle('button2')}
-                    onClick={() => setActiveButton('button2')}
-                >
-                    Плейлисты
-                </Button>
-            </Box>
-            {RenderContentFavor()}
-        </Box>
-    );
-}
 
 // Компонент для рендеринга одной карточки подкаста
 function PodcastCard({item}) {
@@ -491,39 +443,26 @@ function PodcastCard({item}) {
                                 </Typography>
                             </Box>
                             <Box display="flex" alignItems="center">
-                                {/*<Button*/}
-                                {/*    variant="contained"*/}
-                                {/*    sx={{*/}
-                                {/*        width: {xs: '80px', sm: '100px', md: '150px'},*/}
-                                {/*        height: {xs: '40px', sm: '45px', md: '50px'},*/}
-                                {/*        borderRadius: 10,*/}
-                                {/*        bgcolor: isSubscribed ? "blue" : "#173e47",  // Изменение цвета в зависимости от состояния*/}
-                                {/*    }}*/}
-                                {/*    onClick={handleLikeButtonClick}  // Обработчик клика*/}
-                                {/*>*/}
-                                {/*    <Typography sx={{*/}
-                                {/*        fontSize: {xs: '0.6rem', sm: '0.8rem', md: '1rem'}*/}
-                                {/*    }}>Слушать</Typography>*/}
-                                {/*</Button>*/}
                                 <ButtonSubscribe item={item}/>
                                 <IconButton><ShareIcon/></IconButton>
                             </Box>
                         </Box>
                     </CardContent>
-                    <Box display="flex" alignItems="start">
+                    <Box display="flex" alignItems="start"
+                         sx={{fontSize: {xs: '0.7rem', sm: '0.8rem'}}}>
                         <CardMedia
                             component="img"
                             sx={{
                                 width: {xs: 120, sm: 150, md: 200},
                                 height: {xs: 140, sm: 150, md: 200},
                                 borderRadius: 10,
+                                mr: 10
                             }}
+
                             image={playlistImage} // Замените на фактический путь к изображению
                             alt="Плейлист обложка"
                         />
-                        <IconButton>
-                            <FavoriteBorderIcon/>
-                        </IconButton>
+
                     </Box>
                 </Box>
             </Card>

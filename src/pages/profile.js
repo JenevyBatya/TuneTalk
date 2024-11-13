@@ -23,6 +23,13 @@ import Link from '@mui/icons-material/Link';
 import ava from "../assets/cardPhoto.svg";
 import playlistImage from "../assets/playlist.jpg";
 
+const userStatus =
+    {
+        user: true,
+        subscribed: true
+    }
+
+// let subscription = true;
 const podcasts = [
     {
         id: 1,
@@ -30,6 +37,7 @@ const podcasts = [
         description: "Подборка треков для продуктивной работы и сосредоточения.",
         author: "Кака",
         episodes: 45,
+        subscribed: false
     },
     {
         id: 2,
@@ -37,6 +45,7 @@ const podcasts = [
         description: "Энергичные треки для бодрого и успешного начала дня.",
         author: "Кика",
         episodes: 30,
+        subscribed: false
     },
     {
         id: 3,
@@ -44,6 +53,8 @@ const podcasts = [
         description: "Лучшие произведения классической музыки для полного релакса и вдохновения.",
         author: "Кока",
         episodes: 70,
+        subscribed: true
+
     },
     {
         id: 4,
@@ -51,6 +62,8 @@ const podcasts = [
         description: "Старые добрые хиты 80-х и 90-х, которые всегда в моде.",
         author: "Кука",
         episodes: 50,
+        subscribed: true
+
     },
     {
         id: 5,
@@ -58,6 +71,8 @@ const podcasts = [
         description: "Интересные подкасты на разные темы, которые развлекают и вдохновляют.",
         author: "Кека",
         episodes: 100,
+        subscribed: true
+
     },
 ];
 const playlists = [
@@ -166,6 +181,22 @@ export default function ProfilePage() {
     );
 }
 
+function ButtonBeforeCards({item}) {
+    return (
+        <Box display="flex" justifyContent="center" mb={3}>
+            <Button
+                variant="contained"
+                sx={{
+                    bgcolor: '#173e47',
+                    width: {xs: "100%", sm: "80%", md: "70%"},
+                    borderRadius: 10
+                }}
+            >
+                {item}
+            </Button>
+        </Box>
+    )
+}
 
 function renderPlaylistCards(likedStatus) {
     const truncateDescription = (text, wordLimit) => {
@@ -259,7 +290,7 @@ function renderPlaylistCards(likedStatus) {
                                     alt="Плейлист обложка"
                                 />
                                 <IconButton>
-                                    {likedStatus === 'yes' ? <FavoriteIcon /> : <LockIcon />}
+                                    {likedStatus === 'yes' ? <FavoriteIcon/> : <LockIcon/>}
                                 </IconButton>
                             </Box>
                         </Box>
@@ -281,6 +312,127 @@ function renderPlaylistCards(likedStatus) {
             ;
     });
 }
+
+function PlaylistCard({item}) {
+    const cardRef = useRef(null);
+    const [cardSize, setCardSize] = useState({width: 0, height: 0});
+
+    // Получаем размеры карточки после рендера
+    useEffect(() => {
+        if (cardRef.current) {
+            const {width, height} = cardRef.current.getBoundingClientRect();
+            setCardSize({width, height});
+        }
+    }, []);
+
+    const truncateDescription = (text, wordLimit) => {
+        const words = text.split(" ");
+        if (words.length <= wordLimit) return text;
+        return words.slice(0, wordLimit).join(" ") + "...";
+    };
+
+    return (
+        <Box position="relative" mb={2} key={item.id}>
+            <Card ref={cardRef} sx={{position: 'relative', zIndex: 1, mb: 2, borderRadius: 10}}>
+                <Box display="flex" flexDirection="row" alignItems="center" justifyContent="space-between" p={0}>
+                    <CardContent>
+                        <Box sx={{flexDirection: 'column', height: {xs: 150, sm: 180, md: 200}}} display="flex"
+                             justifyContent="space-between">
+                            <Box>
+                                <Typography
+                                    variant="h6"
+                                    sx={{
+                                        fontSize: {xs: '1rem', sm: '1.2rem', md: '1.5rem'},
+                                        lineHeight: 1.2,
+                                        height: {xs: '40px', sm: '65px', md: '70px'}
+                                    }}
+                                >
+                                    {item.title}
+                                </Typography>
+
+                                <Typography variant="body2" color="textSecondary" sx={{
+                                    fontSize: {xs: '0.7rem', sm: '0.8rem'},
+                                    height: {xs: '50px', sm: '65px', md: '70px'},
+                                    lineHeight: 1.2
+                                }}>
+                                    {truncateDescription(item.description, 4)}
+                                </Typography>
+                                <Typography variant="body2" color="textSecondary"
+                                            sx={{fontSize: {xs: '0.7rem', sm: '0.8rem'}}}>
+                                    {item.episodes} выпуска
+                                </Typography>
+                            </Box>
+                            <Box display="flex" alignItems="center">
+                                <Button
+                                    variant="contained"
+                                    sx={{
+                                        width: {xs: '80px', sm: '100px', md: '150px'},
+                                        height: {xs: '40px', sm: '45px', md: '50px'},
+                                        borderRadius: 10,
+                                        bgcolor: "#173e47"
+                                    }}
+                                >
+                                    <Typography sx={{
+                                        fontSize: {xs: '0.6rem', sm: '0.8rem', md: '1rem'}
+                                    }}>Слушать</Typography>
+                                </Button>
+                                <IconButton><ShareIcon/></IconButton>
+                            </Box>
+                        </Box>
+                    </CardContent>
+                    <Box display="flex" alignItems="start">
+                        <CardMedia
+                            component="img"
+                            sx={{
+                                width: {xs: 120, sm: 150, md: 200},
+                                height: {xs: 140, sm: 150, md: 200},
+                                borderRadius: 10,
+                            }}
+                            image={playlistImage} // Замените на фактический путь к изображению
+                            alt="Плейлист обложка"
+                        />
+                        <IconButton>
+                            <LockIcon/>
+                        </IconButton>
+                    </Box>
+                </Box>
+            </Card>
+            <Box
+                sx={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    width: cardSize.width,
+                    height: cardSize.height,
+                    backgroundColor: 'rgb(191,238,1)', // Полупрозрачный слой
+                    zIndex: 0
+                }}
+            />
+        </Box>
+    );
+}
+
+function RenderPlaylistCards() {
+    if (playlists.length === 0) {
+        return (
+            <Typography variant="h6" sx={{mt: 2}} textAlign="center">
+                У вас пока нет плейлистов
+            </Typography>
+        );
+    }
+
+    return (
+        <>
+            <ButtonBeforeCards item={"Новый плейлист"}/>
+
+            {/* Рендер карточек плейлистов по циклу */}
+            {playlists.map((item) => (
+                <PlaylistCard key={item.id} item={item}/>
+            ))}
+        </>
+    );
+}
+
 
 function renderPodcastCards(likedStatus) {
     const truncateDescription = (text, wordLimit) => {
@@ -374,7 +526,7 @@ function renderPodcastCards(likedStatus) {
                                 alt="Плейлист обложка"
                             />
                             <IconButton>
-                                {likedStatus === 'yes' ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+                                {likedStatus === 'yes' ? <FavoriteIcon/> : <FavoriteBorderIcon/>}
                             </IconButton>
                         </Box>
                     </Box>
@@ -434,7 +586,7 @@ function ButtonGroup() {
         borderRadius: 10,
         '&:hover': {
             bgcolor: activeButton === button ? 'orange' : '#ffffff', // Отключаем изменение цвета при наведении
-            color:'black',
+            color: 'black',
         },
     });
 
