@@ -181,7 +181,7 @@ export default function ProfilePage() {
     );
 }
 
-function ButtonBeforeCards({item}) {
+function ButtonBeforeCards({line}) {
     return (
         <Box display="flex" justifyContent="center" mb={3}>
             <Button
@@ -192,7 +192,7 @@ function ButtonBeforeCards({item}) {
                     borderRadius: 10
                 }}
             >
-                {item}
+                {line}
             </Button>
         </Box>
     )
@@ -545,6 +545,134 @@ function renderPodcastCards(likedStatus) {
             </Box>
         );
     });
+}
+
+
+function PodcastCard({item}) {
+    const cardRef = useRef(null);
+    const [cardSize, setCardSize] = useState({width: 0, height: 0});
+    const [isSubscribed, setIsSubscribed] = useState(item.subscribed);
+
+    // Получаем размеры Card после рендеринга
+    useEffect(() => {
+        if (cardRef.current) {
+            const {width, height} = cardRef.current.getBoundingClientRect();
+            setCardSize({width, height});
+        }
+    }, []);
+
+    const truncateDescription = (text, wordLimit) => {
+        const words = text.split(" ");
+        if (words.length <= wordLimit) return text;
+        return words.slice(0, wordLimit).join(" ") + "...";
+    };
+    const handleLikeButtonClick = () => {
+        setIsSubscribed(!isSubscribed); // Переключаем состояние кнопки
+    };
+
+    return (
+        <Box position="relative" mb={2} key={item.id}>
+            <Card ref={cardRef} sx={{position: 'relative', zIndex: 1, mb: 2, borderRadius: 10}}>
+                <Box display="flex" flexDirection="row" alignItems="center" justifyContent="space-between" p={0}>
+                    <CardContent>
+                        <Box sx={{flexDirection: 'column', height: {xs: 150, sm: 180, md: 200}}} display="flex"
+                             justifyContent="space-between">
+                            <Box>
+                                <Typography
+                                    variant="h6"
+                                    sx={{
+                                        fontSize: {xs: '1rem', sm: '1.2rem', md: '1.5rem'},
+                                        lineHeight: 1.2,
+                                        height: {xs: '40px', sm: '65px', md: '70px'}
+                                    }}
+                                >
+                                    {item.title}
+                                </Typography>
+
+                                <Typography variant="body2" color="textSecondary" sx={{
+                                    fontSize: {xs: '0.7rem', sm: '0.8rem'},
+                                    height: {xs: '40px', sm: '65px', md: '70px'},
+                                    lineHeight: 1.2
+                                }}>
+                                    {truncateDescription(item.description, 2)}
+                                </Typography>
+                                <Typography variant="body2" color="textSecondary"
+                                            sx={{fontSize: {xs: '0.7rem', sm: '0.8rem'}}}>
+                                    {item.author}
+                                </Typography>
+                                <Typography variant="body2" color="textSecondary"
+                                            sx={{fontSize: {xs: '0.7rem', sm: '0.8rem'}}}>
+                                    {item.episodes} выпуска
+                                </Typography>
+                            </Box>
+                            <Box display="flex" alignItems="center">
+                                <Button
+                                    variant="contained"
+                                    sx={{
+                                        width: {xs: '80px', sm: '100px', md: '150px'},
+                                        height: {xs: '40px', sm: '45px', md: '50px'},
+                                        borderRadius: 10,
+                                        bgcolor: "#173e47"
+                                    }}
+                                >
+                                    <Typography sx={{
+                                        fontSize: {xs: '0.6rem', sm: '0.8rem', md: '1rem'}
+                                    }}>Слушать</Typography>
+                                </Button>
+                                <IconButton><ShareIcon/></IconButton>
+                            </Box>
+                        </Box>
+                    </CardContent>
+                    <Box display="flex" alignItems="start"
+                         sx={{fontSize: {xs: '0.7rem', sm: '0.8rem'}}}>
+                        <CardMedia
+                            component="img"
+                            sx={{
+                                width: {xs: 120, sm: 150, md: 200},
+                                height: {xs: 140, sm: 150, md: 200},
+                                borderRadius: 10,
+                                mr: 10
+                            }}
+
+                            image={playlistImage} // Замените на фактический путь к изображению
+                            alt="Плейлист обложка"
+                        />
+                        <IconButton>
+                            <FavoriteBorderIcon/>
+                        </IconButton>
+                    </Box>
+                </Box>
+            </Card>
+            <Box
+                sx={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    width: cardSize.width,
+                    height: cardSize.height,
+                    backgroundColor: 'rgb(191,238,1)', // Полупрозрачный слой
+                    zIndex: 0
+                }}
+            />
+        </Box>
+    );
+}
+
+// Основной компонент для рендеринга всех подкастов
+function RenderPodcastCards() {
+    if (podcasts.length === 0) {
+        return <Typography variant="h6" sx={{mt: 2}} textAlign="center">У вас пока нету подкастов</Typography>;
+    }
+
+    return (
+        <>
+            <ButtonBeforeCards line="Новый подкаст"/>
+
+            {podcasts.map((item) => (
+                <PodcastCard key={item.id} item={item}/>
+            ))}
+        </>
+    );
 }
 
 function ButtonGroup() {
