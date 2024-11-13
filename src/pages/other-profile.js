@@ -116,6 +116,7 @@ export default function OtherProfilePage() {
             {/*<AppBar position="fixed" sx={{bgcolor: '#adcac8'}} elevation={0}>*/}
             {/*    <Toolbar sx={{height: 20}}/>*/}
             {/*</AppBar>*/}
+            
 
             <Box display="flex" alignItems="center" mb={3}>
                 <Avatar
@@ -184,10 +185,10 @@ function PlaylistCard({item}) {
     };
 
     return (
-        <Box position="relative" mb={2} key={item.id}>
+        <Box position="relative" mb={2} key={item.id} >
             <Card ref={cardRef} sx={{position: 'relative', zIndex: 1, mb: 2, borderRadius: 10}}>
                 <Box display="flex" flexDirection="row" alignItems="center" justifyContent="space-between" p={0}>
-                    <CardContent>
+                    <CardContent >
                         <Box sx={{flexDirection: 'column', height: {xs: 150, sm: 180, md: 200}}} display="flex"
                              justifyContent="space-between">
                             <Box>
