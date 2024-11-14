@@ -2,7 +2,6 @@ import React from 'react';
 import {Card, CardContent, Typography, Button, Chip, Avatar, Box} from '@mui/material';
 import {styled} from '@mui/system';
 
-
 export const StyledButton = styled(Button)(({theme}) => ({
     backgroundColor: '#173E47',
     color: '#fff',

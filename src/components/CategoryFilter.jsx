@@ -73,7 +73,7 @@ const CategoryFilter = ({onFilter}) => {
         );
     };
 
-    //TODO Отправка запроса на бэкенд
+    //TODO Отправка запроса на бэк
     const applyFilters = async () => {
         try {
             const response = await axios.post('/api/filter', {
