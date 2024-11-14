@@ -4,6 +4,7 @@ import './index.css';
 
 import reportWebVitals from './reportWebVitals';
 import App from "./App";
+import 'fonts/static/Jost-Light.ttf'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
