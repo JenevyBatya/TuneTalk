@@ -17,12 +17,20 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import ShareIcon from '@mui/icons-material/Share';
 import LockIcon from '@mui/icons-material/Lock';
+import LockOpenRoundedIcon from '@mui/icons-material/LockOpenRounded';
 import Star from '@mui/icons-material/Star';
 import Link from '@mui/icons-material/Link';
 
 import ava from "../assets/cardPhoto.svg";
 import playlistImage from "../assets/playlist.jpg";
 
+const userStatus =
+    {
+        user: true,
+        subscribed: true
+    }
+
+// let subscription = true;
 const podcasts = [
     {
         id: 1,
@@ -30,6 +38,8 @@ const podcasts = [
         description: "Подборка треков для продуктивной работы и сосредоточения.",
         author: "Кака",
         episodes: 45,
+        subscribed: false,
+        liked: false
     },
     {
         id: 2,
@@ -37,6 +47,8 @@ const podcasts = [
         description: "Энергичные треки для бодрого и успешного начала дня.",
         author: "Кика",
         episodes: 30,
+        subscribed: false,
+        liked: true
     },
     {
         id: 3,
@@ -44,6 +56,9 @@ const podcasts = [
         description: "Лучшие произведения классической музыки для полного релакса и вдохновения.",
         author: "Кока",
         episodes: 70,
+        subscribed: true,
+        liked: true
+
     },
     {
         id: 4,
@@ -51,6 +66,9 @@ const podcasts = [
         description: "Старые добрые хиты 80-х и 90-х, которые всегда в моде.",
         author: "Кука",
         episodes: 50,
+        subscribed: true,
+        liked: true
+
     },
     {
         id: 5,
@@ -58,6 +76,9 @@ const podcasts = [
         description: "Интересные подкасты на разные темы, которые развлекают и вдохновляют.",
         author: "Кека",
         episodes: 100,
+        subscribed: true,
+        liked: false
+
     },
 ];
 const playlists = [
@@ -66,40 +87,95 @@ const playlists = [
         title: "Музыка для работы",
         description: "Подборка треков для продуктивной работы и сосредоточения.",
         episodes: 45,
+        closed: true
     },
     {
         id: 2,
         title: "Утренний заряд",
         description: "Энергичные треки для бодрого и успешного начала дня.",
         episodes: 30,
+        closed: true
     },
     {
         id: 3,
         title: "Классическая музыка",
         description: "Лучшие произведения классической музыки для полного релакса и вдохновения.",
         episodes: 70,
+        closed: false
     },
     {
         id: 4,
         title: "Ретро Хиты",
         description: "Старые добрые хиты 80-х и 90-х, которые всегда в моде.",
         episodes: 50,
+        closed: false
     },
     {
         id: 5,
         title: "Подкасты на каждый день",
         description: "Интересные подкасты на разные темы, которые развлекают и вдохновляют.",
         episodes: 100,
+        closed: true
+    },
+];
+const likedPodcasts = [
+    {
+        id: 1,
+        title: "Музыка для работы",
+        description: "Подборка треков для продуктивной работы и сосредоточения.",
+        author: "Кака",
+        episodes: 45,
+        subscribed: false,
+        liked: true
+    },
+    {
+        id: 2,
+        title: "Утренний заряд",
+        description: "Энергичные треки для бодрого и успешного начала дня.",
+        author: "Кика",
+        episodes: 30,
+        subscribed: false,
+        liked: true
+    },
+    {
+        id: 3,
+        title: "Классическая музыка",
+        description: "Лучшие произведения классической музыки для полного релакса и вдохновения.",
+        author: "Кока",
+        episodes: 70,
+        subscribed: true,
+        liked: true
+
+    },
+    {
+        id: 4,
+        title: "Ретро Хиты",
+        description: "Старые добрые хиты 80-х и 90-х, которые всегда в моде.",
+        author: "Кука",
+        episodes: 50,
+        subscribed: true,
+        liked: true
+
+    },
+    {
+        id: 5,
+        title: "Подкасты на каждый день",
+        description: "Интересные подкасты на разные темы, которые развлекают и вдохновляют.",
+        author: "Кека",
+        episodes: 100,
+        subscribed: true,
+        liked: true
+
     },
 ];
 
 export default function ProfilePage() {
     return (
         <Container maxWidth="md"
-                   sx={{bgcolor: '#ffffff', pt: 10, pl: 0}}> {/* Увеличен верхний отступ для содержимого */}
-            <AppBar position="fixed" sx={{bgcolor: '#adcac8'}} elevation={0}>
-                <Toolbar sx={{height: 20}}/>
-            </AppBar>
+                   sx={{bgcolor: '#ffffff', pt: 3, pl: 0}}> {/* Увеличен верхний отступ для содержимого */}
+            {/*<AppBar position="fixed" sx={{bgcolor: '#adcac8'}} elevation={0}>*/}
+            {/*    <Toolbar sx={{height: 20}}/>*/}
+            {/*</AppBar>*/}
 
             <Box display="flex" alignItems="center" mb={3}>
                 <Avatar
@@ -166,6 +242,23 @@ export default function ProfilePage() {
     );
 }
 
+function ButtonBeforeCards({line}) {
+    return (
+        <Box display="flex" justifyContent="center" mb={3}>
+            <Button
+                variant="contained"
+                sx={{
+                    bgcolor: '#173e47',
+                    width: {xs: "100%", sm: "80%", md: "70%"},
+                    borderRadius: 10
+                }}
+            >
+                <Typography>{line}</Typography>
+
+            </Button>
+        </Box>
+    )
+}
 
 function renderPlaylistCards(likedStatus) {
     const truncateDescription = (text, wordLimit) => {
@@ -230,7 +323,7 @@ function renderPlaylistCards(likedStatus) {
                                             variant="contained"
                                             sx={{
                                                 width: {xs: '80px', sm: '100px', md: '150px'},
-                                                height: {xs: '40px', sm: '45px', md: '50px'},
+                                                height: {xs: '30px', sm: '45px', md: '50px'},
                                                 borderRadius: 10,
                                                 bgcolor: "#173e47"
                                             }}
@@ -259,7 +352,7 @@ function renderPlaylistCards(likedStatus) {
                                     alt="Плейлист обложка"
                                 />
                                 <IconButton>
-                                    {likedStatus === 'yes' ? <FavoriteIcon /> : <LockIcon />}
+                                    {likedStatus === 'yes' ? <FavoriteIcon/> : <LockIcon/>}
                                 </IconButton>
                             </Box>
                         </Box>
@@ -281,6 +374,127 @@ function renderPlaylistCards(likedStatus) {
             ;
     });
 }
+
+function PlaylistCard({item}) {
+    const cardRef = useRef(null);
+    const [cardSize, setCardSize] = useState({width: 0, height: 0});
+
+    // Получаем размеры карточки после рендера
+    useEffect(() => {
+        if (cardRef.current) {
+            const {width, height} = cardRef.current.getBoundingClientRect();
+            setCardSize({width, height});
+        }
+    }, []);
+
+    const truncateDescription = (text, wordLimit) => {
+        const words = text.split(" ");
+        if (words.length <= wordLimit) return text;
+        return words.slice(0, wordLimit).join(" ") + "...";
+    };
+
+    return (
+        <Box position="relative" mb={2} key={item.id}>
+            <Card ref={cardRef} sx={{position: 'relative', zIndex: 1, mb: 2, borderRadius: 10}}>
+                <Box display="flex" flexDirection="row" alignItems="center" justifyContent="space-between" p={0}>
+                    <CardContent>
+                        <Box sx={{flexDirection: 'column', height: {xs: 150, sm: 180, md: 200}}} display="flex"
+                             justifyContent="space-between">
+                            <Box>
+                                <Typography
+                                    variant="h6"
+                                    sx={{
+                                        fontSize: {xs: '1rem', sm: '1.2rem', md: '1.5rem'},
+                                        lineHeight: 1.2,
+                                        height: {xs: '40px', sm: '65px', md: '70px'}
+                                    }}
+                                >
+                                    {item.title}
+                                </Typography>
+
+                                <Typography variant="body2" color="textSecondary" sx={{
+                                    fontSize: {xs: '0.7rem', sm: '0.8rem'},
+                                    height: {xs: '50px', sm: '65px', md: '70px'},
+                                    lineHeight: 1.2
+                                }}>
+                                    {truncateDescription(item.description, 4)}
+                                </Typography>
+                                <Typography variant="body2" color="textSecondary"
+                                            sx={{fontSize: {xs: '0.7rem', sm: '0.8rem'}}}>
+                                    {item.episodes} выпуска
+                                </Typography>
+                            </Box>
+                            <Box display="flex" alignItems="center">
+                                <Button
+                                    variant="contained"
+                                    sx={{
+                                        width: {xs: '80px', sm: '100px', md: '150px'},
+                                        height: {xs: '40px', sm: '45px', md: '50px'},
+                                        borderRadius: 10,
+                                        bgcolor: "#173e47"
+                                    }}
+                                >
+                                    <Typography sx={{
+                                        fontSize: {xs: '0.6rem', sm: '0.8rem', md: '1rem'}
+                                    }}>Слушать</Typography>
+                                </Button>
+                                <IconButton><ShareIcon/></IconButton>
+                            </Box>
+                        </Box>
+                    </CardContent>
+                    <Box display="flex" alignItems="start">
+                        <CardMedia
+                            component="img"
+                            sx={{
+                                width: {xs: 120, sm: 150, md: 200},
+                                height: {xs: 140, sm: 150, md: 200},
+                                borderRadius: 10,
+                            }}
+                            image={playlistImage} // Замените на фактический путь к изображению
+                            alt="Плейлист обложка"
+                        />
+                        <IconButton>
+                            {item.closed === true ? <LockIcon/> : <LockOpenRoundedIcon/>}
+                        </IconButton>
+                    </Box>
+                </Box>
+            </Card>
+            <Box
+                sx={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    width: cardSize.width,
+                    height: cardSize.height,
+                    backgroundColor: 'rgb(191,238,1)', // Полупрозрачный слой
+                    zIndex: 0
+                }}
+            />
+        </Box>
+    );
+}
+
+function RenderPlaylistCards({list, noButton}) {
+    if (playlists.length === 0) {
+        return (
+            <Typography variant="h6" sx={{mt: 2}} textAlign="center">
+                У вас пока нет плейлистов
+            </Typography>
+        );
+    }
+
+    return (
+        <>
+            {noButton !== true ? <ButtonBeforeCards line="Новый плейлист"/>: null}
+
+            {/* Рендер карточек плейлистов по циклу */}
+            {list.map((item) => (
+                <PlaylistCard key={item.id} item={item}/>
+            ))}
+        </>
+    );
+}
+
 
 function renderPodcastCards(likedStatus) {
     const truncateDescription = (text, wordLimit) => {
@@ -374,7 +588,7 @@ function renderPodcastCards(likedStatus) {
                                 alt="Плейлист обложка"
                             />
                             <IconButton>
-                                {likedStatus === 'yes' ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+                                {likedStatus === 'yes' ? <FavoriteIcon/> : <FavoriteBorderIcon/>}
                             </IconButton>
                         </Box>
                     </Box>
@@ -395,6 +609,136 @@ function renderPodcastCards(likedStatus) {
     });
 }
 
+
+function PodcastCard({item}) {
+    const cardRef = useRef(null);
+    const [cardSize, setCardSize] = useState({width: 0, height: 0});
+    const [isSubscribed, setIsSubscribed] = useState(item.subscribed);
+
+    // Получаем размеры Card после рендеринга
+    useEffect(() => {
+        if (cardRef.current) {
+            const {width, height} = cardRef.current.getBoundingClientRect();
+            setCardSize({width, height});
+        }
+    }, []);
+
+    const truncateDescription = (text, wordLimit) => {
+        const words = text.split(" ");
+        if (words.length <= wordLimit) return text;
+        return words.slice(0, wordLimit).join(" ") + "...";
+    };
+    const handleLikeButtonClick = () => {
+        setIsSubscribed(!isSubscribed); // Переключаем состояние кнопки
+    };
+
+    return (
+        <Box position="relative" mb={2} key={item.id}>
+            <Card ref={cardRef} sx={{position: 'relative', zIndex: 1, mb: 2, borderRadius: 10}}>
+                <Box display="flex" flexDirection="row" alignItems="center" justifyContent="space-between" p={0}>
+                    <CardContent>
+                        <Box sx={{flexDirection: 'column', height: {xs: 150, sm: 180, md: 200}}} display="flex"
+                             justifyContent="space-between">
+                            <Box>
+                                <Typography
+                                    variant="h6"
+                                    sx={{
+                                        fontSize: {xs: '1rem', sm: '1.2rem', md: '1.5rem'},
+                                        lineHeight: 1.2,
+                                        height: {xs: '40px', sm: '65px', md: '70px'}
+                                    }}
+                                >
+                                    {item.title}
+                                </Typography>
+
+                                <Typography variant="body2" color="textSecondary" sx={{
+                                    fontSize: {xs: '0.7rem', sm: '0.8rem'},
+                                    height: {xs: '40px', sm: '65px', md: '70px'},
+                                    lineHeight: 1.2
+                                }}>
+                                    {truncateDescription(item.description, 2)}
+                                </Typography>
+                                <Typography variant="body2" color="textSecondary"
+                                            sx={{fontSize: {xs: '0.7rem', sm: '0.8rem'}}}>
+                                    {item.author}
+                                </Typography>
+                                <Typography variant="body2" color="textSecondary"
+                                            sx={{fontSize: {xs: '0.7rem', sm: '0.8rem'}}}>
+                                    {item.episodes} выпуска
+                                </Typography>
+                            </Box>
+                            <Box display="flex" alignItems="center">
+                                <Button
+                                    variant="contained"
+                                    sx={{
+                                        width: {xs: '80px', sm: '100px', md: '150px'},
+                                        height: {xs: '40px', sm: '45px', md: '50px'},
+                                        borderRadius: 10,
+                                        bgcolor: "#173e47"
+                                    }}
+                                >
+                                    <Typography sx={{
+                                        fontSize: {xs: '0.6rem', sm: '0.8rem', md: '1rem'}
+                                    }}>Слушать</Typography>
+                                </Button>
+                                <IconButton><ShareIcon/></IconButton>
+                            </Box>
+                        </Box>
+                    </CardContent>
+                    <Box display="flex" alignItems="start"
+                         sx={{fontSize: {xs: '0.7rem', sm: '0.8rem'}}}>
+                        <CardMedia
+                            component="img"
+                            sx={{
+                                width: {xs: 120, sm: 150, md: 200},
+                                height: {xs: 140, sm: 150, md: 200},
+                                borderRadius: 10,
+                                // mr: 10
+                            }}
+
+                            image={playlistImage} // Замените на фактический путь к изображению
+                            alt="Плейлист обложка"
+                        />
+                        <IconButton
+                            // sx={{bgcolor: "#173e47"}}
+                        >
+                            {item.liked === true ? <FavoriteBorderIcon/> : <FavoriteIcon/>}
+                        </IconButton>
+                    </Box>
+                </Box>
+            </Card>
+            <Box
+                sx={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    width: cardSize.width,
+                    height: cardSize.height,
+                    backgroundColor: 'rgb(191,238,1)', // Полупрозрачный слой
+                    zIndex: 0
+                }}
+            />
+        </Box>
+    );
+}
+
+// Основной компонент для рендеринга всех подкастов
+function RenderPodcastCards({list, noButton}) {
+    if (podcasts.length === 0) {
+        return <Typography variant="h6" sx={{mt: 2}} textAlign="center">У вас пока нету подкастов</Typography>;
+    }
+
+    return (
+        <>
+            {noButton !== true ? <ButtonBeforeCards line="Новый подкаст"/>: null}
+
+            {list.map((item) => (
+                <PodcastCard key={item.id} item={item}/>
+            ))}
+        </>
+    );
+}
+
 function ButtonGroup() {
     const [activeButton, setActiveButton] = useState('подкасты');
 
@@ -405,13 +749,18 @@ function ButtonGroup() {
     const renderContent = () => {
         switch (activeButton) {
             case 'подкасты':
-                return renderWholePart("Новый подкаст", renderPodcastCards())
+                // return renderWholePart("Новый подкаст", renderPodcastCards())
+                return <RenderPodcastCards list={podcasts} noButton={false}/>
             case 'плейлист':
-                return renderWholePart("Новый плейлист", renderPlaylistCards())
+                // return renderWholePart("Новый плейлист", renderPlaylistCards())
+                return <RenderPlaylistCards list={playlists} noButton={false}/>
             case 'избранное':
-                return renderWholePart("избранное", renderPlaylistCards())
+                // return renderWholePart("избранное", renderPlaylistCards())
+                return <UnderlinedButtons/>
+
             case 'закладки':
-                return renderWholePart("", renderPodcastCards())
+                // return renderWholePart("", renderPodcastCards())
+                return <RenderPodcastCards list={podcasts} noButton={true}/>
 
         }
     }
@@ -434,7 +783,7 @@ function ButtonGroup() {
         borderRadius: 10,
         '&:hover': {
             bgcolor: activeButton === button ? 'orange' : '#ffffff', // Отключаем изменение цвета при наведении
-            color:'black',
+            color: 'black',
         },
     });
 
@@ -499,7 +848,6 @@ function ButtonGroup() {
 
 function renderWholePart(buttonText, func) {
     if (buttonText === "избранное") {
-        console.log("exp");
         return <UnderlinedButtons/>;
     }
     if (!buttonText) {
@@ -547,9 +895,11 @@ function UnderlinedButtons() {
     const renderContentFavor = () => {
         switch (activeButton) {
             case 'button2':
-                return renderWholePart("", renderPlaylistCards("yes"))
+                // return renderWholePart("", renderPlaylistCards("yes"))
+                return <RenderPlaylistCards list={playlists} noButton={true}/>
             case 'button1':
-                return renderWholePart("", renderPodcastCards("yes"));
+                // return renderWholePart("", renderPodcastCards("yes"));
+                return <RenderPodcastCards list={likedPodcasts} noButton={true}/>
 
 
         }
