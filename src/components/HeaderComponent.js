@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import logo from '../assets/Logo.svg';
+import {Link} from "react-router-dom";
+import {Button} from "@mui/material";
 
 export const Header = styled.header`
     display: flex;
@@ -12,6 +14,7 @@ export const Header = styled.header`
     position: sticky;
     top: 0;
     z-index: 10;
+    max-width: 600px;
 `;
 
 export const Logo = styled.img`
@@ -22,7 +25,9 @@ export const Logo = styled.img`
 export const MobileHeader = () => {
     return (
         <Header>
+            <Button as={Link} to="/">
             <Logo src={logo} alt="Логотип" />
+            </Button>
         </Header>
     );
 };
