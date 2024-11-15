@@ -1,10 +1,10 @@
 import React from 'react';
-import Slider from 'react-slick';
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import photo1 from "#";
-import photo2 from "#";
-import photo3 from "#";
+// import Slider from 'react-slick';
+// import "slick-carousel/slick/slick.css";
+// import "slick-carousel/slick/slick-theme.css";
+import photo1 from "../assets/playlist.jpg";
+import photo2 from "../assets/playlist.jpg";
+import photo3 from "../assets/playlist.jpg";
 
 import {
     HeadingText1,
@@ -19,6 +19,8 @@ import {
     PhotoDiv,
     Photo
 } from "../styles/LandingPageStyles";
+import {Link} from "react-router-dom";
+import FooterNavigation from "../components/FooterComponent";
 
 const images = [photo1, photo2, photo3];
 
@@ -45,12 +47,12 @@ const LandingPage = () => {
                     форматами в один клик. Удобный поиск. Эксклюзивные подборки.
                 </Text1>
                 <PhotoDiv>
-                    <Slider {...settings}>
-                        {images.map((src, index) => (
-                            <Photo key={index} src={src} alt={`photo ${index + 1}`}
-                                   style={{width: '100%', height: 'auto'}}/>
-                        ))}
-                    </Slider>
+                    {/*<Slider {...settings}>*/}
+                    {/*    {images.map((src, index) => (*/}
+                    {/*        <Photo key={index} src={src} alt={`photo ${index + 1}`}*/}
+                    {/*               style={{width: '100%', height: 'auto'}}/>*/}
+                    {/*    ))}*/}
+                    {/*</Slider>*/}
 
 
                 </PhotoDiv>
@@ -66,26 +68,28 @@ const LandingPage = () => {
                     Мы собрали всех ваших любимых авторов, чтобы вы наслаждались ими без лишних сложностей.
                 </Text2>
                 <PhotoDiv>
-                    <Slider {...settings}>
-                        {images.map((src, index) => (
-                            <Photo
-                                key={index}
-                                src={src}
-                                alt={`photo ${index + 1}`}
-                                style={{
-                                    width: '100%',
-                                    height: 'auto',
-                                    objectFit: 'cover'
-                                }}
-                            />
-                        ))}
-                    </Slider>
+                    {/*<Slider {...settings}>*/}
+                    {/*    {images.map((src, index) => (*/}
+                    {/*        <Photo*/}
+                    {/*            key={index}*/}
+                    {/*            src={src}*/}
+                    {/*            alt={`photo ${index + 1}`}*/}
+                    {/*            style={{*/}
+                    {/*                width: '100%',*/}
+                    {/*                height: 'auto',*/}
+                    {/*                objectFit: 'cover'*/}
+                    {/*            }}*/}
+                    {/*        />*/}
+                    {/*    ))}*/}
+                    {/*</Slider>*/}
 
                 </PhotoDiv>
-                <StyledButton>
+                <StyledButton as={Link} to="/Registration">
                     Зарегистрироваться
                 </StyledButton>
+
             </RegBlock>
+            <FooterNavigation/>
         </MainContainer>
     );
 }

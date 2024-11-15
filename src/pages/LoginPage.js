@@ -75,7 +75,7 @@ export const LoginPage = () => {
                     {loginError && <ErrorText>{loginError}</ErrorText>}
                     <StyledButton type="submit">Войти</StyledButton>
                 </Form>
-                <LoginLink>Нет аккаунта? <a href="/register">Создать</a></LoginLink>
+                <LoginLink>Нет аккаунта? <a href="/Registration">Создать</a></LoginLink>
             </FormContainer>
         </MainContainer>
     );

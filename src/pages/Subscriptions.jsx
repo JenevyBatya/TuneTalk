@@ -3,6 +3,8 @@ import CustomCard from "../components/CustomCard";
 import cardPhoto from '../assets/cardPhoto.svg';
 import React, {useState} from "react";
 import CategoryFilter from "../components/CategoryFilter";
+import FooterNavigation from "../components/FooterComponent";
+import HeaderComponent from "../components/HeaderComponent";
 
 const Subscriptions = () => {
     const data = [
@@ -35,6 +37,7 @@ const Subscriptions = () => {
     };
     return (
         <div>
+            <HeaderComponent/>
             <table className="chapterName" style={{marginLeft: '1.5vh'}}>
                 <tbody>
                 <tr>
@@ -82,6 +85,7 @@ const Subscriptions = () => {
                     </Box>
                 )}
             </div>
+            <FooterNavigation/>
         </div>
 
     );

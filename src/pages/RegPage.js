@@ -21,6 +21,7 @@ import {
     LoginLink
 } from "../styles/RegPageStyles";
 import google from "../assets/icons/googleLogo.svg";
+import {Link} from "react-router-dom";
 
 const getPasswordStrength = (password) => {
     if (password.length < 8) return { strength: "Слабый", color: "red", value: 20 };
@@ -30,7 +31,7 @@ const getPasswordStrength = (password) => {
     return { strength: "Средний", color: "orange", value: 60 };
 };
 
-export const RegisterPage = () => {
+ const RegPage = () => {
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -142,18 +143,18 @@ export const RegisterPage = () => {
                         />
                     </FormControl>
                     {passwordError && <ErrorText>{passwordError}</ErrorText>}
-                    <StyledButton type="submit">Создать аккаунт</StyledButton>
+                    <StyledButton type="submit" as={Link} to="/library">Создать аккаунт</StyledButton>
                     <GoogleButton>
                         <img src={google} alt="Google Logo" style={{ marginRight: 10 }} />
                         Продолжить с Google
                     </GoogleButton>
                 </Form>
                 <LoginLink>
-                    Уже есть аккаунт? <a href="/login">Войти</a>
+                    Уже есть аккаунт? <a href="/Login">Войти</a>
                 </LoginLink>
             </FormContainer>
         </MainContainer>
     );
 };
 
-export default RegisterPage;
+export default RegPage;
