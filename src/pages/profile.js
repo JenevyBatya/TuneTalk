@@ -23,6 +23,8 @@ import Link from '@mui/icons-material/Link';
 
 import ava from "../assets/cardPhoto.svg";
 import playlistImage from "../assets/playlist.jpg";
+import FooterNavigation from "../components/FooterComponent";
+import HeaderComponent from "../components/HeaderComponent";
 
 const userStatus =
     {
@@ -171,6 +173,8 @@ const likedPodcasts = [
 
 export default function ProfilePage() {
     return (
+        <div>
+            <HeaderComponent/>
         <Container maxWidth="md"
                    sx={{bgcolor: '#ffffff', pt: 3, pl: 0}}> {/* Увеличен верхний отступ для содержимого */}
             {/*<AppBar position="fixed" sx={{bgcolor: '#adcac8'}} elevation={0}>*/}
@@ -239,12 +243,14 @@ export default function ProfilePage() {
             {ButtonGroup()}
 
         </Container>
+</div>
     );
 }
 
 function ButtonBeforeCards({line}) {
     return (
         <Box display="flex" justifyContent="center" mb={3}>
+
             <Button
                 variant="contained"
                 sx={{
@@ -256,6 +262,7 @@ function ButtonBeforeCards({line}) {
                 <Typography>{line}</Typography>
 
             </Button>
+            <FooterNavigation/>
         </Box>
     )
 }
@@ -284,9 +291,8 @@ function renderPlaylistCards(likedStatus) {
             }
         }, []);
 
-        return (<Box>
-
-
+        return (
+            <Box>
                 <Box position="relative" mb={2} key={item.id}>
                     <Card ref={cardRef} sx={{position: 'relative', zIndex: 1, mb: 2, borderRadius: 10}}>
                         <Box display="flex" flexDirection="row" alignItems="center" justifyContent="space-between"
@@ -485,7 +491,7 @@ function RenderPlaylistCards({list, noButton}) {
 
     return (
         <>
-            {noButton !== true ? <ButtonBeforeCards line="Новый плейлист"/>: null}
+            {noButton !== true ? <ButtonBeforeCards line="Новый плейлист"/> : null}
 
             {/* Рендер карточек плейлистов по циклу */}
             {list.map((item) => (
@@ -730,7 +736,7 @@ function RenderPodcastCards({list, noButton}) {
 
     return (
         <>
-            {noButton !== true ? <ButtonBeforeCards line="Новый подкаст"/>: null}
+            {noButton !== true ? <ButtonBeforeCards line="Новый подкаст"/> : null}
 
             {list.map((item) => (
                 <PodcastCard key={item.id} item={item}/>
@@ -920,7 +926,10 @@ function UnderlinedButtons() {
                     Плейлисты
                 </Button>
             </Box>
+
             {renderContentFavor()}
+
+
         </Box>
     );
 }

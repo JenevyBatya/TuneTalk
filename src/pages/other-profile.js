@@ -22,6 +22,7 @@ import Link from '@mui/icons-material/Link';
 
 import ava from "../assets/cardPhoto.svg";
 import playlistImage from "../assets/playlist.jpg";
+import FooterNavigation from "../components/FooterComponent";
 
 const userStatus =
     {
@@ -480,6 +481,7 @@ function PodcastCard({item}) {
                     zIndex: 0
                 }}
             />
+            <FooterNavigation/>
         </Box>
     );
 }

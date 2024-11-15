@@ -4,6 +4,8 @@ import cardPhoto from '../assets/cardPhoto.svg';
 import React, {useState} from "react";
 import SearchFilter from "../components/SearchFilter";
 import CategoryFilter from "../components/CategoryFilter";
+import FooterNavigation from "../components/FooterComponent";
+import HeaderComponent from "../components/HeaderComponent";
 
 const Library = () => {
     const data = [
@@ -36,6 +38,7 @@ const Library = () => {
     };
     return (
         <div>
+            <HeaderComponent/>
             <SearchFilter
                 data={data}
                 searchFields={searchFields} // Поля, по которым будет производиться поиск
@@ -81,6 +84,7 @@ const Library = () => {
                     </Box>
                 )}
             </div>
+            <FooterNavigation/>
         </div>
 
     );
