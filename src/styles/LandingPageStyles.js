@@ -98,6 +98,11 @@ export const StyledButton = styled.button`
     margin-top: 16px;
     margin-left: 12%;
     margin-right: auto;
+    text-decoration: none;
+
+    &:hover {
+        background-color: #45807f;
+    }
 `;
 
 export const RegBlock = styled.div`
