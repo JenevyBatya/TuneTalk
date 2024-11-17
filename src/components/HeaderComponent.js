@@ -1,10 +1,9 @@
-import React from 'react';
 import styled from 'styled-components';
 import logo from '../assets/Logo.svg';
 import {Link} from "react-router-dom";
 import {Button} from "@mui/material";
 
-export const Header = styled.header`
+ const Header = styled.header`
     display: flex;
     align-items: center;
     justify-content: left;

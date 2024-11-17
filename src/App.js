@@ -15,10 +15,10 @@ export function App() {
                 <Routes>
                     <Route path='/' element={<LandingPage />} />
                     <Route path='/Registration' element={<RegPage />} />
-                    <Route path='Login' element={<LoginPage/>}/>
-                    <Route path="/library" element={<Library />} />
-                    <Route path="/subscriptions" element={<Subscriptions />} />
-                    <Route path="/account" element={<ProfilePage />} />
+                    <Route path='/Login' element={<LoginPage/>}/>
+                    <Route path="/Library" element={<Library />} />
+                    <Route path="/Subscriptions" element={<Subscriptions />} />
+                    <Route path="/Account" element={<ProfilePage />} />
                 </Routes>
             </Container>
         </Router>

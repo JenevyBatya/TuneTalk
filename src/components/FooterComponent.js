@@ -14,13 +14,13 @@ function FooterNavigation() {
         // Навигация по индексам
         switch (newValue) {
             case 0:
-                navigate('/library'); // Путь для "Библиотеки"
+                navigate('/Library'); // Путь для "Библиотеки"
                 break;
             case 1:
-                navigate('/subscriptions'); // Путь для "Мои подписки"
+                navigate('/Subscriptions'); // Путь для "Мои подписки"
                 break;
             case 2:
-                navigate('/account'); // Путь для "Мой аккаунт"
+                navigate('/Account'); // Путь для "Мой аккаунт"
                 break;
             default:
                 break;
