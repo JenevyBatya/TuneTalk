@@ -22,9 +22,16 @@ import Star from '@mui/icons-material/Star';
 import Link from '@mui/icons-material/Link';
 
 import ava from "../assets/cardPhoto.svg";
-import playlistImage from "../assets/playlist.jpg";
+import playlistImage from "../assets/Playlist.svg";
 import FooterNavigation from "../components/FooterComponent";
 import HeaderComponent from "../components/HeaderComponent";
+import FooterComponent from "../components/FooterComponent";
+import playlistCardStyles from "../styles/PlaylistCardStyles";
+import podcastCardStyles from '../styles/PodcastCardStyles';
+import buttonGroupStyles from '../styles/ButtonGroupStyles';
+import underlineButtonStyles from '../styles/UnderlinedButtonsStyles';
+import profilePageStyles from '../styles/ProfilePageStyles';
+
 
 const userStatus =
     {
@@ -174,76 +181,46 @@ const likedPodcasts = [
 export default function ProfilePage() {
     return (
         <div>
-            <HeaderComponent/>
-        <Container maxWidth="md"
-                   sx={{bgcolor: '#ffffff', pt: 3, pl: 0}}> {/* Увеличен верхний отступ для содержимого */}
-            {/*<AppBar position="fixed" sx={{bgcolor: '#adcac8'}} elevation={0}>*/}
-            {/*    <Toolbar sx={{height: 20}}/>*/}
-            {/*</AppBar>*/}
-
-            <Box display="flex" alignItems="center" mb={3}>
-                <Avatar
-                    src={ava}
-                    alt="Имя Фамилия"
-                    sx={{
-                        width: {xs: 140, sm: 150, md: 200},
-                        height: {xs: 140, sm: 150, md: 200},
-                        mr: "5vw",
-                        borderRadius: 10
-                    }}
-                    variant="rounded"
-                />
-
-                <Box sx={{
-                    display: 'flex', flexDirection: 'column', alignItems: 'start',
-                    height: {xs: 140, sm: 160, md: 200},
-                    justifyContent: 'space-between'
-                }}>
-                    <Typography variant="h4" sx={{fontSize: {xs: '1.3rem', sm: '2rem', md: '2.5rem'}}}>
-                        Имя Фамилия
-                    </Typography>
-                    <Typography variant="h6" sx={{fontSize: {xs: '0.9rem', sm: '1rem', md: '1.2rem'}, lineHeight: 1}}>
-                        Описание профиля текст текст текст
-                    </Typography>
-                    <Typography variant="body2" color="textSecondary" sx={{fontSize: {xs: '0.9rem', sm: '0.9rem'}}}
-                                display="flex" gap={1}>
-                        <Link/> vk.com/user
-                    </Typography>
-                    <Box sx={{position: 'relative', height: {xs: '30px', sm: '35px', md: '40px'},}}>
-                        <Box sx={{
-                            position: 'absolute',
-                            width: {xs: '140px', sm: '140px', md: '150px'},
-                            height: {xs: '30px', sm: '35px', md: '40px'},
-                            bgcolor: 'black',
-                            zIndex: 0,
-                        }}/>
-                        <Button variant="contained"
-                                sx={{
-                                    width: {xs: '140px', sm: '140px', md: '150px'},
-                                    height: {xs: '30px', sm: '35px', md: '40px'},
-                                    zIndex: 1,
-                                    bgcolor: '#ffffff',
-                                    borderRadius: 10
-                                }}>
-                            <Typography sx={{fontSize: {xs: '0.6rem', sm: '0.8rem', md: '1rem', color: "black"}}}>Изменить
-                                профиль</Typography>
-                        </Button>
+            <HeaderComponent />
+            <Container maxWidth="md" sx={profilePageStyles.container}>
+                <Box display="flex" alignItems="center" mb={3}>
+                    <Avatar
+                        src={ava}
+                        alt="Имя Фамилия"
+                        sx={profilePageStyles.avatar}
+                        variant="rounded"
+                    />
+                    <Box sx={profilePageStyles.profileBox}>
+                        <Typography variant="h4" sx={profilePageStyles.name}>
+                            Имя Фамилия
+                        </Typography>
+                        <Typography variant="h6" sx={profilePageStyles.description}>
+                            Описание профиля текст текст текст
+                        </Typography>
+                        <Typography variant="body2" color="textSecondary" sx={profilePageStyles.profileLink}>
+                            <Link /> vk.com/user
+                        </Typography>
+                        <Box sx={profilePageStyles.buttonContainer}>
+                            <Box sx={profilePageStyles.overlayBox} />
+                            <Button variant="contained" sx={profilePageStyles.button}>
+                                <Typography sx={profilePageStyles.buttonText}>Изменить профиль</Typography>
+                            </Button>
+                        </Box>
                     </Box>
                 </Box>
-            </Box>
 
-            <Box display="flex" justifyContent="space-between" mb={2} sx={{fontSize: {xs: '0.4rem', sm: '0.9rem'}}}>
-                <Typography variant="body2" sx={{fontSize: {xs: '0.8rem', sm: '0.9rem'}}}>27 подписчиков</Typography>
-                <Star sx={{width: 15, height: 15, color: '#cbcbcb'}}/>
-                <Typography variant="body2" sx={{fontSize: {xs: '0.8rem', sm: '0.9rem'}}}>256 подписок</Typography>
-                <Star sx={{width: 15, height: 15, color: '#cbcbcb'}}/>
-                <Typography variant="body2" sx={{fontSize: {xs: '0.8rem', sm: '0.9rem'}}}>7 подкастов</Typography>
-            </Box>
+                <Box sx={profilePageStyles.statsBox}>
+                    <Typography variant="body2" sx={profilePageStyles.statText}>27 подписчиков</Typography>
+                    <Star sx={profilePageStyles.starIcon} />
+                    <Typography variant="body2" sx={profilePageStyles.statText}>256 подписок</Typography>
+                    <Star sx={profilePageStyles.starIcon} />
+                    <Typography variant="body2" sx={profilePageStyles.statText}>7 подкастов</Typography>
+                </Box>
 
-            {ButtonGroup()}
-
-        </Container>
-</div>
+                {ButtonGroup()}
+                <FooterComponent />
+            </Container>
+        </div>
     );
 }
 
@@ -253,11 +230,9 @@ function ButtonBeforeCards({line}) {
 
             <Button
                 variant="contained"
-                sx={{
-                    bgcolor: '#173e47',
-                    width: {xs: "100%", sm: "80%", md: "70%"},
-                    borderRadius: 10
-                }}
+                sx={
+                    buttonGroupStyles.createNewButton
+                }
             >
                 <Typography>{line}</Typography>
 
@@ -294,7 +269,7 @@ function renderPlaylistCards(likedStatus) {
         return (
             <Box>
                 <Box position="relative" mb={2} key={item.id}>
-                    <Card ref={cardRef} sx={{position: 'relative', zIndex: 1, mb: 2, borderRadius: 10}}>
+                    <Card ref={cardRef} sx={{position: 'relative', zIndex: 1, mb: 2, borderRadius: "4vh"}}>
                         <Box display="flex" flexDirection="row" alignItems="center" justifyContent="space-between"
                              p={0}>
                             <CardContent>
@@ -330,7 +305,7 @@ function renderPlaylistCards(likedStatus) {
                                             sx={{
                                                 width: {xs: '80px', sm: '100px', md: '150px'},
                                                 height: {xs: '30px', sm: '45px', md: '50px'},
-                                                borderRadius: 10,
+                                                borderRadius: "4vh",
                                                 bgcolor: "#173e47"
                                             }}
                                         >
@@ -352,7 +327,7 @@ function renderPlaylistCards(likedStatus) {
                                     sx={{
                                         width: {xs: 120, sm: 150, md: 200},
                                         height: {xs: 140, sm: 150, md: 200},
-                                        borderRadius: 10,
+                                        borderRadius: "4vh",
                                     }}
                                     image={playlistImage} // Замените на фактический путь к изображению
                                     alt="Плейлист обложка"
@@ -384,6 +359,7 @@ function renderPlaylistCards(likedStatus) {
 function PlaylistCard({item}) {
     const cardRef = useRef(null);
     const [cardSize, setCardSize] = useState({width: 0, height: 0});
+    const [isClosed, setClosed] = useState(item.closed);
 
     // Получаем размеры карточки после рендера
     useEffect(() => {
@@ -399,83 +375,51 @@ function PlaylistCard({item}) {
         return words.slice(0, wordLimit).join(" ") + "...";
     };
 
+    const handleCloseButtonClick = () => {
+        setClosed((prevClosed) => !prevClosed);
+    };
+
     return (
-        <Box position="relative" mb={2} key={item.id}>
-            <Card ref={cardRef} sx={{position: 'relative', zIndex: 1, mb: 2, borderRadius: 10}}>
+        <Box sx={playlistCardStyles.rootBox} key={item.id}>
+            <Card ref={cardRef} sx={playlistCardStyles.card}>
                 <Box display="flex" flexDirection="row" alignItems="center" justifyContent="space-between" p={0}>
                     <CardContent>
-                        <Box sx={{flexDirection: 'column', height: {xs: 150, sm: 180, md: 200}}} display="flex"
-                             justifyContent="space-between">
+                        <Box sx={playlistCardStyles.cardContentBox}>
                             <Box>
-                                <Typography
-                                    variant="h6"
-                                    sx={{
-                                        fontSize: {xs: '1rem', sm: '1.2rem', md: '1.5rem'},
-                                        lineHeight: 1.2,
-                                        height: {xs: '40px', sm: '65px', md: '70px'}
-                                    }}
-                                >
+                                <Typography variant="h6" sx={playlistCardStyles.titleTypography}>
                                     {item.title}
                                 </Typography>
-
-                                <Typography variant="body2" color="textSecondary" sx={{
-                                    fontSize: {xs: '0.7rem', sm: '0.8rem'},
-                                    height: {xs: '50px', sm: '65px', md: '70px'},
-                                    lineHeight: 1.2
-                                }}>
+                                <Typography variant="body2" sx={playlistCardStyles.descriptionTypography}>
                                     {truncateDescription(item.description, 4)}
                                 </Typography>
-                                <Typography variant="body2" color="textSecondary"
-                                            sx={{fontSize: {xs: '0.7rem', sm: '0.8rem'}}}>
+                                <Typography variant="body2" sx={playlistCardStyles.episodesTypography}>
                                     {item.episodes} выпуска
                                 </Typography>
                             </Box>
                             <Box display="flex" alignItems="center">
-                                <Button
-                                    variant="contained"
-                                    sx={{
-                                        width: {xs: '80px', sm: '100px', md: '150px'},
-                                        height: {xs: '40px', sm: '45px', md: '50px'},
-                                        borderRadius: 10,
-                                        bgcolor: "#173e47"
-                                    }}
-                                >
-                                    <Typography sx={{
-                                        fontSize: {xs: '0.6rem', sm: '0.8rem', md: '1rem'}
-                                    }}>Слушать</Typography>
+                                <Button variant="contained" sx={playlistCardStyles.listenButton}>
+                                    <Typography sx={playlistCardStyles.listenButtonText}>Слушать</Typography>
                                 </Button>
-                                <IconButton><ShareIcon/></IconButton>
+                                <IconButton>
+                                    <ShareIcon/>
+                                </IconButton>
                             </Box>
                         </Box>
                     </CardContent>
                     <Box display="flex" alignItems="start">
                         <CardMedia
                             component="img"
-                            sx={{
-                                width: {xs: 120, sm: 150, md: 200},
-                                height: {xs: 140, sm: 150, md: 200},
-                                borderRadius: 10,
-                            }}
+                            sx={playlistCardStyles.media}
                             image={playlistImage} // Замените на фактический путь к изображению
                             alt="Плейлист обложка"
                         />
-                        <IconButton>
-                            {item.closed === true ? <LockIcon/> : <LockOpenRoundedIcon/>}
+                        <IconButton onClick={handleCloseButtonClick}>
+                            {isClosed ? <LockIcon/> : <LockOpenRoundedIcon/>}
                         </IconButton>
                     </Box>
                 </Box>
             </Card>
-            <Box
-                sx={{
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    width: cardSize.width,
-                    height: cardSize.height,
-                    backgroundColor: 'rgb(191,238,1)', // Полупрозрачный слой
-                    zIndex: 0
-                }}
-            />
+            <Box sx={playlistCardStyles.overlay(cardSize.width, cardSize.height)}/>
         </Box>
     );
 }
@@ -488,6 +432,7 @@ function RenderPlaylistCards({list, noButton}) {
             </Typography>
         );
     }
+
 
     return (
         <>
@@ -527,7 +472,7 @@ function renderPodcastCards(likedStatus) {
 
         return (
             <Box position="relative" mb={2} key={item.id}>
-                <Card ref={cardRef} sx={{position: 'relative', zIndex: 1, mb: 2, borderRadius: 10}}>
+                <Card ref={cardRef} sx={{position: 'relative', zIndex: 1, mb: 2, borderRadius: "4vh"}}>
                     <Box display="flex" flexDirection="row" alignItems="center" justifyContent="space-between" p={0}>
                         <CardContent>
                             <Box sx={{flexDirection: 'column', height: {xs: 150, sm: 180, md: 200}}} display="flex"
@@ -566,7 +511,7 @@ function renderPodcastCards(likedStatus) {
                                         sx={{
                                             width: {xs: '80px', sm: '100px', md: '150px'},
                                             height: {xs: '40px', sm: '45px', md: '50px'},
-                                            borderRadius: 10,
+                                            borderRadius: "4vh",
                                             bgcolor: "#173e47"
                                         }}
                                     >
@@ -588,13 +533,13 @@ function renderPodcastCards(likedStatus) {
                                 sx={{
                                     width: {xs: 120, sm: 150, md: 200},
                                     height: {xs: 140, sm: 150, md: 200},
-                                    borderRadius: 10,
+                                    borderRadius: "4vh",
                                 }}
                                 image={playlistImage} // Замените на фактический путь к изображению
                                 alt="Плейлист обложка"
                             />
                             <IconButton>
-                                {likedStatus === 'yes' ? <FavoriteIcon/> : <FavoriteBorderIcon/>}
+                                {likedStatus === 'yes' ? <FavoriteBorderIcon/> : <FavoriteIcon/>}
                             </IconButton>
                         </Box>
                     </Box>
@@ -617,11 +562,12 @@ function renderPodcastCards(likedStatus) {
 
 
 function PodcastCard({item}) {
+    const styles = podcastCardStyles; // Используем объект стилей
     const cardRef = useRef(null);
     const [cardSize, setCardSize] = useState({width: 0, height: 0});
     const [isSubscribed, setIsSubscribed] = useState(item.subscribed);
+    const [isLiked, setLiked] = useState(item.liked);
 
-    // Получаем размеры Card после рендеринга
     useEffect(() => {
         if (cardRef.current) {
             const {width, height} = cardRef.current.getBoundingClientRect();
@@ -634,99 +580,65 @@ function PodcastCard({item}) {
         if (words.length <= wordLimit) return text;
         return words.slice(0, wordLimit).join(" ") + "...";
     };
+
     const handleLikeButtonClick = () => {
-        setIsSubscribed(!isSubscribed); // Переключаем состояние кнопки
+        setLiked((prevLiked) => !prevLiked);
     };
 
     return (
         <Box position="relative" mb={2} key={item.id}>
-            <Card ref={cardRef} sx={{position: 'relative', zIndex: 1, mb: 2, borderRadius: 10}}>
+            <Card ref={cardRef} sx={styles.card}>
                 <Box display="flex" flexDirection="row" alignItems="center" justifyContent="space-between" p={0}>
                     <CardContent>
-                        <Box sx={{flexDirection: 'column', height: {xs: 150, sm: 180, md: 200}}} display="flex"
-                             justifyContent="space-between">
+                        <Box sx={styles.cardContentBox}>
                             <Box>
-                                <Typography
-                                    variant="h6"
-                                    sx={{
-                                        fontSize: {xs: '1rem', sm: '1.2rem', md: '1.5rem'},
-                                        lineHeight: 1.2,
-                                        height: {xs: '40px', sm: '65px', md: '70px'}
-                                    }}
-                                >
+                                <Typography variant="h6" sx={styles.title}>
                                     {item.title}
                                 </Typography>
-
-                                <Typography variant="body2" color="textSecondary" sx={{
-                                    fontSize: {xs: '0.7rem', sm: '0.8rem'},
-                                    height: {xs: '40px', sm: '65px', md: '70px'},
-                                    lineHeight: 1.2
-                                }}>
+                                <Typography variant="body2" color="textSecondary" sx={styles.description}>
                                     {truncateDescription(item.description, 2)}
                                 </Typography>
-                                <Typography variant="body2" color="textSecondary"
-                                            sx={{fontSize: {xs: '0.7rem', sm: '0.8rem'}}}>
+                                <Typography variant="body2" color="textSecondary" sx={styles.additionalInfo}>
                                     {item.author}
                                 </Typography>
-                                <Typography variant="body2" color="textSecondary"
-                                            sx={{fontSize: {xs: '0.7rem', sm: '0.8rem'}}}>
+                                <Typography variant="body2" color="textSecondary" sx={styles.additionalInfo}>
                                     {item.episodes} выпуска
                                 </Typography>
                             </Box>
                             <Box display="flex" alignItems="center">
-                                <Button
-                                    variant="contained"
-                                    sx={{
-                                        width: {xs: '80px', sm: '100px', md: '150px'},
-                                        height: {xs: '40px', sm: '45px', md: '50px'},
-                                        borderRadius: 10,
-                                        bgcolor: "#173e47"
-                                    }}
-                                >
-                                    <Typography sx={{
-                                        fontSize: {xs: '0.6rem', sm: '0.8rem', md: '1rem'}
-                                    }}>Слушать</Typography>
+                                <Button variant="contained" sx={styles.button}>
+                                    <Typography sx={styles.buttonText}>Слушать</Typography>
                                 </Button>
-                                <IconButton><ShareIcon/></IconButton>
+                                <IconButton>
+                                    <ShareIcon/>
+                                </IconButton>
                             </Box>
                         </Box>
                     </CardContent>
-                    <Box display="flex" alignItems="start"
-                         sx={{fontSize: {xs: '0.7rem', sm: '0.8rem'}}}>
+                    <Box display="flex" alignItems="start" sx={styles.additionalInfo}>
                         <CardMedia
                             component="img"
-                            sx={{
-                                width: {xs: 120, sm: 150, md: 200},
-                                height: {xs: 140, sm: 150, md: 200},
-                                borderRadius: 10,
-                                // mr: 10
-                            }}
-
-                            image={playlistImage} // Замените на фактический путь к изображению
+                            sx={styles.cardMedia}
+                            image={playlistImage} // Динамическое изображение
                             alt="Плейлист обложка"
                         />
-                        <IconButton
-                            // sx={{bgcolor: "#173e47"}}
-                        >
-                            {item.liked === true ? <FavoriteBorderIcon/> : <FavoriteIcon/>}
+                        <IconButton onClick={handleLikeButtonClick}>
+                            {isLiked ? <FavoriteIcon/> : <FavoriteBorderIcon/>}
                         </IconButton>
                     </Box>
                 </Box>
             </Card>
             <Box
                 sx={{
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
+                    ...styles.overlay,
                     width: cardSize.width,
                     height: cardSize.height,
-                    backgroundColor: 'rgb(191,238,1)', // Полупрозрачный слой
-                    zIndex: 0
                 }}
             />
         </Box>
     );
 }
+
 
 // Основной компонент для рендеринга всех подкастов
 function RenderPodcastCards({list, noButton}) {
@@ -745,6 +657,7 @@ function RenderPodcastCards({list, noButton}) {
     );
 }
 
+
 function ButtonGroup() {
     const [activeButton, setActiveButton] = useState('подкасты');
 
@@ -755,95 +668,64 @@ function ButtonGroup() {
     const renderContent = () => {
         switch (activeButton) {
             case 'подкасты':
-                // return renderWholePart("Новый подкаст", renderPodcastCards())
-                return <RenderPodcastCards list={podcasts} noButton={false}/>
+                return <RenderPodcastCards list={podcasts} noButton={false}/>;
             case 'плейлист':
-                // return renderWholePart("Новый плейлист", renderPlaylistCards())
-                return <RenderPlaylistCards list={playlists} noButton={false}/>
+                return <RenderPlaylistCards list={playlists} noButton={false}/>;
             case 'избранное':
-                // return renderWholePart("избранное", renderPlaylistCards())
-                return <UnderlinedButtons/>
-
+                return <UnderlinedButtons/>;
             case 'закладки':
-                // return renderWholePart("", renderPodcastCards())
-                return <RenderPodcastCards list={podcasts} noButton={true}/>
-
+                return <RenderPodcastCards list={podcasts} noButton={true}/>;
+            default:
+                return null;
         }
-    }
-
-    const buttonStyle = (button) => ({
-        width: {xs: '90px', sm: '100px', md: '150px'},
-        height: {xs: '30px', sm: '35px', md: '40px'},
-        zIndex: 1,
-        bgcolor: activeButton === button ? '#fd7510' : '#ffffff',
-        color: 'black',
-        borderRadius: 10,
-    });
-
-    const iconButtonStyle = (button) => ({
-        width: {xs: '35px', sm: '100px', md: '150px'},
-        height: {xs: '30px', sm: '35px', md: '40px'},
-        zIndex: 1,
-        bgcolor: activeButton === button ? '#fd7510' : '#ffffff',
-        color: 'black', // Оранжевый цвет для активной кнопки
-        borderRadius: 10,
-        '&:hover': {
-            bgcolor: activeButton === button ? 'orange' : '#ffffff', // Отключаем изменение цвета при наведении
-            color: 'black',
-        },
-    });
-
-    const boxStyle = (button) => ({
-        position: 'absolute',
-        width: {xs: '90px', sm: '100px', md: '150px'},
-        height: {xs: '30px', sm: '35px', md: '40px'},
-        bgcolor: '#fd7510',
-        opacity: activeButton === button ? 0 : 1, // Если кнопка активна, делаем бокс прозрачным
-        zIndex: 0,
-    });
-    const boxIconStyle = (button) => ({
-        position: 'absolute',
-        width: {xs: '35px', sm: '100px', md: '150px'},
-        height: {xs: '30px', sm: '35px', md: '40px'},
-        bgcolor: '#fd7510',
-        opacity: activeButton === button ? 0 : 1, // Если кнопка активна, делаем бокс прозрачным
-        zIndex: 0,
-    });
+    };
 
     return (
         <Box>
             <Box display="flex" justifyContent="space-between" alignItems="center" gap={2} mb={2} width="100%">
                 {/* Кнопка подкасты */}
-                <Box sx={{position: 'relative', height: {xs: '30px', sm: '35px', md: '40px'}}}>
-                    <Box sx={boxStyle('подкасты')}/>
-                    <Button variant="contained" sx={buttonStyle('подкасты')}
-                            onClick={() => handleButtonClick('подкасты')}>
-                        <Typography sx={{fontSize: {xs: '0.6rem', sm: '0.8rem', md: '1rem'}}}>подкасты</Typography>
+                <Box sx={buttonGroupStyles.buttonBox}>
+                    <Box sx={buttonGroupStyles.box(activeButton, 'подкасты')}/>
+                    <Button
+                        variant="contained"
+                        sx={buttonGroupStyles.button(activeButton, 'подкасты')}
+                        onClick={() => handleButtonClick('подкасты')}
+                    >
+                        <Typography sx={buttonGroupStyles.typography}>подкасты</Typography>
                     </Button>
                 </Box>
 
                 {/* Кнопка плейлист */}
-                <Box sx={{position: 'relative', height: {xs: '30px', sm: '35px', md: '40px'}}}>
-                    <Box sx={boxStyle('плейлист')}/>
-                    <Button variant="contained" sx={buttonStyle('плейлист')}
-                            onClick={() => handleButtonClick('плейлист')}>
-                        <Typography sx={{fontSize: {xs: '0.6rem', sm: '0.8rem', md: '1rem'}}}>плейлист</Typography>
+                <Box sx={buttonGroupStyles.buttonBox}>
+                    <Box sx={buttonGroupStyles.box(activeButton, 'плейлист')}/>
+                    <Button
+                        variant="contained"
+                        sx={buttonGroupStyles.button(activeButton, 'плейлист')}
+                        onClick={() => handleButtonClick('плейлист')}
+                    >
+                        <Typography sx={buttonGroupStyles.typography}>плейлист</Typography>
                     </Button>
                 </Box>
 
                 {/* Иконка Favorite */}
-                <Box sx={{position: 'relative', height: {xs: '30px', sm: '35px', md: '40px'}}}>
-                    <Box sx={boxIconStyle('избранное')}/>
-                    <IconButton sx={iconButtonStyle('избранное')} onClick={() => handleButtonClick('избранное')}>
-                        <FavoriteBorderIcon sx={{fontSize: {xs: '1rem', sm: '1.5rem', md: '2rem'}}}/>
+                <Box sx={buttonGroupStyles.buttonBox}>
+                    <Box sx={buttonGroupStyles.boxIcon(activeButton, 'избранное')}/>
+                    <IconButton
+                        sx={buttonGroupStyles.iconButton(activeButton, 'избранное')}
+                        onClick={() => handleButtonClick('избранное')}
+                    >
+                        <FavoriteBorderIcon sx={buttonGroupStyles.icon}/>
                     </IconButton>
                 </Box>
 
                 {/* Иконка Bookmark */}
-                <Box sx={{position: 'relative', height: {xs: '30px', sm: '35px', md: '40px'}}}>
-                    <Box sx={boxIconStyle('закладки')}/>
-                    <IconButton sx={iconButtonStyle('закладки')} onClick={() => handleButtonClick('закладки')}>
-                        <BookmarkBorderIcon sx={{fontSize: {xs: '1rem', sm: '1.5rem', md: '2rem'}}}/>
+                <Box sx={buttonGroupStyles.buttonBox}>
+                    <Box sx={buttonGroupStyles.boxIcon(activeButton, 'закладки')}/>
+                    <IconButton
+                        sx={buttonGroupStyles.iconButton(activeButton, 'закладки')}
+                        onClick={() => handleButtonClick('закладки')}
+                    >
+                        <BookmarkBorderIcon sx={buttonGroupStyles.icon}/>
                     </IconButton>
                 </Box>
             </Box>
@@ -872,7 +754,7 @@ function renderWholePart(buttonText, func) {
                     sx={{
                         bgcolor: '#173e47',
                         width: {xs: "100%", sm: "80%", md: "70%"},
-                        borderRadius: 10
+                        borderRadius: "4vh"
                     }}
                 >
                     {buttonText}
@@ -887,52 +769,36 @@ function renderWholePart(buttonText, func) {
 function UnderlinedButtons() {
     const [activeButton, setActiveButton] = useState('button1'); // По умолчанию выбрана первая кнопка
 
-    // Стили для кнопок
-    const buttonStyle = (button) => ({
-        color: 'black',
-        backgroundColor: 'transparent',
-        boxShadow: 'none',
-        padding: '10px 20px',
-        borderBottom: activeButton === button ? '2px solid #fd7510' : 'none', // Подчеркнуть активную кнопку
-        '&:hover': {
-            backgroundColor: 'transparent', // Отключаем цвет при наведении
-        }
-    });
     const renderContentFavor = () => {
         switch (activeButton) {
             case 'button2':
-                // return renderWholePart("", renderPlaylistCards("yes"))
-                return <RenderPlaylistCards list={playlists} noButton={true}/>
+                return <RenderPlaylistCards list={playlists} noButton={true}/>;
             case 'button1':
-                // return renderWholePart("", renderPodcastCards("yes"));
-                return <RenderPodcastCards list={likedPodcasts} noButton={true}/>
-
-
+                return <RenderPodcastCards list={likedPodcasts} noButton={true}/>;
+            default:
+                return null;
         }
-    }
+    };
+
     return (
         <Box>
-            <Box display="flex" justifyContent="center" gap={2}>
+            <Box sx={underlineButtonStyles.container}>
                 <Button
-                    sx={buttonStyle('button1')}
+                    sx={underlineButtonStyles.button(activeButton, 'button1')}
                     onClick={() => setActiveButton('button1')}
                 >
                     Подкасты
                 </Button>
                 <Button
-                    sx={buttonStyle('button2')}
+                    sx={underlineButtonStyles.button(activeButton, 'button2')}
                     onClick={() => setActiveButton('button2')}
                 >
                     Плейлисты
                 </Button>
             </Box>
-
             {renderContentFavor()}
-
-
         </Box>
     );
 }
-
 
 

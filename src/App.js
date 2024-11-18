@@ -5,7 +5,7 @@ import RegPage from './pages/RegPage';
 import LoginPage from "./pages/LoginPage";
 import Library from "./pages/Library";
 import Subscriptions from "./pages/Subscriptions";
-import ProfilePage from "./pages/profile";
+import ProfilePage from "./pages/Profile";
 
 export function App() {
     return (
