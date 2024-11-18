@@ -84,7 +84,7 @@ const LandingPage = () => {
                     {/*</Slider>*/}
 
                 </PhotoDiv>
-                <StyledButton as={Link} to="/Registration">
+                <StyledButton as={Link} to="/registration">
                     Зарегистрироваться
                 </StyledButton>
 

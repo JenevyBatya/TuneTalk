@@ -1,11 +1,12 @@
-import {Box, Typography} from "@mui/material";
+import React, { useState } from "react";
+import { Box, Typography } from "@mui/material";
 import CustomCard from "../components/CustomCard";
-import cardPhoto from '../assets/cardPhoto.svg';
-import React, {useState} from "react";
 import SearchFilter from "../components/SearchFilter";
 import CategoryFilter from "../components/CategoryFilter";
 import FooterNavigation from "../components/FooterComponent";
 import HeaderComponent from "../components/HeaderComponent";
+import cardPhoto from '../assets/cardPhoto.svg';
+import styles from '../styles/Library.module.css';
 
 const Library = () => {
     const data = [
@@ -13,7 +14,7 @@ const Library = () => {
             id: 1,
             name: "Name",
             description: "Description/Theme",
-            tags: [{id: 1, text: "tags"}, {id: 2, text: "tags"}, {id: 3, text: "tags"}],
+            tags: [{ id: 1, text: "tags" }, { id: 2, text: "tags" }, { id: 3, text: "tags" }],
             duration: "60 min",
             author: "author",
             subscribes: 1,
@@ -23,70 +24,72 @@ const Library = () => {
             id: 2,
             name: "Test",
             description: "Description/Theme",
-            tags: [{id: 1, text: "tags"}, {id: 2, text: "tags"}, {id: 3, text: "tags"}],
+            tags: [{ id: 1, text: "tags" }, { id: 2, text: "tags" }, { id: 3, text: "tags" }],
             duration: "60 min",
             author: "author",
             subscribes: 1,
             photo: cardPhoto
         }
-    ]
+    ];
+
     const searchFields = ['name', 'description', 'author'];
     const [filteredData, setFilteredData] = useState(data);
 
     const handleFilterData = (filtered) => {
         setFilteredData(filtered);
     };
+
     return (
         <div>
-            <HeaderComponent/>
+            <HeaderComponent />
             <SearchFilter
                 data={data}
-                searchFields={searchFields} // Поля, по которым будет производиться поиск
-                onSearch={(filtered) => setFilteredData(filtered)} // Обработка результатов поиска
+                searchFields={searchFields}
+                onSearch={setFilteredData}
             />
-            <table className="chapterName" style={{marginLeft: '1.5vh'}}>
+            <table className={styles.chapterName}>
                 <tbody>
                 <tr>
                     <th>
-                        <Typography variant="h3" component="div" style={{fontWeight: 'bold', marginRight: 4}}>
+                        <Typography variant="h4" component="div" className={styles.libraryHeader}>
                             Library
                         </Typography>
                     </th>
                     <th>
-                        <Typography style={{color: "#6D6D6D", marginTop: 3}}>— [ˈlaɪbrərɪ] (en.) библиотека</Typography>
+                        <Typography className={styles.librarySubheader}>
+                            — [ˈlaɪbrərɪ] (en.) библиотека
+                        </Typography>
                     </th>
                 </tr>
                 </tbody>
             </table>
-            <CategoryFilter
-                onFilter={handleFilterData}  // Передаем функцию для фильтрации данных
-            />
-            <div style={{marginTop: 15}}>
+            <CategoryFilter onFilter={handleFilterData} />
+            <div className={styles.cardContainer}>
                 {filteredData.length > 0 ? (
-                    filteredData.map((item, index) => (
-                    <div key={index} style={{marginTop: 10}}>
-                        <CustomCard
-                            name={item.name}
-                            description={item.description}
-                            tags={item.tags}
-                            duration={item.duration}
-                            author={item.author}
-                            subscribers={item.subscribes}
-                            cardPhoto={item.photo}
-                        />
-                    </div>
-                ))
-                ):(
-                    <Box sx={{textAlign:'center'}}>
-                    <Typography variant="h8" component="div" style={{fontWeight: 'bold'}}>
-                        Кажется, пока что у нас такого нет...
-                    </Typography>
+                    filteredData.map((item) => (
+                        <div key={item.id} className={styles.cardWrapper}>
+                            <CustomCard
+                                name={item.name}
+                                description={item.description}
+                                tags={item.tags}
+                                duration={item.duration}
+                                author={item.author}
+                                subscribers={item.subscribes}
+                                cardPhoto={item.photo}
+                            />
+                        </div>
+                    ))
+                ) : (
+                    <Box className={styles.noData}>
+                        <Typography variant="body1" className={styles.noDataText}>
+                            Кажется, пока что у нас такого нет...
+                        </Typography>
                     </Box>
                 )}
             </div>
-            <FooterNavigation/>
+            <FooterNavigation />
         </div>
-
     );
 };
+
 export default Library;
