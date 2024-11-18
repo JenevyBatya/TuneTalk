@@ -14,6 +14,10 @@ export const MainContainer = styled.div`
     color: white;
     text-align: left;
     font-family: Jost;
+    padding-bottom: 90px; 
+    position: relative; 
+    min-height: 100vh; 
+    overflow-x: hidden;
 
 `;
 
@@ -40,13 +44,11 @@ export const RecBlock = styled.div`
 
 export const HeadingText2 = styled.div`
     font-size: 26px;
-    //font-weight: bold;
     color: #074753;
     margin-bottom: 8px;
 `;
 export const HeadingText1 = styled.div`
     font-size: 26px;
-    //font-weight: bold;
     color: #D9D9D9;
 
     margin-bottom: 8px;
@@ -86,19 +88,24 @@ export const Photo = styled.img`
 `;
 
 export const StyledButton = styled.button`
-    width: 75%;
+    width: 80%;
     background-color: #59A3A2;
     color: white;
     font-size: 14px;
     padding: 12px;
     border: none;
-    border-radius: 8px;
+    border-radius: 10px;
     font-weight: bold;
     cursor: pointer;
-    margin-top: 16px;
-    margin-left: 12%;
-    margin-right: auto;
     text-decoration: none;
+    text-align: center;
+    padding-left: 20%;
+    padding-right: 20%;
+    align-content: center;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 8%;
+  
 
     &:hover {
         background-color: #45807f;
@@ -115,4 +122,18 @@ export const RegBlock = styled.div`
 `;
 export const HeaderBlock = styled.div`
     min-height: 40px;
+`
+export const RecommendDiv = styled.div `
+    width: 80%;
+    background-color: #59A3A2;
+    color: white;
+    font-size: 14px;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    font-weight: bold;
+    text-align: center;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 8%;
 `
