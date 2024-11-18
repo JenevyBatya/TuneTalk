@@ -45,7 +45,7 @@ const profilePageStyles = {
         width: { xs: '140px', sm: '140px', md: '150px' },
         height: { xs: '30px', sm: '35px', md: '40px' },
         zIndex: 1,
-        bgcolor: '#ffffff',
+        bgcolor: 'white',
         borderRadius: "2vh",
         boxShadow: "none",
 

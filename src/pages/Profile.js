@@ -587,27 +587,27 @@ function PodcastCard({item}) {
 
     return (
         <Box position="relative" mb={2} key={item.id}>
-            <Card ref={cardRef} sx={styles.card}>
+            <Card ref={cardRef} sx={podcastCardStyles.card}>
                 <Box display="flex" flexDirection="row" alignItems="center" justifyContent="space-between" p={0}>
                     <CardContent>
-                        <Box sx={styles.cardContentBox}>
+                        <Box sx={podcastCardStyles.cardContentBox}>
                             <Box>
-                                <Typography variant="h6" sx={styles.title}>
+                                <Typography variant="h6" sx={podcastCardStyles.title}>
                                     {item.title}
                                 </Typography>
-                                <Typography variant="body2" color="textSecondary" sx={styles.description}>
+                                <Typography variant="body2" color="textSecondary" sx={podcastCardStyles.description}>
                                     {truncateDescription(item.description, 2)}
                                 </Typography>
-                                <Typography variant="body2" color="textSecondary" sx={styles.additionalInfo}>
+                                <Typography variant="body2" color="textSecondary" sx={podcastCardStyles.additionalInfo}>
                                     {item.author}
                                 </Typography>
-                                <Typography variant="body2" color="textSecondary" sx={styles.additionalInfo}>
+                                <Typography variant="body2" color="textSecondary" sx={podcastCardStyles.additionalInfo}>
                                     {item.episodes} выпуска
                                 </Typography>
                             </Box>
                             <Box display="flex" alignItems="center">
-                                <Button variant="contained" sx={styles.button}>
-                                    <Typography sx={styles.buttonText}>Слушать</Typography>
+                                <Button variant="contained" sx={podcastCardStyles.button}>
+                                    <Typography sx={podcastCardStyles.buttonText}>Слушать</Typography>
                                 </Button>
                                 <IconButton>
                                     <ShareIcon/>

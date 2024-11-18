@@ -38,6 +38,7 @@ const buttonGroupStyles = {
         bgcolor: '#fd7510',
         opacity: activeButton === button ? 0 : 1,
         zIndex: 0,
+        boxShadow: "none",
     }),
     typography: {
         fontSize: { xs: '0.6rem', sm: '0.8rem', md: '1rem' },
@@ -55,6 +56,8 @@ const buttonGroupStyles = {
     buttonBox:{
         position: 'relative',
         height: { xs: '30px', sm: '35px', md: '40px'},
+        boxShadow: "none",
+
 
     }
 };

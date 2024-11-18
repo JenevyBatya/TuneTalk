@@ -29,7 +29,7 @@ const podcastCardStyles = {
     button: {
         width: { xs: '80px', sm: '100px', md: '150px' },
         height: { xs: '40px', sm: '45px', md: '50px' },
-        borderRadius: "2vh",
+        borderRadius: "10px",
         bgcolor: "#173e47",
     },
     buttonText: {
