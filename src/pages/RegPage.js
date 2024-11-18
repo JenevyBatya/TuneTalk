@@ -60,7 +60,7 @@ const getPasswordStrength = (password) => {
                 <HeadingText>Создать аккаунт</HeadingText>
                 <Form onSubmit={handleSubmit}>
                     <FormControl fullWidth margin="normal" variant="outlined">
-                        <InputLabel>Логин</InputLabel>
+                        <InputLabel shrink={Boolean(username)}>Логин</InputLabel>
                         <OutlinedInput
                             type="text"
                             value={username}
@@ -69,8 +69,9 @@ const getPasswordStrength = (password) => {
                             required
                         />
                     </FormControl>
+
                     <FormControl fullWidth margin="normal" variant="outlined">
-                        <InputLabel>Email</InputLabel>
+                        <InputLabel shrink={Boolean(email)}>Email</InputLabel>
                         <OutlinedInput
                             type="email"
                             value={email}
@@ -80,7 +81,7 @@ const getPasswordStrength = (password) => {
                         />
                     </FormControl>
                     <FormControl fullWidth margin="normal" variant="outlined">
-                        <InputLabel>Пароль</InputLabel>
+                        <InputLabel shrink={Boolean(password)}>Пароль</InputLabel>
                         <OutlinedInput
                             type={showPassword ? "text" : "password"}
                             value={password}
@@ -143,7 +144,7 @@ const getPasswordStrength = (password) => {
                         />
                     </FormControl>
                     {passwordError && <ErrorText>{passwordError}</ErrorText>}
-                    <StyledButton type="submit" as={Link} to="/library">Создать аккаунт</StyledButton>
+                    <StyledButton type="submit" as={Link} to="/Library">Создать аккаунт</StyledButton>
                     <GoogleButton>
                         <img src={google} alt="Google Logo" style={{ marginRight: 10 }} />
                         Продолжить с Google
