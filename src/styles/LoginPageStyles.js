@@ -45,11 +45,16 @@ export const StyledButton = styled.button`
     background-color: #074753;
     color: white;
     font-size: 16px;
-    padding: 12px;
+    //padding: 12px;
     border: none;
     border-radius: 8px;
     font-weight: bold;
     cursor: pointer;
+    height: 55px;
+    margin-top: 20px;
+    text-decoration: none;
+    text-align: center;
+    align-content: center;
 
     &:hover {
         background-color: #05333b;
