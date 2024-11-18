@@ -1,5 +1,5 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { BottomNavigation, BottomNavigationAction } from '@mui/material';
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 import SubscriptionsIcon from '@mui/icons-material/Subscriptions';
@@ -8,19 +8,36 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 function FooterNavigation() {
     const [value, setValue] = React.useState(0);
     const navigate = useNavigate();
+    const location = useLocation();
+
+    // Синхронизируем значение `value` с текущим маршрутом
+    useEffect(() => {
+        switch (location.pathname) {
+            case '/Library':
+                setValue(0);
+                break;
+            case '/Subscriptions':
+                setValue(1);
+                break;
+            case '/Account':
+                setValue(2);
+                break;
+            default:
+                break;
+        }
+    }, [location.pathname]);
 
     const handleNavigation = (newValue) => {
-        setValue(newValue);
-        // Навигация по индексам
+        setValue(newValue); // Обновляем состояние для мгновенного визуального эффекта
         switch (newValue) {
             case 0:
-                navigate('/library'); // Путь для "Библиотеки"
+                navigate('/Library'); // Переход на страницу "Библиотека"
                 break;
             case 1:
-                navigate('/subscriptions'); // Путь для "Мои подписки"
+                navigate('/Subscriptions'); // Переход на страницу "Мои подписки"
                 break;
             case 2:
-                navigate('/account'); // Путь для "Мой аккаунт"
+                navigate('/Account'); // Переход на страницу "Мой аккаунт"
                 break;
             default:
                 break;
@@ -36,12 +53,11 @@ function FooterNavigation() {
                 height: '80px',
                 backgroundColor: '#173E47',
                 maxWidth: '600px',
+                marginTop: '80px',
                 zIndex: 1000, // Устанавливаем z-index, чтобы подвал был на переднем плане
             }}
             value={value}
-            onChange={(event, newValue) => {
-                handleNavigation(newValue);
-            }}
+            onChange={(event, newValue) => handleNavigation(newValue)}
         >
             <BottomNavigationAction
                 label="Библиотека"
