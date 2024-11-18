@@ -10,6 +10,7 @@ import {
 } from "../styles/LoginPageStyles";
 import { FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import {Link} from "react-router-dom";
 
 export const LoginPage = () => {
     const [identifier, setIdentifier] = useState("");
@@ -80,7 +81,7 @@ export const LoginPage = () => {
                         />
                     </FormControl>
                     {loginError && <ErrorText>{loginError}</ErrorText>}
-                    <StyledButton type="submit">Войти</StyledButton>
+                    <StyledButton type="submit" as={Link} to="/Library"м>Войти</StyledButton>
                 </Form>
                 <LoginLink>Нет аккаунта? <a href="/Registration">Создать</a></LoginLink>
             </FormContainer>
