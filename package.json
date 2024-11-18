@@ -17,8 +17,7 @@
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.27.0",
     "react-scripts": "5.0.1",
-    "web-vitals": "^2.1.4",
-    "type": "module"
+    "web-vitals": "^2.1.4"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -47,5 +46,8 @@
   "devDependencies": {
     "@mui/icons-material": "^6.1.5",
     "styled-components": "^6.1.13"
+  },
+  "optionalDependencies": {
+    "type": "module"
   }
 }
