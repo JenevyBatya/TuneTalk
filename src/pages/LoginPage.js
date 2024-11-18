@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState, useEffect } from "react";
 import {
     ErrorText,
     Form,
@@ -8,8 +8,9 @@ import {
     StyledButton,
     FormContainer
 } from "../styles/LoginPageStyles";
-import {FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput} from "@mui/material";
-import {Visibility, VisibilityOff} from "@mui/icons-material";
+import { FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput } from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+import {Link} from "react-router-dom";
 
 export const LoginPage = () => {
     const [identifier, setIdentifier] = useState("");
@@ -28,14 +29,21 @@ export const LoginPage = () => {
         if (!identifier || !password) {
             setLoginError("Both fields are required");
         } else if (isValidEmail(identifier) || identifier.length >= 3) {
-
             setLoginError("");
-            console.log("Logging in with:", {identifier, password});
-
+            console.log("Logging in with:", { identifier, password });
         } else {
             setLoginError("Please enter a valid email or username (min 3 characters)");
         }
     };
+
+    // Добавляем useEffect для обработки авто-заполнения
+    useEffect(() => {
+        if (identifier || password) {
+            // Принудительно заставляем метки подняться, если поля заполнены
+            setIdentifier(identifier);
+            setPassword(password);
+        }
+    }, [identifier, password]);
 
     return (
         <MainContainer>
@@ -43,7 +51,7 @@ export const LoginPage = () => {
                 <HeadingText>Вход в аккаунт</HeadingText>
                 <Form onSubmit={handleSubmit}>
                     <FormControl fullWidth margin="normal" variant="outlined">
-                        <InputLabel>Логин</InputLabel>
+                        <InputLabel shrink={!!identifier}>Логин или Email</InputLabel>
                         <OutlinedInput
                             type="text"
                             value={identifier}
@@ -53,7 +61,7 @@ export const LoginPage = () => {
                         />
                     </FormControl>
                     <FormControl fullWidth margin="normal" variant="outlined">
-                        <InputLabel>Пароль</InputLabel>
+                        <InputLabel shrink={!!password}>Пароль</InputLabel>
                         <OutlinedInput
                             type={showPassword ? "text" : "password"}
                             value={password}
@@ -66,14 +74,14 @@ export const LoginPage = () => {
                                         onClick={() => setShowPassword(!showPassword)}
                                         edge="end"
                                     >
-                                        {showPassword ? <VisibilityOff/> : <Visibility/>}
+                                        {showPassword ? <VisibilityOff /> : <Visibility />}
                                     </IconButton>
                                 </InputAdornment>
                             }
                         />
                     </FormControl>
                     {loginError && <ErrorText>{loginError}</ErrorText>}
-                    <StyledButton type="submit">Войти</StyledButton>
+                    <StyledButton type="submit" as={Link} to="/Library"м>Войти</StyledButton>
                 </Form>
                 <LoginLink>Нет аккаунта? <a href="/Registration">Создать</a></LoginLink>
             </FormContainer>
