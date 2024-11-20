@@ -1,0 +1,48 @@
+.subscriptionsTitle {
+    margin-left: 1.5vh;
+}
+
+.chapterName {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    /* padding-left: 16px; padding-right: 16px; */
+}
+
+.subscriptionsSubtitle {
+    position: relative;
+}
+
+.subscriptionsSubtitleText {
+    color: #6D6D6D;
+    margin-top: 3px;
+    padding-left: 0;
+    margin-left: 0;
+    position: absolute;
+    left: 22.9%;
+}
+
+.subscHeader {
+    font-weight: bold;
+    margin-left: 4px;
+}
+
+.categoryFilterBox {
+    margin-top: 30px;
+}
+
+.cardContainer {
+    margin-top: 15px;
+}
+
+.cardWrapper {
+    margin-top: 10px;
+}
+
+.noContentBox {
+    text-align: center;
+}
+
+.noContentText {
+    font-weight: bold;
+}
