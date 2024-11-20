@@ -1,0 +1,32 @@
+{
+  "files": {
+    "main.css": "/static/css/main.3a0678f0.css",
+    "main.js": "/static/js/main.4515ce5d.js",
+    "static/js/453.291811c6.chunk.js": "/static/js/453.291811c6.chunk.js",
+    "static/media/cardPhoto.svg": "/static/media/cardPhoto.be481f8efdaa8c01049b984e62774599.svg",
+    "static/media/Playlist.svg": "/static/media/Playlist.d14ea7b42bc0dba45f6ad8c0bd27dc17.svg",
+    "static/media/auth3.jpg": "/static/media/auth3.287f32aa54aa37ee24d1.jpg",
+    "static/media/auth1.jpg": "/static/media/auth1.255c61e946c4bcb2a924.jpg",
+    "static/media/rec2.jpg": "/static/media/rec2.a847a84acfa55dc737c5.jpg",
+    "static/media/rec3.jpg": "/static/media/rec3.222a6c3b3ba1ceaa0c42.jpg",
+    "static/media/rec1.jpg": "/static/media/rec1.03d1171178080bb6d8e3.jpg",
+    "static/media/auth2.jpg": "/static/media/auth2.e04054f2cc6df8072268.jpg",
+    "static/media/Jost-Light.ttf": "/static/media/Jost-Light.11d743a0564ed7f42122.ttf",
+    "static/media/Logo.svg": "/static/media/Logo.44d9fd106780e490061bab2cd3a6760d.svg",
+    "static/media/slick.svg": "/static/media/slick.2630a3e3eab21c607e21.svg",
+    "static/media/slick.eot": "/static/media/slick.a4e97f5a2a64f0ab1323.eot",
+    "static/media/slick.ttf": "/static/media/slick.c94f7671dcc99dce43e2.ttf",
+    "static/media/slick.woff": "/static/media/slick.295183786cd8a1389865.woff",
+    "static/media/googleLogo.svg": "/static/media/googleLogo.0f1ca395d6ba1c7e1c0a253f0e15a68c.svg",
+    "index.html": "/index.html",
+    "static/media/searchIcon.svg": "/static/media/searchIcon.96f83d7a6a7bb3d844a9abb1561dff50.svg",
+    "static/media/filterIcon.svg": "/static/media/filterIcon.83cc5e39cbfeba42b1fc37a9e8c23ac9.svg",
+    "main.3a0678f0.css.map": "/static/css/main.3a0678f0.css.map",
+    "main.4515ce5d.js.map": "/static/js/main.4515ce5d.js.map",
+    "453.291811c6.chunk.js.map": "/static/js/453.291811c6.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.3a0678f0.css",
+    "static/js/main.4515ce5d.js"
+  ]
+}
