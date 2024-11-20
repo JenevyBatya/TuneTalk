@@ -1,8 +1,10 @@
 {
   "files": {
-    "main.css": "/TuneTalk/static/css/main.860d8b9b.css",
-    "main.js": "/TuneTalk/static/js/main.70bfdc02.js",
+    "main.css": "/TuneTalk/static/css/main.01c17378.css",
+    "main.js": "/TuneTalk/static/js/main.b5a95734.js",
     "static/js/453.291811c6.chunk.js": "/TuneTalk/static/js/453.291811c6.chunk.js",
+    "static/media/cardPhoto.svg": "/TuneTalk/static/media/cardPhoto.be481f8efdaa8c01049b984e62774599.svg",
+    "static/media/Playlist.svg": "/TuneTalk/static/media/Playlist.d14ea7b42bc0dba45f6ad8c0bd27dc17.svg",
     "static/media/auth3.jpg": "/TuneTalk/static/media/auth3.287f32aa54aa37ee24d1.jpg",
     "static/media/auth1.jpg": "/TuneTalk/static/media/auth1.255c61e946c4bcb2a924.jpg",
     "static/media/rec2.jpg": "/TuneTalk/static/media/rec2.a847a84acfa55dc737c5.jpg",
@@ -15,13 +17,16 @@
     "static/media/slick.eot": "/TuneTalk/static/media/slick.a4e97f5a2a64f0ab1323.eot",
     "static/media/slick.ttf": "/TuneTalk/static/media/slick.c94f7671dcc99dce43e2.ttf",
     "static/media/slick.woff": "/TuneTalk/static/media/slick.295183786cd8a1389865.woff",
+    "static/media/googleLogo.svg": "/TuneTalk/static/media/googleLogo.0f1ca395d6ba1c7e1c0a253f0e15a68c.svg",
     "index.html": "/TuneTalk/index.html",
-    "main.860d8b9b.css.map": "/TuneTalk/static/css/main.860d8b9b.css.map",
-    "main.70bfdc02.js.map": "/TuneTalk/static/js/main.70bfdc02.js.map",
+    "static/media/searchIcon.svg": "/TuneTalk/static/media/searchIcon.96f83d7a6a7bb3d844a9abb1561dff50.svg",
+    "static/media/filterIcon.svg": "/TuneTalk/static/media/filterIcon.83cc5e39cbfeba42b1fc37a9e8c23ac9.svg",
+    "main.01c17378.css.map": "/TuneTalk/static/css/main.01c17378.css.map",
+    "main.b5a95734.js.map": "/TuneTalk/static/js/main.b5a95734.js.map",
     "453.291811c6.chunk.js.map": "/TuneTalk/static/js/453.291811c6.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.860d8b9b.css",
-    "static/js/main.70bfdc02.js"
+    "static/css/main.01c17378.css",
+    "static/js/main.b5a95734.js"
   ]
 }
