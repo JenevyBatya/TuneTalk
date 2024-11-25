@@ -11,10 +11,3 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-@font-face {
-  font-family: "Jost";
-  src: local("Jost Light"), url("fonts/static/Jost-Light.ttf") format("truetype");
-  font-weight: 200;
-  font-style: normal;
-  font-optical-sizing: auto;
-}
