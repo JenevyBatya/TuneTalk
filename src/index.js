@@ -1,19 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import Bugsnag from '@bugsnag/js'
-import BugsnagPluginReact from '@bugsnag/plugin-react'
+
 import reportWebVitals from './reportWebVitals';
 import App from "./App";
 import './fonts/static/Jost-Light.ttf'
 
-Bugsnag.start({
-    apiKey: process.env.REACT_APP_BUGSNAG_API_KEY,
-    plugins: [new BugsnagPluginReact()],
-});
 const root = ReactDOM.createRoot(document.getElementById('root'));
-const ErrorBoundary =
-    Bugsnag.getPlugin('react').createErrorBoundary(React);
+
 root.render(
   <React.StrictMode>
     <App />
