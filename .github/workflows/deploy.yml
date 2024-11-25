@@ -36,12 +36,10 @@ jobs:
       - name: Build project
         run: |
           npm run build
-
+      # 4. Деплой проекта
       - name: Deploy to GitHub Pages
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
-          git config --global user.name "GitHub Actions Bot"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          npx gh-pages -d build -u "github-actions[bot] <github-actions[bot]@users.noreply.github.com>"
+          npm run deploy
 
