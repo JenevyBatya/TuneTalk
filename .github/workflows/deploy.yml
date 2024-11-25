@@ -21,6 +21,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: Configure Git identity
+        run:
+          git config user.email "thealisky@gmail.com"
+          git config user.name "Karina"
+
       # 2. Установите зависимости, если необходимо
       - name: Install dependencies
         run: |
