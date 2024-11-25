@@ -6,7 +6,6 @@ import BugsnagPluginReact from '@bugsnag/plugin-react'
 import reportWebVitals from './reportWebVitals';
 import App from "./App";
 import './fonts/static/Jost-Light.ttf'
-import { Provider } from 'react-redux';
 
 Bugsnag.start({
     apiKey: process.env.REACT_APP_BUGSNAG_API_KEY,
@@ -17,10 +16,7 @@ const ErrorBoundary =
     Bugsnag.getPlugin('react').createErrorBoundary(React);
 root.render(
     <ErrorBoundary>
-        <Provider store={store}>
             <App/>
-
-        </Provider>
     </ErrorBoundary>
 );
 
