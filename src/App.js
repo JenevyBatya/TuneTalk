@@ -1,25 +1,39 @@
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './App.css';
+import {HashRouter, Route, Routes, useLocation} from "react-router-dom";
+import LandingPage from "./pages/LandingPage";
+import LoginPage from "./pages/LoginPage";
+import RegPage from "./pages/RegPage";
+import Library from "./pages/Library";
+import {Subscriptions} from "@mui/icons-material";
+import ProfilePage from "./pages/Profile";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const location = useLocation();
+
+    // Вывод текущего пути в консоль
+    console.log("Current path:", location.pathname);
+
+    return (
+        <LandingPage/>
+    );
 }
 
-export default App;
+function Root() {
+    return (
+        <HashRouter>
+            <Routes>
+
+                <Route path='/' element={<LandingPage/>}/>
+                <Route path='/registration' element={<RegPage/>}/>
+                <Route path='/login' element={<LoginPage/>}/>
+                <Route path="/library" element={<Library/>}/>
+                <Route path="/subscriptions" element={<Subscriptions/>}/>
+                <Route path="/account" element={<ProfilePage/>}/>
+            </Routes>
+        </HashRouter>
+    );
+}
+
+export default Root;
+
