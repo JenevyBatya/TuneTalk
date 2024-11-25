@@ -1,0 +1,25 @@
+name: Deploy on Merge to Master
+
+on:
+  push:
+    branches:
+      - master  # Триггер на пуши в ветку master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest  # Среда выполнения
+
+    steps:
+      # 1. Checkout репозитория
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # 2. Установите зависимости, если необходимо
+      - name: Install dependencies
+        run: |
+          npm install
+
+      # 3. Постройте проект
+      - name: Build project
+        run: |
+          npm run deploy
