@@ -47,7 +47,7 @@ const LandingPage = () => {
                 <HeaderComponent/>
             <RecBlock>
                 <HeadingText1>
-                    Хостинг подкастов
+                    Хостинг подкастов dvdsvsd
                 </HeadingText1>
                 <Text1>
                     Все русскоязычные подкасты на одной платформе. Возможность переключаться между аудио и видео
