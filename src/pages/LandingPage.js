@@ -92,7 +92,7 @@ const LandingPage = () => {
 
                 </PhotoDiv>
                 <RecommendDiv>
-                <StyledButton as={Link} to="/Registration">
+                <StyledButton as={Link} to="/registration">
                     Зарегистрироваться
                 </StyledButton>
                 </RecommendDiv>

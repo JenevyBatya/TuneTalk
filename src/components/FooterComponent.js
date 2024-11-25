@@ -13,13 +13,13 @@ function FooterNavigation() {
     // Синхронизируем значение `value` с текущим маршрутом
     useEffect(() => {
         switch (location.pathname) {
-            case '/Library':
+            case '/library':
                 setValue(0);
                 break;
-            case '/Subscriptions':
+            case '/subscriptions':
                 setValue(1);
                 break;
-            case '/Account':
+            case '/account':
                 setValue(2);
                 break;
             default:
@@ -31,13 +31,13 @@ function FooterNavigation() {
         setValue(newValue); // Обновляем состояние для мгновенного визуального эффекта
         switch (newValue) {
             case 0:
-                navigate('/Library'); // Переход на страницу "Библиотека"
+                navigate('/library'); // Переход на страницу "Библиотека"
                 break;
             case 1:
-                navigate('/Subscriptions'); // Переход на страницу "Мои подписки"
+                navigate('/subscriptions'); // Переход на страницу "Мои подписки"
                 break;
             case 2:
-                navigate('/Account'); // Переход на страницу "Мой аккаунт"
+                navigate('/account'); // Переход на страницу "Мой аккаунт"
                 break;
             default:
                 break;
