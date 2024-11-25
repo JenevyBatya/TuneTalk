@@ -7,7 +7,6 @@ import RegPage from "./pages/RegPage";
 import Library from "./pages/Library";
 import {Subscriptions} from "@mui/icons-material";
 import ProfilePage from "./pages/Profile";
-import Bugsnag from "@bugsnag/js";
 
 function App() {
     const location = useLocation();
@@ -21,9 +20,6 @@ function App() {
 }
 
 function Root() {
-    React.useEffect(() => {
-        Bugsnag.notify(new Error('Test error'));
-    }, []);
     return (
         <HashRouter>
             <Routes>
