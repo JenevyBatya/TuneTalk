@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import Bugsnag from '@bugsnag/js'
 import BugsnagPluginReact from '@bugsnag/plugin-react'
-import BugsnagPerformance from '@bugsnag/browser-performance'
 import reportWebVitals from './reportWebVitals';
 import App from "./App";
 import './fonts/static/Jost-Light.ttf'
