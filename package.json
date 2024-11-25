@@ -21,8 +21,10 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "DISABLE_ESLINT_PLUGIN=true react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -46,6 +48,7 @@
   },
   "devDependencies": {
     "@mui/icons-material": "^6.1.5",
+    "gh-pages": "^6.2.0",
     "react-slick": "^0.30.2",
     "styled-components": "^6.1.13"
   },
