@@ -18,6 +18,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Configure Git
+        run: |
+          git config --global user.name "Karina"
+          git config --global user.email "thealisky@gmail.com"
+
       # 1. Checkout репозитория
       - name: Checkout code
         uses: actions/checkout@v3
