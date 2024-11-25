@@ -34,4 +34,4 @@ jobs:
         run: |
           git config --global user.name "GitHub Actions Bot"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          npx gh-pages -d build -u "github-actions[bot] <github-actions[bot]@users.noreply.github.com>"
+          npx gh-pages -d build -u "GitHub Actions Bot <github-actions[bot]@users.noreply.github.com>"
