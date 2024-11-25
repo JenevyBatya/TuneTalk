@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/TuneTalk/static/css/main.01c17378.css",
-    "main.js": "/TuneTalk/static/js/main.ded72ea4.js",
+    "main.js": "/TuneTalk/static/js/main.fa80d08c.js",
     "static/js/453.291811c6.chunk.js": "/TuneTalk/static/js/453.291811c6.chunk.js",
     "static/media/cardPhoto.svg": "/TuneTalk/static/media/cardPhoto.be481f8efdaa8c01049b984e62774599.svg",
     "static/media/Playlist.svg": "/TuneTalk/static/media/Playlist.d14ea7b42bc0dba45f6ad8c0bd27dc17.svg",
@@ -22,11 +22,11 @@
     "static/media/searchIcon.svg": "/TuneTalk/static/media/searchIcon.96f83d7a6a7bb3d844a9abb1561dff50.svg",
     "static/media/filterIcon.svg": "/TuneTalk/static/media/filterIcon.83cc5e39cbfeba42b1fc37a9e8c23ac9.svg",
     "main.01c17378.css.map": "/TuneTalk/static/css/main.01c17378.css.map",
-    "main.ded72ea4.js.map": "/TuneTalk/static/js/main.ded72ea4.js.map",
+    "main.fa80d08c.js.map": "/TuneTalk/static/js/main.fa80d08c.js.map",
     "453.291811c6.chunk.js.map": "/TuneTalk/static/js/453.291811c6.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.01c17378.css",
-    "static/js/main.ded72ea4.js"
+    "static/js/main.fa80d08c.js"
   ]
 }
