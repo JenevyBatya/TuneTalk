@@ -81,9 +81,9 @@ export const LoginPage = () => {
                         />
                     </FormControl>
                     {loginError && <ErrorText>{loginError}</ErrorText>}
-                    <StyledButton type="submit" as={Link} to="/Library"м>Войти</StyledButton>
+                    <StyledButton type="submit" as={Link} to="/library"м>Войти</StyledButton>
                 </Form>
-                <LoginLink>Нет аккаунта? <a href="/Registration">Создать</a></LoginLink>
+                <LoginLink>Нет аккаунта? <a href="/registration">Создать</a></LoginLink>
             </FormContainer>
         </MainContainer>
     );

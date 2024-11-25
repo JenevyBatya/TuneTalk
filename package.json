@@ -1,9 +1,12 @@
 {
   "name": "tune-talk",
   "version": "0.1.0",
-  "homepage": "https://jenevybatya.github.io/TuneTalk/",
+  "homepage": "https://jenevybatya.github.io/TuneTalk/#",
   "private": true,
   "dependencies": {
+    "@bugsnag/browser-performance": "^2.10.1",
+    "@bugsnag/js": "^8.1.2",
+    "@bugsnag/plugin-react": "^8.1.1",
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
     "@fontsource/roboto": "^5.1.0",
@@ -28,8 +31,9 @@
     "build": "DISABLE_ESLINT_PLUGIN=true react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
-  }
-,
+
+  },
+
   "eslintConfig": {
     "extends": [
       "react-app",

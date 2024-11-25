@@ -144,14 +144,14 @@ const getPasswordStrength = (password) => {
                         />
                     </FormControl>
                     {passwordError && <ErrorText>{passwordError}</ErrorText>}
-                    <StyledButton type="submit" as={Link} to="/Library">Создать аккаунт</StyledButton>
+                    <StyledButton type="submit" as={Link} to="/library">Создать аккаунт</StyledButton>
                     <GoogleButton>
                         <img src={google} alt="Google Logo" style={{ marginRight: 10 }} />
                         Продолжить с Google
                     </GoogleButton>
                 </Form>
                 <LoginLink>
-                    Уже есть аккаунт? <a href="/Login">Войти</a>
+                    Уже есть аккаунт? <a href="/#/login">Войти</a>
                 </LoginLink>
             </FormContainer>
         </MainContainer>
