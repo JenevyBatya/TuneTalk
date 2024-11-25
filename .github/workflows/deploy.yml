@@ -5,6 +5,14 @@ on:
     branches:
       - master  # Триггер на пуши в ветку master
 
+
+  # Событие pull_request, завершившееся merge в master
+  pull_request:
+    branches:
+      - master
+    types:
+      - closed
+
 jobs:
   deploy:
     runs-on: ubuntu-latest  # Среда выполнения
