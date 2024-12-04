@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import axios from 'axios';
+import React, {useState} from "react";
 import {
     ErrorText,
     Form,
@@ -8,9 +9,9 @@ import {
     StyledButton,
     FormContainer
 } from "../styles/LoginPageStyles";
-import { FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput } from "@mui/material";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
-import {Link} from "react-router-dom";
+import {FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput} from "@mui/material";
+import {Visibility, VisibilityOff} from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
 
 export const LoginPage = () => {
     const [identifier, setIdentifier] = useState("");
@@ -22,28 +23,35 @@ export const LoginPage = () => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return emailRegex.test(email);
     };
-
-    const handleSubmit = (e) => {
+    const history = useNavigate(); // Для программного редиректа
+    const handleSubmit = async(e) => {
         e.preventDefault();
-
-        if (!identifier || !password) {
-            setLoginError("Both fields are required");
-        } else if (isValidEmail(identifier) || identifier.length >= 3) {
-            setLoginError("");
-            console.log("Logging in with:", { identifier, password });
-        } else {
-            setLoginError("Please enter a valid email or username (min 3 characters)");
+        try{
+            if (!identifier || !password) {
+                setLoginError("Both fields are required");
+            } else if (isValidEmail(identifier) || identifier.length >= 3) {
+                setLoginError("");
+                console.log("Logging in with:", {identifier, password});
+                const response = await axios.post('http://localhost:8080/auth/login', {
+                    email: identifier,
+                    password: password
+                });
+                if (response.status === 200){
+                    // Перенаправление на другую страницу после успешного входа
+                    history('/library');
+                }
+            } else {
+                setLoginError("Please enter a valid email or username (min 3 characters)");
+            }
+        } catch (error) {
+            if (error.status === 400){
+                setLoginError("Check your credentials");
+            }
+            if (error.status === 404){
+                setLoginError("Check your email");
+            }
         }
     };
-
-    // Добавляем useEffect для обработки авто-заполнения
-    useEffect(() => {
-        if (identifier || password) {
-            // Принудительно заставляем метки подняться, если поля заполнены
-            setIdentifier(identifier);
-            setPassword(password);
-        }
-    }, [identifier, password]);
 
     return (
         <MainContainer>
@@ -51,7 +59,7 @@ export const LoginPage = () => {
                 <HeadingText>Вход в аккаунт</HeadingText>
                 <Form onSubmit={handleSubmit}>
                     <FormControl fullWidth margin="normal" variant="outlined">
-                        <InputLabel shrink={!!identifier}>Логин или Email</InputLabel>
+                        <InputLabel>Логин</InputLabel>
                         <OutlinedInput
                             type="text"
                             value={identifier}
@@ -61,7 +69,7 @@ export const LoginPage = () => {
                         />
                     </FormControl>
                     <FormControl fullWidth margin="normal" variant="outlined">
-                        <InputLabel shrink={!!password}>Пароль</InputLabel>
+                        <InputLabel>Пароль</InputLabel>
                         <OutlinedInput
                             type={showPassword ? "text" : "password"}
                             value={password}
@@ -74,16 +82,16 @@ export const LoginPage = () => {
                                         onClick={() => setShowPassword(!showPassword)}
                                         edge="end"
                                     >
-                                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                                        {showPassword ? <VisibilityOff/> : <Visibility/>}
                                     </IconButton>
                                 </InputAdornment>
                             }
                         />
                     </FormControl>
                     {loginError && <ErrorText>{loginError}</ErrorText>}
-                    <StyledButton type="submit" as={Link} to="/Library"м>Войти</StyledButton>
+                    <StyledButton type="submit">Войти</StyledButton>
                 </Form>
-                <LoginLink>Нет аккаунта? <a href="/Registration">Создать</a></LoginLink>
+                <LoginLink>Нет аккаунта? <a href="/registration">Создать</a></LoginLink>
             </FormContainer>
         </MainContainer>
     );

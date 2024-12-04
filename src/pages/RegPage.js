@@ -1,27 +1,10 @@
 import React, { useState } from "react";
-import {
-    Box,
-    Typography,
-    InputAdornment,
-    IconButton,
-    FormControl,
-    InputLabel,
-    OutlinedInput,
-    LinearProgress
-} from "@mui/material";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
-import {
-    ErrorText,
-    Form,
-    GoogleButton,
-    HeadingText,
-    StyledButton,
-    FormContainer,
-    MainContainer,
-    LoginLink
-} from "../styles/RegPageStyles";
+import { Box, Typography, InputAdornment, IconButton, FormControl, InputLabel, OutlinedInput, LinearProgress } from "@mui/material";
+import { Login, Visibility, VisibilityOff } from "@mui/icons-material";
+import { ErrorText, Form, GoogleButton, HeadingText, StyledButton, FormContainer, MainContainer, LoginLink } from "../styles/RegPageStyles";
 import google from "../assets/icons/googleLogo.svg";
-import {Link} from "react-router-dom";
+import { useNavigate } from "react-router-dom"; // Используем useHistory для программного перехода
+import axios from 'axios';
 
 const getPasswordStrength = (password) => {
     if (password.length < 8) return { strength: "Слабый", color: "red", value: 20 };
@@ -31,7 +14,7 @@ const getPasswordStrength = (password) => {
     return { strength: "Средний", color: "orange", value: 60 };
 };
 
- const RegPage = () => {
+const RegPage = () => {
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -39,18 +22,44 @@ const getPasswordStrength = (password) => {
     const [passwordError, setPasswordError] = useState("");
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-
     const passwordStrength = getPasswordStrength(password);
 
-    const handleSubmit = (e) => {
+    const history = useNavigate(); // Для программного редиректа
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
+
         if (password !== confirmPassword) {
             setPasswordError("Пароли не совпадают");
         } else if (password.length < 6) {
             setPasswordError("Пароль должен содержать не менее 6 символов");
         } else {
-            setPasswordError("");
-            console.log("Аккаунт создан:", { username, email, password });
+            try {
+                setPasswordError("");
+
+                // Отправляем запрос на сервер
+                const response = await axios.post('http://localhost:8080/auth/register', {
+                    username: username,
+                    email: email,
+                    password: password
+                });
+                if (response.status === 201 || response.status === 200){
+                    // Перенаправление на другую страницу после успешной регистрации
+                    history('/library'); // После регистрации перенаправляем на /library
+                } else {
+                    alert('Login is unavailable')
+                }
+            } catch (error) {
+                if (error.status === 400){
+                    setPasswordError("You should fill all fields");
+                }
+                if (error.status === 418){
+                    setPasswordError("Email is already taken");
+                }
+                if (error.status === 427){
+                    setPasswordError("Username is already taken");
+                }
+            }
         }
     };
 
@@ -60,7 +69,7 @@ const getPasswordStrength = (password) => {
                 <HeadingText>Создать аккаунт</HeadingText>
                 <Form onSubmit={handleSubmit}>
                     <FormControl fullWidth margin="normal" variant="outlined">
-                        <InputLabel shrink={Boolean(username)}>Логин</InputLabel>
+                        <InputLabel>Логин</InputLabel>
                         <OutlinedInput
                             type="text"
                             value={username}
@@ -69,9 +78,8 @@ const getPasswordStrength = (password) => {
                             required
                         />
                     </FormControl>
-
                     <FormControl fullWidth margin="normal" variant="outlined">
-                        <InputLabel shrink={Boolean(email)}>Email</InputLabel>
+                        <InputLabel>Email</InputLabel>
                         <OutlinedInput
                             type="email"
                             value={email}
@@ -81,7 +89,7 @@ const getPasswordStrength = (password) => {
                         />
                     </FormControl>
                     <FormControl fullWidth margin="normal" variant="outlined">
-                        <InputLabel shrink={Boolean(password)}>Пароль</InputLabel>
+                        <InputLabel>Пароль</InputLabel>
                         <OutlinedInput
                             type={showPassword ? "text" : "password"}
                             value={password}
@@ -112,9 +120,10 @@ const getPasswordStrength = (password) => {
                                     height: 6,
                                     borderRadius: 1,
                                     "& .MuiLinearProgress-bar": {
-                                        background: passwordStrength.value <= 30
-                                            ? 'linear-gradient(to right, #ff0000, #ff7f7f)' // Красный для слабого
-                                            : passwordStrength.value <= 60
+                                        background:
+                                            passwordStrength.value <= 30
+                                                ? 'linear-gradient(to right, #ff0000, #ff7f7f)' // Красный для слабого
+                                                : passwordStrength.value <= 60
                                                 ? 'linear-gradient(to right, #ffcc00, #ffff66)' // Желтый для среднего
                                                 : 'linear-gradient(to right, #66ff66, #00cc00)', // Зеленый для сильного
                                     },
@@ -144,7 +153,7 @@ const getPasswordStrength = (password) => {
                         />
                     </FormControl>
                     {passwordError && <ErrorText>{passwordError}</ErrorText>}
-                    <StyledButton type="submit" as={Link} to="/Library">Создать аккаунт</StyledButton>
+                    <StyledButton type="submit">Создать аккаунт</StyledButton>
                     <GoogleButton>
                         <img src={google} alt="Google Logo" style={{ marginRight: 10 }} />
                         Продолжить с Google
