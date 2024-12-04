@@ -25,6 +25,7 @@ import {
 import {Link} from "react-router-dom";
 import FooterNavigation from "../components/FooterComponent";
 import HeaderComponent from "../components/HeaderComponent";
+import Bugsnag from "@bugsnag/js";
 
 const images = [photo1, photo2, photo3];
 const authors = [auth1, auth2, auth3];
@@ -39,6 +40,7 @@ const LandingPage = () => {
         autoplay: true,
         autoplaySpeed: 3000
     };
+    Bugsnag.notify(new Error('Test error'))
 
     return (
         <MainContainer>
