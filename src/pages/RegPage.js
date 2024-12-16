@@ -38,7 +38,7 @@ const RegPage = () => {
                 setPasswordError("");
 
                 // Отправляем запрос на сервер
-                const response = await axios.post('http://localhost:8080/auth/register', {
+                const response = await axios.post('http://26.227.27.136:80/auth/register', {
                     username: username,
                     email: email,
                     password: password
