@@ -18,7 +18,7 @@ export function App() {
                     <Route path="/Library" element={<Library />} />
                     <Route path="/Subscriptions" element={<Subscriptions />} />
                     <Route path="/Account" element={<ProfilePage />} />
-                    <Route path="/AccPodkasts" element={<ProfilePagePodkasts />} />
+                    <Route path="/AcPage1" element={<ProfilePagePodkasts />} />
                 </Routes>
         </Router>
     );
