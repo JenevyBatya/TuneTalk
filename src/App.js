@@ -6,6 +6,7 @@ import LoginPage from "./pages/LoginPage";
 import Library from "./pages/Library";
 import Subscriptions from "./pages/Subscriptions";
 import ProfilePage from "./pages/Profile";
+import AudioPodcastPage from "./pages/AudioPodcastPage";
 
 export function App() {
     return (
@@ -17,6 +18,7 @@ export function App() {
                     <Route path="/Library" element={<Library />} />
                     <Route path="/Subscriptions" element={<Subscriptions />} />
                     <Route path="/Account" element={<ProfilePage />} />
+                    <Route path="/Audio-podcast/:id" element={<AudioPodcastPage/>} />
                 </Routes>
         </Router>
     );
