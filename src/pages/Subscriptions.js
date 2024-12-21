@@ -20,7 +20,7 @@ const Subscriptions = () => {
     const handleFilterData = (filtered) => {
         setFilteredData(filtered);
     };
-// Mock server request, TODO server request
+// Mock TODO real server request
     const fetchData = async (page) => {
         const limit = 10;
         const start = (page - 1) * limit;
