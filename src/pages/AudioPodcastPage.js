@@ -1,12 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { Box, Typography, Avatar, Chip, Divider } from "@mui/material";
+import {Box, Typography, Avatar, Chip, Divider} from "@mui/material";
 import AudioPlayer from "../components/AudioPlayer";
 import Comments from "../components/Comments";
 import cardPhoto from '../assets/cardPhoto.svg';
+import mockAudio from '../assets/SLAVA SKRIPKA Бобр.mp3';
+import FooterNavigation from "../components/FooterComponent";
+import HeaderComponent from "../components/HeaderComponent";
+import SubscribeButton from "../components/ButtonForSubscribe";
 
 
 // Mock for podcast
 const mockPodcastData = {
+    audioSrc: mockAudio,
     name: "Name",
     description: "Description...",
     author: "Альфа-Банк",
@@ -23,6 +28,7 @@ const mockComments = [
     { id: 2, author: "Мария", text: "Здорово", avatar: "" },
 ];
 
+
 const AudioPodcastPage = () => {
     const [podcast, setPodcast] = useState(null);
     const [comments, setComments] = useState([]);
@@ -36,8 +42,10 @@ const AudioPodcastPage = () => {
     if (!podcast) return <div>Загрузка...</div>;
 
     return (
-        <Box sx={{ padding: 3 }}>
-            <AudioPlayer duration={podcast.duration} likes={podcast.likes} cardPhoto={podcast.cardPhoto} name={podcast.name}/>
+        <div>
+            <HeaderComponent />
+            <Box sx={{ padding: 3 }}>
+            <AudioPlayer audioSrc={podcast.audioSrc} duration={podcast.duration} likes={podcast.likes} cardPhoto={podcast.cardPhoto} name={podcast.name}/>
 
             {/* Автор и информация */}
             <Box sx={{ display: "flex", alignItems: "center", marginBottom: 2 }}>
@@ -48,10 +56,11 @@ const AudioPodcastPage = () => {
                         {podcast.subscribers} подписчиков
                     </Typography>
                 </Box>
+                    <SubscribeButton/>
             </Box>
 
             {/* Теги */}
-            <Box sx={{ display: "flex", flexWrap: "wrap", marginBottom: 2 }}>
+            <Box sx={{ display: "flex", flexWrap: "wrap", marginBottom: 2}}>
                 {podcast.tags.map((tag, index) => (
                     <Chip
                         key={index}
@@ -60,6 +69,7 @@ const AudioPodcastPage = () => {
                             backgroundColor: "transparent",
                             color: "#FF6600",
                             marginRight: 1,
+                            fontSize: 19,
                         }}
                     />
                 ))}
@@ -68,7 +78,9 @@ const AudioPodcastPage = () => {
             <Divider sx={{ marginY: 2 }} />
             <Comments comments={comments} />
         </Box>
-    );
+        <FooterNavigation />
+    </div>
+);
 };
 
 export default AudioPodcastPage;

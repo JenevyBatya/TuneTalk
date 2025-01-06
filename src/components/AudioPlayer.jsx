@@ -1,14 +1,58 @@
-import React, {useState} from "react";
+import React, { useState, useEffect } from "react";
 import { Box, IconButton, Typography } from "@mui/material";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import PauseIcon from "@mui/icons-material/Pause";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import useSound from "use-sound";
 
-const AudioPlayer = ({ duration, likes, cardPhoto, name }) => {
+const AudioPlayer = ({ audioSrc, likes, cardPhoto, name }) => {
     const [isPlaying, setIsPlaying] = useState(false);
+    const [currentTime, setCurrentTime] = useState(0);
+    const [trackDuration, setTrackDuration] = useState(0);
+    const [isLiked, setIsLiked] = useState(false);
+    const [play, { pause, sound }] = useSound(audioSrc, {
+        onend: () => setIsPlaying(false),
+    });
+
+    useEffect(() => {
+        if (sound) {
+            const durationInSeconds = sound.duration();
+            setTrackDuration(durationInSeconds || 0);
+
+            const interval = setInterval(() => {
+                setCurrentTime(sound.seek() || 0);
+            }, 500);
+
+            return () => clearInterval(interval); // del interval before el will be dead
+        }
+    }, [sound]);
 
     const togglePlay = () => {
+        if (isPlaying) {
+            pause();
+        } else {
+            play();
+        }
         setIsPlaying(!isPlaying);
+    };
+
+    // for updating time
+    const handleSeek = (value) => {
+        if (sound) {
+            sound.seek(value);
+            setCurrentTime(value);
+        }
+    };
+
+    const formatTime = (time) => {
+        const minutes = Math.floor(time / 60);
+        const seconds = Math.floor(time % 60);
+        return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+    };
+
+    const toggleLike = () => {
+        setIsLiked((prev) => !prev);
     };
 
     return (
@@ -37,7 +81,7 @@ const AudioPlayer = ({ duration, likes, cardPhoto, name }) => {
                         backgroundPosition: "center",
                         filter: "blur(1.5px) brightness(0.8)",
                         zIndex: 1,
-                        borderRadius: '2vh',
+                        borderRadius: "2vh",
                     }}
                 ></Box>
 
@@ -62,29 +106,40 @@ const AudioPlayer = ({ duration, likes, cardPhoto, name }) => {
                     {isPlaying ? <PauseIcon sx={{ fontSize: 36 }} /> : <PlayArrowIcon sx={{ fontSize: 36 }} />}
                 </IconButton>
             </Box>
+
+            {/* Название выпуска и лайки */}
             <Box sx={{ display: "table", width: "100%", marginTop: 2 }}>
-            {/* Название выпуска */}
                 <Typography
                     variant="h6"
                     fontWeight="bold"
                     sx={{ display: "table-cell", textAlign: "left", paddingX: 2 }}
                 >
-                {name}
-            </Typography>
-            {/* Лайки */}
+                    {name}
+                </Typography>
                 <Box sx={{ display: "table-cell", textAlign: "right", paddingRight: 2 }}>
                     <Box sx={{ display: "flex", alignItems: "center", justifyContent: "flex-end" }}>
-                    <FavoriteIcon sx={{ color: "#FF6600", marginRight: 0.5 }} />
-                <Typography>{likes}</Typography>
-            </Box>
+                        <IconButton
+                            onClick={toggleLike}
+                            sx={{ padding: 0, color: isLiked ? "#FF6600" : "#ccc" }}
+                        >
+                            {isLiked ? (
+                                <FavoriteIcon sx={{ fontSize: 24 }} />
+                            ) : (
+                                <FavoriteBorderIcon sx={{ fontSize: 24 }} />
+                            )}
+                        </IconButton>
+                        <Typography sx={{ marginLeft: 0.5 }}>{likes + (isLiked ? 1 : 0)}</Typography>
                     </Box>
+                </Box>
             </Box>
-            {/* Прогресс-дорожка и длительность */}
+
+            {/* Прогресс-дорожка и время */}
             <Box
                 sx={{
                     display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-between",
+                    flexDirection: "column",
+                    // alignItems: "center",
+                    // justifyContent: "center",
                     width: "90%",
                     marginTop: 2,
                     marginBottom: 2,
@@ -93,19 +148,25 @@ const AudioPlayer = ({ duration, likes, cardPhoto, name }) => {
                 {/* Прогресс-дорожка */}
                 <Box
                     sx={{
-                        flex: 1,
+                        width: "100%",
                         height: 4,
                         backgroundColor: "#AECBC9",
                         borderRadius: 2,
                         position: "relative",
                         overflow: "hidden",
-                        marginRight: 2,
+                    }}
+                    onClick={(e) => {
+                        const box = e.target.getBoundingClientRect();
+                        const clickX = e.clientX - box.left;
+                        const percentage = clickX / box.width;
+                        const newTime = trackDuration * percentage;
+                        handleSeek(newTime);
                     }}
                 >
                     <Box
                         sx={{
                             height: "100%",
-                            width: "30%", // процент текущего прогресса
+                            width: `${(currentTime / trackDuration) * 100}%`,
                             backgroundColor: "#173E47",
                             position: "absolute",
                             left: 0,
@@ -114,9 +175,17 @@ const AudioPlayer = ({ duration, likes, cardPhoto, name }) => {
                     />
                 </Box>
 
-                {/* Длительность */}
-                <Typography variant="body2" color="text.secondary">
-                    {duration}
+                {/* Время: Текущее время / Общая длительность */}
+                <Typography
+                    variant="body2"
+                    color="#173E47"
+                    sx={{
+                        marginTop: 2,
+                        textAlign: "left",
+                        fontWeight: "bold",
+                    }}
+                >
+                    {`${formatTime(currentTime)} / ${formatTime(trackDuration)}`}
                 </Typography>
             </Box>
         </Box>

@@ -8,7 +8,7 @@ const Comments = ({ comments }) => {
     const handleAddComment = () => {
         if (newComment.trim()) {
             console.log("Добавлен комментарий:", newComment);
-            setNewComment(""); // Очистка поля ввода
+            setNewComment("");
         }
     };
 
@@ -41,7 +41,11 @@ const Comments = ({ comments }) => {
                 multiline
                 rows={2}
                 variant="outlined"
-                sx={{ marginBottom: 2 }}
+                sx={{ marginBottom: 1, backgroundColor: "#F1F1F1", borderRadius: "20px", "& .MuiOutlinedInput-root": {
+                        "& fieldset": {
+                            border: "none",
+                        }
+                    },}}
             />
             <StyledButton
                 variant="contained"
