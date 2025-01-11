@@ -14,7 +14,9 @@ const getPasswordStrength = (password) => {
     return { strength: "Средний", color: "orange", value: 60 };
 };
 
+
 const RegPage = () => {
+
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
