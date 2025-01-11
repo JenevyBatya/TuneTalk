@@ -112,7 +112,15 @@ export const StatsContainer = styled.div`
 export const StatsItem = styled.div`
     display: flex;
     align-items: center;
+    cursor: pointer; 
+
+    &:hover {
+        background-color: #f0f0f0; 
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
+        border-radius: 8px; 
+    }
 `;
+
 export const StarIcon = styled.img `
     width: 20px;
     height: auto;

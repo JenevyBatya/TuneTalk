@@ -16,6 +16,7 @@ import {
     MainContainer,
     StarIcon,
 } from "../styles/ProfilePagePodkastsStyles";
+import { useNavigate } from "react-router-dom";
 
 import UserPic from "../assets/auth2.jpg";
 import LinkIcon from "../assets/icons/searchIcon.svg";
@@ -26,6 +27,7 @@ import CustomCard from "../components/CustomCard";
 import cardData from "../mocks/CardData.json";
 
 const ProfilePagePodkasts = () => {
+    const navigate = useNavigate();
     const [activeSection, setActiveSection] = useState(0); // Состояние текущей вкладки
     const [content, setContent] = useState([]); // Состояние данных для отображения
     const [loading, setLoading] = useState(false); // Состояние загрузки
@@ -101,6 +103,7 @@ const ProfilePagePodkasts = () => {
     };
 
     return (
+
         <MainContainer>
             <ProfileContainer>
                 <Pic src={UserPic} alt="User" />
@@ -122,13 +125,26 @@ const ProfilePagePodkasts = () => {
 
             <StatsContainer>
                 <StarIcon src={Star} alt="" />
-                <StatsItem>
+                <StatsItem
+                    onClick={() => {
+                        navigate("/Users/followers"); // Передаем правильный параметр для подписчиков
+                    }}
+                    style={{ cursor: "pointer" }}
+                >
                     <StatText>100 подписчиков</StatText>
                 </StatsItem>
+
                 <StarIcon src={Star} alt="" />
-                <StatsItem>
-                    <StatText>200 подписок</StatText>
+
+                <StatsItem
+                    onClick={() => {
+                        navigate("/Users/subscriptions"); // Передаем правильный параметр для подписок
+                    }}
+                    style={{ cursor: "pointer" }}
+                >
+                    <StatText>50 подписок</StatText>
                 </StatsItem>
+
                 <StarIcon src={Star} alt="" />
                 <StatsItem>
                     <StatText>50 публикаций</StatText>
