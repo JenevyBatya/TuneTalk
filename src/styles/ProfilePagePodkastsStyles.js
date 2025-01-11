@@ -4,6 +4,7 @@ export const MainContainer = styled.div `
     width: 100%;
     max-width: 600px;
     display: flex;
+    flex-direction: column;
 `
 
 
@@ -17,6 +18,8 @@ export const ProfileContainer = styled.div`
     padding: 20px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     font-family: Arial, sans-serif;
+    flex-direction: column;
+
 `;
 
 export const Pic = styled.img`
@@ -89,6 +92,7 @@ export const EditButton = styled.button`
 `;
 
 export const StatsContainer = styled.div`
+    width: 100%;
     display: flex;
     justify-content: space-between;
     margin-top: 20px;
@@ -100,13 +104,16 @@ export const StatsItem = styled.div`
     display: flex;
     align-items: center;
 `;
+export const StarIcon = styled.img `
+width: 100%;
+    height: auto;
+    margin-left: 2%;
+`
 
 export const StatText = styled.span`
     margin: 0 5px;
 `;
-
-export const Sections = styled.div `
-
+export const SectionComponent = styled.div`
+margin: 0;
+    width: 100%;
 `
-
-
