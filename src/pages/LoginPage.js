@@ -36,10 +36,8 @@ export const LoginPage = () => {
         }
     };
 
-    // Добавляем useEffect для обработки авто-заполнения
     useEffect(() => {
         if (identifier || password) {
-            // Принудительно заставляем метки подняться, если поля заполнены
             setIdentifier(identifier);
             setPassword(password);
         }
@@ -51,8 +49,9 @@ export const LoginPage = () => {
                 <HeadingText>Вход в аккаунт</HeadingText>
                 <Form onSubmit={handleSubmit}>
                     <FormControl fullWidth margin="normal" variant="outlined">
-                        <InputLabel shrink={!!identifier}>Логин или Email</InputLabel>
+                        <InputLabel htmlFor="identifier-input" shrink={!!identifier}>Логин или Email</InputLabel>
                         <OutlinedInput
+                            id="identifier-input"
                             type="text"
                             value={identifier}
                             onChange={(e) => setIdentifier(e.target.value)}
@@ -60,9 +59,11 @@ export const LoginPage = () => {
                             required
                         />
                     </FormControl>
+
                     <FormControl fullWidth margin="normal" variant="outlined">
-                        <InputLabel shrink={!!password}>Пароль</InputLabel>
+                        <InputLabel htmlFor="password-input" shrink={!!password}>Пароль</InputLabel>
                         <OutlinedInput
+                            id="password-input"
                             type={showPassword ? "text" : "password"}
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
@@ -80,6 +81,7 @@ export const LoginPage = () => {
                             }
                         />
                     </FormControl>
+
                     {loginError && <ErrorText>{loginError}</ErrorText>}
                     <StyledButton type="submit" as={Link} to="/Library"м>Войти</StyledButton>
                 </Form>
