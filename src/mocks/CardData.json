@@ -1,0 +1,55 @@
+{
+    "podcasts": [
+        {
+            "name": "Подкаст о технологиях",
+            "description": "Обсуждаем последние достижения в области IT.",
+            "tags": [{"text": "технологии"}, {"text": "новости"}],
+            "duration": "15:30",
+            "author": "Иван Иванов",
+            "subscribers": 123,
+            "cardPhoto": "https://via.placeholder.com/150"
+        },
+        {
+            "name": "Подкаст о науке",
+            "description": "Глубокий анализ научных открытий.",
+            "tags": [{"text": "наука"}, {"text": "исследования"}],
+            "duration": "20:45",
+            "author": "Мария Петрова",
+            "subscribers": 234,
+            "cardPhoto": "https://via.placeholder.com/150"
+        }
+    ],
+    "playlists": [
+        {
+            "name": "Музыкальный плейлист",
+            "description": "Подборка лучших треков.",
+            "tags": [{"text": "музыка"}, {"text": "хиты"}],
+            "duration": "50:00",
+            "author": "Алексей Смирнов",
+            "subscribers": 456,
+            "cardPhoto": "https://via.placeholder.com/150"
+        }
+    ],
+    "liked": [
+        {
+            "name": "Подкаст об искусстве",
+            "description": "Размышления об истории искусства.",
+            "tags": [{"text": "искусство"}, {"text": "история"}],
+            "duration": "30:00",
+            "author": "Елена Кузнецова",
+            "subscribers": 678,
+            "cardPhoto": "https://via.placeholder.com/150"
+        }
+    ],
+    "saved": [
+        {
+            "name": "Подкаст о спорте",
+            "description": "Обсуждаем последние спортивные события.",
+            "tags": [{"text": "спорт"}, {"text": "новости"}],
+            "duration": "25:00",
+            "author": "Олег Новиков",
+            "subscribers": 789,
+            "cardPhoto": "https://via.placeholder.com/150"
+        }
+    ]
+}

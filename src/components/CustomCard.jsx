@@ -12,6 +12,7 @@ export const StyledButton = styled(Button)(({theme}) => ({
     },
 }));
 const GreenSquare = styled(Box)(({theme}) => ({
+    marginTop: '5%',
     backgroundColor: '#C0EF00',
     width: '90%',
     display: 'flex',
