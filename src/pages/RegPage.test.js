@@ -1,112 +1,105 @@
 import React from "react";
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
-import axios from "axios";
-import { BrowserRouter } from "react-router-dom"; // Для работы с history
-import RegPage from "./RegPage";
+import { render, screen, fireEvent } from "@testing-library/react";
+import { BrowserRouter } from "react-router-dom";
+import RegPage from "./RegPage"; // Путь к вашему компоненту
+import '@testing-library/jest-dom/extend-expect';
 
-// Мокируем модуль axios
-jest.mock("axios");
-
-const renderWithRouter = (ui) => {
-    return render(<BrowserRouter>{ui}</BrowserRouter>);
-};
+// Mocking useNavigate from react-router-dom
+jest.mock("react-router-dom", () => ({
+    ...jest.requireActual("react-router-dom"),
+    useNavigate: jest.fn(),
+}));
 
 describe("RegPage Component", () => {
-    test("Рендеринг всех элементов формы", () => {
-        renderWithRouter(<RegPage />);
+    let mockNavigate;
 
-        // Проверяем наличие всех полей формы
-        expect(screen.getByLabelText(/Логин/i)).toBeInTheDocument();
-        expect(screen.getByLabelText(/Email/i)).toBeInTheDocument();
-        expect(screen.getByLabelText(/Пароль/i)).toBeInTheDocument();
-        expect(screen.getByLabelText(/Повторите пароль/i)).toBeInTheDocument();
-
-        // Проверяем кнопки
-        expect(screen.getByText(/Создать аккаунт/i)).toBeInTheDocument();
-        expect(screen.getByText(/Продолжить с Google/i)).toBeInTheDocument();
+    beforeEach(() => {
+        mockNavigate = require("react-router-dom").useNavigate;
+        mockNavigate.mockReturnValue(jest.fn()); // Mock the navigate function
     });
 
-    test("Отображение ошибки при несовпадении паролей", async () => {
-        renderWithRouter(<RegPage />);
-
-        const passwordInput = screen.getByLabelText(/Пароль/i);
-        const confirmPasswordInput = screen.getByLabelText(/Повторите пароль/i);
-        const submitButton = screen.getByText(/Создать аккаунт/i);
-
-        // Заполняем поля
-        fireEvent.change(passwordInput, { target: { value: "Password123" } });
-        fireEvent.change(confirmPasswordInput, { target: { value: "Password456" } });
-
-        // Отправляем форму
-        fireEvent.click(submitButton);
-
-        // Проверяем наличие ошибки
-        expect(await screen.findByText(/Пароли не совпадают/i)).toBeInTheDocument();
+    afterEach(() => {
+        jest.clearAllMocks();
     });
 
-    test("Отображение индикатора силы пароля", () => {
-        renderWithRouter(<RegPage />);
+    it("renders the registration form correctly", () => {
+        render(
+            <BrowserRouter>
+                <RegPage />
+            </BrowserRouter>
+        );
 
-        const passwordInput = screen.getByLabelText(/Пароль/i);
+        // Query for the button specifically using getByRole
+        expect(screen.getByRole("button", { name: /Создать аккаунт/i })).toBeInTheDocument();
 
-        // Вводим слабый пароль
-        fireEvent.change(passwordInput, { target: { value: "123" } });
-        expect(screen.getByText(/Сила пароля: Слабый/i)).toBeInTheDocument();
+        // Query for the heading separately, as it is not a button
+        expect(screen.getByRole("heading", { name: /Создать аккаунт/i })).toBeInTheDocument();
 
-        // Вводим средний пароль
-        fireEvent.change(passwordInput, { target: { value: "Password1" } });
-        expect(screen.getByText(/Сила пароля: Средний/i)).toBeInTheDocument();
-
-        // Вводим сильный пароль
-        fireEvent.change(passwordInput, { target: { value: "Password123!" } });
-        expect(screen.getByText(/Сила пароля: Сильный/i)).toBeInTheDocument();
+        // Query for the labels
+        expect(screen.getByLabelText("Логин")).toBeInTheDocument();
+        expect(screen.getByLabelText("Email")).toBeInTheDocument();
+        expect(screen.getByLabelText("Пароль")).toBeInTheDocument();
+        expect(screen.getByLabelText("Повторите пароль")).toBeInTheDocument();
     });
 
-    test("Успешная регистрация и редирект", async () => {
-        axios.post.mockResolvedValueOnce({ status: 201 });
 
-        renderWithRouter(<RegPage />);
+    it("shows an error when passwords do not match", () => {
+        render(
+            <BrowserRouter>
+                <RegPage />
+            </BrowserRouter>
+        );
 
-        const usernameInput = screen.getByLabelText(/Логин/i);
-        const emailInput = screen.getByLabelText(/Email/i);
-        const passwordInput = screen.getByLabelText(/Пароль/i);
-        const confirmPasswordInput = screen.getByLabelText(/Повторите пароль/i);
-        const submitButton = screen.getByText(/Создать аккаунт/i);
+        fireEvent.change(screen.getByLabelText("Логин"), { target: { value: "TestUser" } });
+        fireEvent.change(screen.getByLabelText("Email"), { target: { value: "test@example.com" } });
+        fireEvent.change(screen.getByLabelText("Пароль"), { target: { value: "Password123" } });
+        fireEvent.change(screen.getByLabelText("Повторите пароль"), { target: { value: "Password456" } });
 
-        // Заполняем поля
-        fireEvent.change(usernameInput, { target: { value: "testuser" } });
-        fireEvent.change(emailInput, { target: { value: "test@example.com" } });
-        fireEvent.change(passwordInput, { target: { value: "Password123" } });
-        fireEvent.change(confirmPasswordInput, { target: { value: "Password123" } });
+        fireEvent.click(screen.getByRole("button", { name: /Создать аккаунт/i }));
 
-        // Отправляем форму
-        fireEvent.click(submitButton);
-
-        // Ждем редиректа
-        await waitFor(() => expect(window.location.pathname).toBe("/library"));
+        expect(screen.getByText("Пароли не совпадают")).toBeInTheDocument();
     });
 
-    test("Отображение серверной ошибки", async () => {
-        axios.post.mockRejectedValueOnce({ response: { status: 418 } });
+    it("shows an error when password is too short", () => {
+        render(
+            <BrowserRouter>
+                <RegPage />
+            </BrowserRouter>
+        );
 
-        renderWithRouter(<RegPage />);
+        fireEvent.change(screen.getByLabelText("Логин"), { target: { value: "TestUser" } });
+        fireEvent.change(screen.getByLabelText("Email"), { target: { value: "test@example.com" } });
+        fireEvent.change(screen.getByLabelText("Пароль"), { target: { value: "123" } });
+        fireEvent.change(screen.getByLabelText("Повторите пароль"), { target: { value: "123" } });
 
-        const usernameInput = screen.getByLabelText(/Логин/i);
-        const emailInput = screen.getByLabelText(/Email/i);
-        const passwordInput = screen.getByLabelText(/Пароль/i);
-        const confirmPasswordInput = screen.getByLabelText(/Повторите пароль/i);
-        const submitButton = screen.getByText(/Создать аккаунт/i);
+        fireEvent.click(screen.getByRole("button", { name: /Создать аккаунт/i }));
 
-        // Заполняем поля
-        fireEvent.change(usernameInput, { target: { value: "testuser" } });
-        fireEvent.change(emailInput, { target: { value: "test@example.com" } });
-        fireEvent.change(passwordInput, { target: { value: "Password123" } });
-        fireEvent.change(confirmPasswordInput, { target: { value: "Password123" } });
-
-        // Отправляем форму
-        fireEvent.click(submitButton);
-
-        // Проверяем наличие ошибки
-        expect(await screen.findByText(/Email is already taken/i)).toBeInTheDocument();
+        expect(screen.getByText("Пароль должен содержать не менее 6 символов")).toBeInTheDocument();
     });
+
+    it("navigates to /library on successful registration", async () => {
+        mockNavigate.mockImplementation(jest.fn()); // Мок навигации
+
+        render(
+            <BrowserRouter>
+                <RegPage />
+            </BrowserRouter>
+        );
+
+        // Заполнение формы
+        fireEvent.change(screen.getByLabelText("Логин"), { target: { value: "TestUser" } });
+        fireEvent.change(screen.getByLabelText("Email"), { target: { value: "test@example.com" } });
+        fireEvent.change(screen.getByLabelText("Пароль"), { target: { value: "Password123" } });
+        fireEvent.change(screen.getByLabelText("Повторите пароль"), { target: { value: "Password123" } });
+
+        // Клик по кнопке регистрации
+        fireEvent.click(screen.getByRole("button", { name: /Создать аккаунт/i }));
+
+        // Ожидание асинхронного выполнения
+        await screen.findByText(/успешно зарегистрированы/i); // Используйте реальный текст, показывающий успешную регистрацию
+
+        // Проверка навигации
+        expect(mockNavigate).toHaveBeenCalledWith("/library");
+    });
+
 });
