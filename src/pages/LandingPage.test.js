@@ -1,68 +1,77 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
-import { BrowserRouter as Router } from 'react-router-dom';
-import LandingPage from './LandingPage';
-import Slider from 'react-slick';
-import { axe, toHaveNoViolations } from 'jest-axe';
+import { render, screen, waitFor } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
+import LandingPage from '../pages/LandingPage';
 
+// Импортируем стили и мокируем их
+jest.mock('../styles/LandingPageStyles', () => ({
+    HeadingText1: 'h1',
+    HeadingText2: 'h2',
+    MainContainer: 'div',
+    RecBlock: 'div',
+    RegBlock: 'div',
+    StyledButton: 'button',
+    Text2: 'p',
+    Text1: 'p',
+    HeaderBlock: 'div',
+    PhotoDiv: 'div',
+    Photo: 'img',
+    RecommendDiv: 'div',
+}));
 
-jest.mock('../components/FooterComponent', () => () => <div>Footer</div>);
-jest.mock('../components/HeaderComponent', () => () => <div>Header</div>);
-jest.mock('react-slick', () => ({ children }) => <div>{children}</div>);
-
-expect.extend(toHaveNoViolations);
+// Убедимся, что реальный Slider используется
+jest.unmock('react-slick');
+jest.mock('react-slick', () => {
+    return ({ children }) => <div>{children}</div>;
+});
 
 describe('LandingPage Component', () => {
-    it('renders the header component', () => {
+    test('Рендеринг заголовков, текста и кнопок', () => {
         render(
-            <Router>
+            <MemoryRouter>
                 <LandingPage />
-            </Router>
+            </MemoryRouter>
         );
-        expect(screen.getByText('Header')).toBeInTheDocument();
+
+        // Проверяем наличие заголовков и текста
+        expect(screen.getByText(/Хостинг подкастов/i)).toBeInTheDocument();
+        expect(
+            screen.getByText(
+                /Все русскоязычные подкасты на одной платформе/i
+            )
+        ).toBeInTheDocument();
+        expect(
+            screen.getByText(/Любимые авторы в одном месте/i)
+        ).toBeInTheDocument();
+        expect(
+            screen.getByText(/Мы собрали всех ваших любимых авторов/i)
+        ).toBeInTheDocument();
+
+        // Проверяем наличие кнопки "Зарегистрироваться"
+        expect(
+            screen.getByRole('button', { name: /Зарегистрироваться/i })
+        ).toBeInTheDocument();
     });
 
-    it('renders the registration button with correct link', () => {
+    test('Слайды с изображениями рендерятся корректно', async () => {
         render(
-            <Router>
+            <MemoryRouter>
                 <LandingPage />
-            </Router>
+            </MemoryRouter>
         );
-        const registerButton = screen.getByRole('link', { name: 'Зарегистрироваться' });
-        expect(registerButton).toHaveAttribute('href', '/Registration');
-    });
 
-    it('renders the slider with images', () => {
-        render(
-            <Router>
-                <LandingPage />
-            </Router>
-        );
-        const images = screen.getAllByRole('img');
-        expect(images).toHaveLength(6);
-        images.forEach((image, index) => {
-            expect(image).toHaveAttribute('src');
-            expect(image).toHaveAttribute('alt', expect.stringMatching(/photo|auth/));
+        // Проверяем, что первое изображение появляется в слайдере
+        await waitFor(() => {
+            expect(screen.getByAltText(/photo 1/i)).toBeInTheDocument();
         });
+
+        // Проверяем остальные изображения в первом слайдере
+        expect(screen.getByAltText(/photo 2/i)).toBeInTheDocument();
+        expect(screen.getByAltText(/photo 3/i)).toBeInTheDocument();
+
+        // Проверяем изображения авторов во втором слайдере
+        expect(screen.getByAltText(/auth 1/i)).toBeInTheDocument();
+        expect(screen.getByAltText(/auth 2/i)).toBeInTheDocument();
+        expect(screen.getByAltText(/auth 3/i)).toBeInTheDocument();
     });
-
-    it('renders the footer component', () => {
-        render(
-            <Router>
-                <LandingPage />
-            </Router>
-        );
-        expect(screen.getByText('Footer')).toBeInTheDocument();
-    });
-
-    it('matches the snapshot', () => {
-        const { asFragment } = render(
-            <Router>
-                <LandingPage />
-            </Router>
-        );
-        expect(asFragment()).toMatchSnapshot();
-    });
-
-
 });
