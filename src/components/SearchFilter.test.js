@@ -20,7 +20,7 @@ describe('SearchFilter Component', () => {
     test('should render SearchFilter component correctly', () => {
         render(<SearchFilter data={data} searchFields={searchFields} onSearch={mockOnSearch} />);
 
-        // Проверка наличия текстового поля и иконки поиска
+
         expect(screen.getByRole('textbox')).toBeInTheDocument();
         expect(screen.getByAltText('search icon')).toBeInTheDocument();
     });
@@ -31,7 +31,7 @@ describe('SearchFilter Component', () => {
         const input = screen.getByRole('textbox');
         fireEvent.change(input, { target: { value: 'john' } });
 
-        // Проверка, что фильтрация работает
+
         expect(mockOnSearch).toHaveBeenCalledWith([
             { name: 'John Doe', email: 'john@example.com' },
             { name: 'Sam Johnson', email: 'sam@example.com' },
@@ -44,7 +44,7 @@ describe('SearchFilter Component', () => {
         const input = screen.getByRole('textbox');
         fireEvent.change(input, { target: { value: '' } });
 
-        // Проверка, что все данные передаются обратно без изменений
+
         expect(mockOnSearch).toHaveBeenCalledWith(data);
     });
 
@@ -54,7 +54,7 @@ describe('SearchFilter Component', () => {
         const input = screen.getByRole('textbox');
         fireEvent.change(input, { target: { value: 'jane' } });
 
-        // Проверка, что onSearch вызывается с отфильтрованными данными
+
         expect(mockOnSearch).toHaveBeenCalledWith([
             { name: 'Jane Smith', email: 'jane@example.com' },
         ]);
@@ -66,7 +66,7 @@ describe('SearchFilter Component', () => {
         const input = screen.getByRole('textbox');
         fireEvent.change(input, { target: { value: '123' } });
 
-        // Проверка, что onSearch вызывается с пустым массивом (ничего не найдено)
+
         expect(mockOnSearch).toHaveBeenCalledWith([]);
     });
 });

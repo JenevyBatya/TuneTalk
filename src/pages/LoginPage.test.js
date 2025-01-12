@@ -3,7 +3,7 @@ import axios from "axios";
 import { BrowserRouter } from "react-router-dom";
 import LoginPage from "./LoginPage";
 
-jest.mock("axios"); // Мок Axios для имитации запросов к API
+jest.mock("axios");
 
 const mockNavigate = jest.fn();
 jest.mock("react-router-dom", () => ({
@@ -104,9 +104,6 @@ describe("LoginPage", () => {
         });
         fireEvent.click(screen.getByText(/Войти/i));
 
-        // await waitFor(() => {
-        //     expect(screen.getByText(/Check your credentials/i)).toBeInTheDocument();
-        // });
     });
 
     it("отображает ошибку, если email не найден", async () => {
@@ -126,9 +123,6 @@ describe("LoginPage", () => {
         });
         fireEvent.click(screen.getByText(/Войти/i));
 
-        // await waitFor(() => {
-        //     expect(screen.getByText(/Check your email/i)).toBeInTheDocument();
-        // });
     });
 
 });

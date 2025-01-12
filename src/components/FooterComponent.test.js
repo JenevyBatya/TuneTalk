@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import { BrowserRouter as Router } from 'react-router-dom'; // Для тестирования с маршрутизацией
+import { BrowserRouter as Router } from 'react-router-dom';
 import FooterNavigation from './FooterComponent';
 import { MemoryRouter } from 'react-router-dom';
 
@@ -11,7 +11,7 @@ describe('FooterNavigation Component', () => {
             </Router>
         );
 
-        // Проверка на наличие всех трех кнопок
+
         expect(screen.getByLabelText('Библиотека')).toBeInTheDocument();
         expect(screen.getByLabelText('Мои подписки')).toBeInTheDocument();
         expect(screen.getByLabelText('Мой аккаунт')).toBeInTheDocument();
@@ -24,7 +24,7 @@ describe('FooterNavigation Component', () => {
             </MemoryRouter>
         );
 
-        // Проверка подсветки активной кнопки для маршрута "/Library"
+
         expect(screen.getByLabelText('Библиотека')).toHaveStyle('color: #1976D2');
         expect(screen.getByLabelText('Мои подписки')).toHaveStyle('color: #9DB2CE');
         expect(screen.getByLabelText('Мой аккаунт')).toHaveStyle('color: #9DB2CE');
@@ -40,7 +40,7 @@ describe('FooterNavigation Component', () => {
         const subscriptionsButton = screen.getByLabelText('Мои подписки');
         fireEvent.click(subscriptionsButton);
 
-        // Проверка, что после клика происходит переход на правильную страницу
+
         expect(window.location.pathname).toBe('/');
     });
 
@@ -51,19 +51,19 @@ describe('FooterNavigation Component', () => {
             </MemoryRouter>
         );
 
-        // Проверяем начальное состояние для маршрута "/Library"
+
         expect(screen.getByLabelText('Библиотека')).toHaveStyle('color: #1976D2');
         expect(screen.getByLabelText('Мои подписки')).toHaveStyle('color: #9DB2CE');
         expect(screen.getByLabelText('Мой аккаунт')).toHaveStyle('color: #9DB2CE');
 
-        // Перерендериваем компонент с новым маршрутом "/Subscriptions"
+
         rerender(
             <MemoryRouter initialEntries={['/Subscriptions']}>
                 <FooterNavigation />
             </MemoryRouter>
         );
 
-        // Проверяем состояние после изменения маршрута
+
         expect(screen.getByLabelText('Мои подписки')).toHaveStyle('color: #9DB2CE');
         expect(screen.getByLabelText('Библиотека')).toHaveStyle('color: #1976D2');
         expect(screen.getByLabelText('Мой аккаунт')).toHaveStyle('color: #9DB2CE');

@@ -11,10 +11,10 @@ describe('MobileHeader Component', () => {
             </MemoryRouter>
         );
 
-        // Проверяем наличие логотипа
+
         const logo = screen.getByAltText('Логотип');
         expect(logo).toBeInTheDocument();
-        expect(logo).toHaveAttribute('src', expect.stringContaining('Logo.svg')); // Проверяем путь к изображению
+        expect(logo).toHaveAttribute('src', expect.stringContaining('Logo.svg'));
     });
 
     test('header has correct styles', () => {
@@ -24,7 +24,7 @@ describe('MobileHeader Component', () => {
             </MemoryRouter>
         );
 
-        const header = screen.getByRole('banner'); // Проверяем наличие header
+        const header = screen.getByRole('banner');
         expect(header).toHaveStyle('background-color: #AECBC9');
         expect(header).toHaveStyle('position: sticky');
     });

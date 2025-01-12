@@ -18,11 +18,9 @@ describe('CategoryFilter Component', () => {
         const filterButton = screen.getByRole('button', { name: /search icon/i });
         expect(filterButton).toBeInTheDocument();
 
-        // Open filters
         fireEvent.click(filterButton);
         expect(screen.getByText(/фильтрация/i)).toBeInTheDocument();
 
-        // Close filters
         fireEvent.click(filterButton);
         expect(screen.queryByText(/фильтрация/i)).not.toBeInTheDocument();
     });
@@ -34,13 +32,8 @@ describe('CategoryFilter Component', () => {
         const categoryChip = screen.getByText('Криминал');
         expect(categoryChip).toBeInTheDocument();
 
-        // Select a category
         fireEvent.click(categoryChip);
-        // expect(categoryChip).toHaveStyle('background-color: #D4FF00');
-
-        // Deselect the category
         fireEvent.click(categoryChip);
-        // expect(categoryChip).toHaveStyle('background-color: #E5E5E5');
     });
 
     test('renders sorting options and changes selected sort order', () => {
@@ -51,7 +44,6 @@ describe('CategoryFilter Component', () => {
         const relevanceOption = screen.getByLabelText('По релевантности');
         expect(relevanceOption).toBeInTheDocument();
 
-        // Change sort order
         fireEvent.click(relevanceOption);
         expect(relevanceOption).toBeChecked();
     });
@@ -59,21 +51,14 @@ describe('CategoryFilter Component', () => {
     test('renders duration slider and changes its value', () => {
         render(<CategoryFilter onFilter={onFilterMock} />);
 
-        // Открытие фильтра
         fireEvent.click(screen.getByRole('button', { name: /search icon/i }));
 
-        // Получаем все элементы с ролью "slider"
         const sliders = screen.getAllByRole('slider');
         expect(sliders.length).toBeGreaterThan(0);
 
-        // Берем первый слайдер (или по конкретному индексу/атрибуту, если он уникален)
-        const slider = sliders[0]; // например, это слайдер с `data-index="0"`
+        const slider = sliders[0];
         expect(slider).toBeInTheDocument();
-
-        // Изменение значения слайдера
         fireEvent.change(slider, { target: { value: 30 } });
-
-        // Проверяем новое значение
         expect(slider.value).toBe('30');
     });
 
@@ -83,8 +68,6 @@ describe('CategoryFilter Component', () => {
         render(<CategoryFilter onFilter={onFilterMock} />);
 
         fireEvent.click(screen.getByRole('button', { name: /search icon/i }));
-
-        // Apply filters
         const applyButton = screen.getByText('Применить фильтры');
         fireEvent.click(applyButton);
 
@@ -104,12 +87,11 @@ describe('CategoryFilter Component', () => {
 
         fireEvent.click(screen.getByRole('button', { name: /search icon/i }));
 
-        // Apply filters
         const applyButton = screen.getByText('Применить фильтры');
         fireEvent.click(applyButton);
 
         expect(axios.post).toHaveBeenCalled();
-        await screen.findByText('Применить фильтры'); // Wait for async operation
+        await screen.findByText('Применить фильтры');
         expect(onFilterMock).not.toHaveBeenCalled();
     });
 });
