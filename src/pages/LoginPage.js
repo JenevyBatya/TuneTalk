@@ -47,15 +47,21 @@ export const LoginPage = () => {
             setLoginError("Please enter a valid email or username (min 3 characters)");
         }
     };
-
+    useEffect(() => {
+        if (identifier || password) {
+            setIdentifier(identifier);
+            setPassword(password);
+        }
+    }, [identifier, password]);
     return (
         <MainContainer>
             <FormContainer>
                 <HeadingText>Вход в аккаунт</HeadingText>
                 <Form onSubmit={handleSubmit}>
                     <FormControl fullWidth margin="normal" variant="outlined">
-                        <InputLabel>Логин</InputLabel>
+                        <InputLabel htmlFor="identifier-input" shrink={!!identifier}>Логин или Email</InputLabel>
                         <OutlinedInput
+                            id="identifier-input"
                             type="text"
                             value={identifier}
                             onChange={(e) => setIdentifier(e.target.value)}
@@ -63,9 +69,11 @@ export const LoginPage = () => {
                             required
                         />
                     </FormControl>
+
                     <FormControl fullWidth margin="normal" variant="outlined">
-                        <InputLabel>Пароль</InputLabel>
+                        <InputLabel htmlFor="password-input" shrink={!!password}>Пароль</InputLabel>
                         <OutlinedInput
+                            id="password-input"
                             type={showPassword ? "text" : "password"}
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
