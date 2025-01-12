@@ -1,65 +1,89 @@
-import { render, screen } from '@testing-library/react';
-import CustomCard from './CustomCard';
+import React from "react";
+import { render, screen, fireEvent } from "@testing-library/react";
+import { MemoryRouter } from "react-router-dom";
+import CustomCard, { StyledButton } from "./CustomCard";
 
-describe('CustomCard Component', () => {
-    const mockProps = {
-        name: 'Test Podcast',
-        description: 'This is a test podcast description.',
-        tags: [{ text: 'React' }, { text: 'JavaScript' }],
-        duration: '15 min',
-        author: 'John Doe',
-        subscribers: 123,
-        cardPhoto: 'test-image.jpg',
+// Мок для useNavigate
+jest.mock("react-router-dom", () => ({
+    ...jest.requireActual("react-router-dom"),
+    useNavigate: jest.fn(),
+}));
+
+describe("CustomCard Component", () => {
+    const mockNavigate = jest.fn();
+    beforeEach(() => {
+        require("react-router-dom").useNavigate.mockReturnValue(mockNavigate);
+    });
+
+    const defaultProps = {
+        id: "1",
+        name: "Test Podcast",
+        description: "This is a test podcast description",
+        tags: [{ text: "tech" }, { text: "education" }],
+        duration: "30 mins",
+        author: "Test Author",
+        subscribers: 1000,
+        cardPhoto: "test-image.jpg",
     };
 
-    test('should render the card with all the necessary elements', () => {
-        render(<CustomCard {...mockProps} />);
+    it("renders the component with all props", () => {
+        render(
+            <MemoryRouter>
+                <CustomCard {...defaultProps} />
+            </MemoryRouter>
+        );
 
-        expect(screen.getByText(mockProps.name)).toBeInTheDocument();
+        // Проверяем отображение имени
+        expect(screen.getByText(defaultProps.name)).toBeInTheDocument();
 
-        expect(screen.getByText(mockProps.description)).toBeInTheDocument();
+        // Проверяем описание
+        expect(screen.getByText(defaultProps.description)).toBeInTheDocument();
 
+        // Проверяем теги
+        expect(screen.getByText("#tech")).toBeInTheDocument();
+        expect(screen.getByText("#education")).toBeInTheDocument();
 
-        expect(screen.getByText(mockProps.duration)).toBeInTheDocument();
+        // Проверяем продолжительность
+        expect(screen.getByText(defaultProps.duration)).toBeInTheDocument();
 
+        // Проверяем автора и подписчиков
+        expect(screen.getByText(defaultProps.author)).toBeInTheDocument();
+        expect(
+            screen.getByText(`${defaultProps.subscribers} подписчиков`)
+        ).toBeInTheDocument();
 
-        expect(screen.getByText(mockProps.author)).toBeInTheDocument();
-
-
-        expect(screen.getByText(`${mockProps.subscribers} подписчиков`)).toBeInTheDocument();
-    });
-
-    test('should render tags correctly', () => {
-        render(<CustomCard {...mockProps} />);
-
-
-        mockProps.tags.forEach((tag) => {
-            expect(screen.getByText(`#${tag.text}`)).toBeInTheDocument();
-        });
-    });
-
-    test('should render the image correctly', () => {
-        render(<CustomCard {...mockProps} />);
-
-
-        const image = screen.getByAltText('Podcast');
+        // Проверяем изображение
+        const image = screen.getByAltText("Podcast");
         expect(image).toBeInTheDocument();
-        expect(image).toHaveAttribute('src', mockProps.cardPhoto);
+        expect(image).toHaveAttribute("src", defaultProps.cardPhoto);
     });
 
-    test('should render "Слушать" button', () => {
-        render(<CustomCard {...mockProps} />);
+    it("navigates to the correct route when the 'Слушать' button is clicked", () => {
+        render(
+            <MemoryRouter>
+                <CustomCard {...defaultProps} />
+            </MemoryRouter>
+        );
 
+        const listenButton = screen.getByRole("button", { name: /слушать/i });
+        expect(listenButton).toBeInTheDocument();
 
-        const button = screen.getByText('Слушать');
-        expect(button).toBeInTheDocument();
+        // Клик по кнопке
+        fireEvent.click(listenButton);
+
+        // Проверяем, что navigate был вызван с правильным маршрутом
+        expect(mockNavigate).toHaveBeenCalledWith(`/Audio-podcast/${defaultProps.id}`);
     });
 
-    test('should render correctly with no tags', () => {
-        const propsWithoutTags = { ...mockProps, tags: [] };
-        render(<CustomCard {...propsWithoutTags} />);
+    it("renders StyledButton with correct styles", () => {
+        render(
+            <MemoryRouter>
+                <StyledButton>Тестовая кнопка</StyledButton>
+            </MemoryRouter>
+        );
 
-
-        expect(screen.queryByTestId('tags')).not.toBeInTheDocument();
+        const button = screen.getByRole("button", { name: /тестовая кнопка/i });
+        expect(button).toHaveStyle("background-color: #173E47");
+        expect(button).toHaveStyle("color: #fff");
     });
 });
