@@ -71,8 +71,9 @@ const RegPage = () => {
                 <HeadingText>Создать аккаунт</HeadingText>
                 <Form onSubmit={handleSubmit}>
                     <FormControl fullWidth margin="normal" variant="outlined">
-                        <InputLabel>Логин</InputLabel>
+                        <InputLabel htmlFor="username-input" shrink={Boolean(username)}>Логин</InputLabel>
                         <OutlinedInput
+                            id="username-input"
                             type="text"
                             value={username}
                             onChange={(e) => setUsername(e.target.value)}
@@ -81,8 +82,9 @@ const RegPage = () => {
                         />
                     </FormControl>
                     <FormControl fullWidth margin="normal" variant="outlined">
-                        <InputLabel>Email</InputLabel>
+                        <InputLabel htmlFor="email-input" shrink={Boolean(email)}>Email</InputLabel>
                         <OutlinedInput
+                            id="email-input"
                             type="email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
@@ -91,8 +93,9 @@ const RegPage = () => {
                         />
                     </FormControl>
                     <FormControl fullWidth margin="normal" variant="outlined">
-                        <InputLabel>Пароль</InputLabel>
+                        <InputLabel htmlFor="password-input" shrink={Boolean(password)}>Пароль</InputLabel>
                         <OutlinedInput
+                            id="password-input"
                             type={showPassword ? "text" : "password"}
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
@@ -135,8 +138,9 @@ const RegPage = () => {
                         </Box>
                     )}
                     <FormControl fullWidth margin="normal" variant="outlined">
-                        <InputLabel>Повторите пароль</InputLabel>
+                        <InputLabel htmlFor="confirm-password-input">Повторите пароль</InputLabel>
                         <OutlinedInput
+                            id="confirm-password-input"
                             type={showConfirmPassword ? "text" : "password"}
                             value={confirmPassword}
                             onChange={(e) => setConfirmPassword(e.target.value)}
