@@ -5,7 +5,8 @@ import cardPhoto from '../assets/cardPhoto.svg';
 import CategoryFilter from "../components/CategoryFilter";
 import FooterNavigation from "../components/FooterComponent";
 import HeaderComponent from "../components/HeaderComponent";
-import styles from "../styles/Library.module.css";  // Импортируем файл стилей
+import styles from "../styles/Library.module.css";
+import Bugsnag from "@bugsnag/js";  // Импортируем файл стилей
 
 const Subscriptions = () => {
     const data = [
@@ -35,6 +36,7 @@ const Subscriptions = () => {
     const [filteredData, setFilteredData] = useState(data);
 
     const handleFilterData = (filtered) => {
+        Bugsnag.notify(new Error('Test error'))
         setFilteredData(filtered);
     };
 
