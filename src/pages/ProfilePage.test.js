@@ -48,35 +48,35 @@ describe("ProfilePageNew", () => {
             </BrowserRouter>
         );
 
-        // Проверяем контент для вкладки "Подкасты"
+
         fireEvent.click(screen.getByText("Подкасты"));
         await waitFor(() =>
             expect(
-                screen.getAllByTestId("custom-card")[0] // Берем первый элемент
+                screen.getAllByTestId("custom-card")[0]
             ).toHaveTextContent(cardData.podcasts[0].name)
         );
 
-        // Проверяем контент для вкладки "Плейлисты"
+
         fireEvent.click(screen.getByText("Плейлисты"));
         await waitFor(() =>
             expect(
-                screen.getAllByTestId("custom-card")[0] // Берем первый элемент
+                screen.getAllByTestId("custom-card")[0]
             ).toHaveTextContent(cardData.playlists[0].name)
         );
 
-        // Проверяем контент для вкладки "Избранное"
+
         fireEvent.click(screen.getByText("Избранное"));
         await waitFor(() =>
             expect(
-                screen.getAllByTestId("custom-card")[0] // Берем первый элемент
+                screen.getAllByTestId("custom-card")[0]
             ).toHaveTextContent(cardData.liked[0].name)
         );
 
-        // Проверяем контент для вкладки "Сохраненное"
+
         fireEvent.click(screen.getByText("Сохраненное"));
         await waitFor(() =>
             expect(
-                screen.getAllByTestId("custom-card")[0] // Берем первый элемент
+                screen.getAllByTestId("custom-card")[0]
             ).toHaveTextContent(cardData.saved[0].name)
         );
     });
@@ -92,7 +92,7 @@ describe("ProfilePageNew", () => {
 
         await waitFor(() => {
             expect(screen.queryByTestId("custom-card")).toBeInTheDocument();
-            // expect(screen.getByText("Нет данных для отображения.")).not.toBeInTheDocument();
+
         });
     });
 
@@ -105,7 +105,7 @@ describe("ProfilePageNew", () => {
 
         fireEvent.click(screen.getByText("Плейлисты"));
 
-        // expect(screen.getByText("Загрузка...")).toBeInTheDocument();
+
 
         await waitFor(() =>
             expect(screen.queryByText("Загрузка...")).not.toBeInTheDocument()

@@ -6,7 +6,7 @@ describe('Sections Component', () => {
     let setActiveSectionMock;
 
     beforeEach(() => {
-        setActiveSectionMock = jest.fn(); // Mock функции setActiveSection
+        setActiveSectionMock = jest.fn();
     });
 
     it('renders all section buttons with correct labels', () => {
@@ -23,7 +23,7 @@ describe('Sections Component', () => {
 
         const podcastsButton = getByText('Подкасты').closest('div');
         expect(podcastsButton).toHaveStyle('background: #FF7510');
-        // expect(podcastsButton).toHaveStyle('color: white');
+
     });
 
     it('updates active section and calls setActiveSection on button click', () => {
@@ -42,14 +42,14 @@ describe('Sections Component', () => {
         const podcastsButton = getByText('Подкасты').closest('div');
         const playlistsButton = getByText('Плейлисты').closest('div');
 
-        // Проверяем начальное состояние
+
         expect(podcastsButton).toHaveStyle('background: #FF7510');
         expect(playlistsButton).toHaveStyle('background: white');
 
-        // Кликаем по кнопке "Плейлисты"
+
         fireEvent.click(playlistsButton);
 
-        // Проверяем обновленное состояние
+
         expect(podcastsButton).toHaveStyle('background: white');
         expect(playlistsButton).toHaveStyle('background: #FF7510');
     });

@@ -2,7 +2,7 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import Subscriptions from './Subscriptions';
 import { BrowserRouter as Router } from 'react-router-dom';
 
-// Мокаем зависимые компоненты
+
 jest.mock('../components/CustomCard', () => () => <div>CustomCard</div>);
 jest.mock('../components/CategoryFilter', () => ({ onFilter }) => (
     <button onClick={() => onFilter([])}>Filter</button>
@@ -18,7 +18,7 @@ describe('Subscriptions Component', () => {
             </Router>
         );
 
-        // Проверка отображения заголовков
+
         expect(screen.getByText(/Subscriptions/i)).toBeInTheDocument();
         expect(screen.getByText(/подписки/i)).toBeInTheDocument();
     });
@@ -30,7 +30,7 @@ describe('Subscriptions Component', () => {
             </Router>
         );
 
-        // Проверка наличия CustomCard
+
         expect(screen.getAllByText('CustomCard').length).toBe(2);
     });
 
@@ -41,10 +41,10 @@ describe('Subscriptions Component', () => {
             </Router>
         );
 
-        // Клик по фильтру, чтобы очистить данные
+
         fireEvent.click(screen.getByText('Filter'));
 
-        // Проверка отображения текста "Кажется, пока что у нас такого нет..."
+
         expect(screen.getByText('Кажется, пока что у нас такого нет...')).toBeInTheDocument();
     });
 
@@ -55,10 +55,10 @@ describe('Subscriptions Component', () => {
             </Router>
         );
 
-        // Получаем кнопку фильтра
+
         const filterButton = screen.getByText('Filter');
 
-        // Проверяем, что фильтр вызывает handleFilterData
+
         fireEvent.click(filterButton);
         expect(screen.queryByText('CustomCard')).toBeNull();
         expect(screen.getByText('Кажется, пока что у нас такого нет...')).toBeInTheDocument();

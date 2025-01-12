@@ -2,7 +2,7 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import Library from './Library';
 import { BrowserRouter as Router } from 'react-router-dom';
 
-// Мокаем зависимые компоненты
+
 jest.mock('../components/CustomCard', () => () => <div>CustomCard</div>);
 jest.mock('../components/SearchFilter', () => ({ onSearch }) => (
     <button onClick={() => onSearch([])}>Search</button>
@@ -21,7 +21,7 @@ describe('Library Component', () => {
             </Router>
         );
 
-        // Проверка отображения заголовков
+
         expect(screen.getByText(/Library/i)).toBeInTheDocument();
         expect(screen.getByText(/библиотека/i)).toBeInTheDocument();
     });
@@ -33,7 +33,7 @@ describe('Library Component', () => {
             </Router>
         );
 
-        // Проверка наличия CustomCard
+
         expect(screen.getAllByText('CustomCard').length).toBe(2);
     });
 
@@ -44,10 +44,10 @@ describe('Library Component', () => {
             </Router>
         );
 
-        // Клик по фильтру, чтобы очистить данные
+
         fireEvent.click(screen.getByText('Filter'));
 
-        // Проверка отображения текста "Кажется, пока что у нас такого нет..."
+
         expect(screen.getByText('Кажется, пока что у нас такого нет...')).toBeInTheDocument();
     });
 
@@ -58,10 +58,10 @@ describe('Library Component', () => {
             </Router>
         );
 
-        // Получаем кнопку фильтра
+
         const filterButton = screen.getByText('Filter');
 
-        // Проверяем, что фильтр вызывает handleFilterData
+
         fireEvent.click(filterButton);
         expect(screen.queryByText('CustomCard')).toBeNull();
         expect(screen.getByText('Кажется, пока что у нас такого нет...')).toBeInTheDocument();
@@ -74,10 +74,10 @@ describe('Library Component', () => {
             </Router>
         );
 
-        // Получаем кнопку поиска
+
         const searchButton = screen.getByText('Search');
 
-        // Проверяем, что кнопка поиска вызывает setFilteredData
+
         fireEvent.click(searchButton);
         expect(screen.queryByText('CustomCard')).toBeNull();
         expect(screen.getByText('Кажется, пока что у нас такого нет...')).toBeInTheDocument();
