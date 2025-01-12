@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Box, Typography } from "@mui/material";
+import React, {useState} from "react";
+import {Box, Typography} from "@mui/material";
 import CustomCard from "../components/CustomCard";
 import SearchFilter from "../components/SearchFilter";
 import CategoryFilter from "../components/CategoryFilter";
@@ -14,7 +14,7 @@ const Library = () => {
             id: 1,
             name: "Name",
             description: "Description/Theme",
-            tags: [{ id: 1, text: "tags" }, { id: 2, text: "tags" }, { id: 3, text: "tags" }],
+            tags: [{id: 1, text: "tags"}, {id: 2, text: "tags"}, {id: 3, text: "tags"}],
             duration: "60 min",
             author: "author",
             subscribes: 1,
@@ -24,7 +24,7 @@ const Library = () => {
             id: 2,
             name: "Test",
             description: "Description/Theme",
-            tags: [{ id: 1, text: "tags" }, { id: 2, text: "tags" }, { id: 3, text: "tags" }],
+            tags: [{id: 1, text: "tags"}, {id: 2, text: "tags"}, {id: 3, text: "tags"}],
             duration: "60 min",
             author: "author",
             subscribes: 1,
@@ -40,8 +40,8 @@ const Library = () => {
     };
 
     return (
-        <div>
-            <HeaderComponent />
+        <div className={styles.mainContainer}>
+            <HeaderComponent/>
             <SearchFilter
                 data={data}
                 searchFields={searchFields}
@@ -63,7 +63,7 @@ const Library = () => {
                 </tr>
                 </tbody>
             </table>
-            <CategoryFilter onFilter={handleFilterData} />
+            <CategoryFilter onFilter={handleFilterData}/>
             <div className={styles.cardContainer}>
                 {filteredData.length > 0 ? (
                     filteredData.map((item) => (
@@ -87,7 +87,7 @@ const Library = () => {
                     </Box>
                 )}
             </div>
-            <FooterNavigation />
+            <FooterNavigation/>
         </div>
     );
 };

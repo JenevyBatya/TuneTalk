@@ -117,7 +117,7 @@ export default function OtherProfilePage() {
             {/*<AppBar position="fixed" sx={{bgcolor: '#adcac8'}} elevation={0}>*/}
             {/*    <Toolbar sx={{height: 20}}/>*/}
             {/*</AppBar>*/}
-            
+
 
             <Box display="flex" alignItems="center" mb={3}>
                 <Avatar
