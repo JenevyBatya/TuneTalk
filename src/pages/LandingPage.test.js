@@ -2,13 +2,13 @@ import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import LandingPage from './LandingPage';
-import Slider from 'react-slick';  // импортируем слайдер
-import { axe, toHaveNoViolations } from 'jest-axe';  // для тестирования доступности
+import Slider from 'react-slick';
+import { axe, toHaveNoViolations } from 'jest-axe';
 
-// Мокирование компонентов
+
 jest.mock('../components/FooterComponent', () => () => <div>Footer</div>);
 jest.mock('../components/HeaderComponent', () => () => <div>Header</div>);
-jest.mock('react-slick', () => ({ children }) => <div>{children}</div>); // Мок слайдера
+jest.mock('react-slick', () => ({ children }) => <div>{children}</div>);
 
 expect.extend(toHaveNoViolations);
 
@@ -39,7 +39,7 @@ describe('LandingPage Component', () => {
             </Router>
         );
         const images = screen.getAllByRole('img');
-        expect(images).toHaveLength(6); // 3 изображения в первом слайдере и 3 во втором
+        expect(images).toHaveLength(6);
         images.forEach((image, index) => {
             expect(image).toHaveAttribute('src');
             expect(image).toHaveAttribute('alt', expect.stringMatching(/photo|auth/));
