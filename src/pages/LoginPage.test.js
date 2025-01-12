@@ -1,128 +1,138 @@
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
-import axios from "axios";
-import { BrowserRouter } from "react-router-dom";
-import LoginPage from "./LoginPage";
+import React from 'react';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import  LoginPage  from './LoginPage';
+import {Provider, useSelector} from 'react-redux';
+import { createStore } from 'redux';
+import { login } from '../features/authSlice';
 
-jest.mock("axios");
-
-const mockNavigate = jest.fn();
-jest.mock("react-router-dom", () => ({
-    ...jest.requireActual("react-router-dom"),
-    useNavigate: () => mockNavigate,
+// Мокаем Redux состояния
+jest.mock('react-redux', () => ({
+    useDispatch: jest.fn(),
+    useSelector: jest.fn(),
 }));
 
-describe("LoginPage", () => {
+// Мокаем Redux Store и dispatch
+const mockDispatch = jest.fn();
+const mockNavigate = jest.fn();
+
+const mockStore = {
+    auth: {
+        isLoading: false,
+        error: null,
+    },
+};
+
+describe('LoginPage', () => {
     beforeEach(() => {
         jest.clearAllMocks();
     });
 
-    it("рендерит все основные элементы компонента", () => {
+    it('should render login form correctly', () => {
+        // Мокаем useSelector, чтобы вернуть состояние auth
+        useSelector.mockReturnValue(mockStore.auth);
+
         render(
-            <BrowserRouter>
+            <Provider store={{ getState: () => mockStore, dispatch: mockDispatch }}>
                 <LoginPage />
-            </BrowserRouter>
+            </Provider>
         );
 
         expect(screen.getByLabelText(/Логин или Email/i)).toBeInTheDocument();
         expect(screen.getByLabelText(/Пароль/i)).toBeInTheDocument();
         expect(screen.getByText(/Войти/i)).toBeInTheDocument();
-        expect(screen.getByText(/Нет аккаунта\?/i)).toBeInTheDocument();
     });
 
-    it("отображает ошибку, если поля не заполнены", async () => {
+    it('should show error message if fields are empty and submit is clicked', async () => {
+        useSelector.mockReturnValue(mockStore.auth);
+
         render(
-            <BrowserRouter>
+            <Provider store={{ getState: () => mockStore, dispatch: mockDispatch }}>
                 <LoginPage />
-            </BrowserRouter>
+            </Provider>
         );
 
-        fireEvent.click(screen.getByText(/Войти/i));
+        fireEvent.click(screen.getByText('Войти'));
 
         await waitFor(() => {
             expect(screen.getByText(/Both fields are required/i)).toBeInTheDocument();
         });
     });
 
-    it("отображает ошибку при неверном формате email или коротком логине", async () => {
+    it('should show error message if invalid email is entered', async () => {
+        useSelector.mockReturnValue(mockStore.auth);
+
         render(
-            <BrowserRouter>
+            <Provider store={{ getState: () => mockStore, dispatch: mockDispatch }}>
                 <LoginPage />
-            </BrowserRouter>
+            </Provider>
         );
 
         fireEvent.change(screen.getByLabelText(/Логин или Email/i), {
-            target: { value: "ab" },
+            target: { value: 'invalid-email' },
         });
+
         fireEvent.change(screen.getByLabelText(/Пароль/i), {
-            target: { value: "password123" },
+            target: { value: 'password' },
         });
-        fireEvent.click(screen.getByText(/Войти/i));
+
+        fireEvent.click(screen.getByText('Войти'));
 
         await waitFor(() => {
-            expect(
-                screen.getByText(/Please enter a valid email or username/i)
-            ).toBeInTheDocument();
+            expect(screen.getByText(/Please enter a valid email or username/i)).toBeInTheDocument();
         });
     });
 
-    it("успешно выполняет вход при корректных данных", async () => {
-        axios.post.mockResolvedValue({ status: 200 });
+    it('should dispatch login action and navigate to /library on successful login', async () => {
+        const mockState = {
+            auth: {
+                isLoading: false,
+                error: null,
+            },
+        };
+
+        useSelector.mockReturnValue(mockState.auth);
+        useDispatch.mockReturnValue(mockDispatch);
 
         render(
-            <BrowserRouter>
+            <Provider store={{ getState: () => mockState, dispatch: mockDispatch }}>
                 <LoginPage />
-            </BrowserRouter>
+            </Provider>
         );
 
         fireEvent.change(screen.getByLabelText(/Логин или Email/i), {
-            target: { value: "test@example.com" },
+            target: { value: 'user@example.com' },
         });
+
         fireEvent.change(screen.getByLabelText(/Пароль/i), {
-            target: { value: "password123" },
+            target: { value: 'password' },
         });
-        fireEvent.click(screen.getByText(/Войти/i));
+
+        fireEvent.click(screen.getByText('Войти'));
 
         await waitFor(() => {
-            expect(mockNavigate).toHaveBeenCalledWith("/library");
+            expect(mockDispatch).toHaveBeenCalledWith(login({ identifier: 'user@example.com', password: 'password' }));
+            expect(mockNavigate).toHaveBeenCalledWith('/library');
         });
     });
 
-    it("отображает ошибку при неправильных данных для входа", async () => {
-        axios.post.mockRejectedValue({ response: { status: 400 } });
+    it('should display error message if login fails', async () => {
+        const mockState = {
+            auth: {
+                isLoading: false,
+                error: 'Login failed, please try again.',
+            },
+        };
+
+        useSelector.mockReturnValue(mockState.auth);
 
         render(
-            <BrowserRouter>
+            <Provider store={{ getState: () => mockState, dispatch: mockDispatch }}>
                 <LoginPage />
-            </BrowserRouter>
+            </Provider>
         );
 
-        fireEvent.change(screen.getByLabelText(/Логин или Email/i), {
-            target: { value: "test@example.com" },
+        await waitFor(() => {
+            expect(screen.getByText(/Login failed, please try again./i)).toBeInTheDocument();
         });
-        fireEvent.change(screen.getByLabelText(/Пароль/i), {
-            target: { value: "wrongpassword" },
-        });
-        fireEvent.click(screen.getByText(/Войти/i));
-
     });
-
-    it("отображает ошибку, если email не найден", async () => {
-        axios.post.mockRejectedValue({ response: { status: 404 } });
-
-        render(
-            <BrowserRouter>
-                <LoginPage />
-            </BrowserRouter>
-        );
-
-        fireEvent.change(screen.getByLabelText(/Логин или Email/i), {
-            target: { value: "unknown@example.com" },
-        });
-        fireEvent.change(screen.getByLabelText(/Пароль/i), {
-            target: { value: "password123" },
-        });
-        fireEvent.click(screen.getByText(/Войти/i));
-
-    });
-
 });
