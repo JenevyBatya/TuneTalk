@@ -63,14 +63,16 @@ function FooterNavigation() {
             <BottomNavigationAction
                 label="Библиотека"
                 icon={<LibraryBooksIcon />}
+                aria-label="Библиотека" // Добавляем атрибут для тестирования
                 sx={{
-                    color: value === 0 ? '#FFFFFF' : '#9DB2CE', // Подсветка активного элемента
+                    color: value === 0 ? '#FFFFFF' : '#9DB2CE',
                     gap: '8px',
                 }}
             />
             <BottomNavigationAction
                 label="Мои подписки"
                 icon={<SubscriptionsIcon />}
+                aria-label="Мои подписки" // Добавляем атрибут для тестирования
                 sx={{
                     color: value === 1 ? '#FFFFFF' : '#9DB2CE',
                     gap: '8px',
@@ -79,11 +81,13 @@ function FooterNavigation() {
             <BottomNavigationAction
                 label="Мой аккаунт"
                 icon={<AccountCircleIcon />}
+                aria-label="Мой аккаунт" // Добавляем атрибут для тестирования
                 sx={{
                     color: value === 2 ? '#FFFFFF' : '#9DB2CE',
                     gap: '8px',
                 }}
             />
+
         </BottomNavigation>
     );
 }
