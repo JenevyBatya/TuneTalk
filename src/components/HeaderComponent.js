@@ -5,16 +5,16 @@ import {Link} from "react-router-dom";
 import {Button} from "@mui/material";
 
 export const Header = styled.header`
-    display: flex;
-    align-items: center;
-    justify-content: left;
-    background-color: #AECBC9;
-    height: calc(env(safe-area-inset-top) + 60px); /* Учитываем высоту безопасной области сверху */
-    padding-top: env(safe-area-inset-top); /* Добавляем отступ для "чёлки" */
-    position: sticky;
-    top: 0;
-    z-index: 10;
-    max-width: 600px;
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  background-color: #AECBC9;
+  height: calc(env(safe-area-inset-top) + 60px); /* Учитываем высоту безопасной области сверху */
+  padding-top: env(safe-area-inset-top); /* Добавляем отступ для "чёлки" */
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  max-width: 600px;
 `;
 
 export const Logo = styled.img`
@@ -25,8 +25,8 @@ export const Logo = styled.img`
 export const MobileHeader = () => {
     return (
         <Header>
-            <Button as={Link} to="/">
-            <Logo src={logo} alt="Логотип" />
+            <Button as={Link} to="/" aria-label="На главную">
+                <Logo src={logo} alt="Логотип" />
             </Button>
         </Header>
     );
