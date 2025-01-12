@@ -90,6 +90,7 @@ const CustomCard = ({name, description, tags=[], duration, author, subscribers, 
                         display: 'flex',
                         justifyContent: 'center',
                         alignItems: 'center',
+                        borderRadius: '5px'
                     }}
                 >
                     <img

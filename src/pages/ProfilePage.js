@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect} from "react";
 import {
     ProfileContainer,
     Pic,
@@ -15,18 +15,23 @@ import {
     StatText,
     MainContainer,
     StarIcon,
+    FooterContainer,
+    ProfileDiv
 } from "../styles/ProfilePagePodkastsStyles";
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
 import UserPic from "../assets/auth2.jpg";
-import LinkIcon from "../assets/icons/searchIcon.svg";
+import LinkIcon from "../assets/icons/LinkIcon.svg";
 import Star from "../assets/icons/ProfileStar.svg";
 import Sections from "../components/Sections";
 import ContentContainer from "../components/ContentContainer";
 import CustomCard from "../components/CustomCard";
 import cardData from "../mocks/CardData.json";
+import FooterComponent from "../components/FooterComponent";
+import FooterNavigation from "../components/FooterComponent";
+import HeaderComponent from "../components/HeaderComponent";
 
-const ProfilePagePodkasts = () => {
+const ProfilePageNew = () => {
     const navigate = useNavigate();
     const [activeSection, setActiveSection] = useState(0); // Состояние текущей вкладки
     const [content, setContent] = useState([]); // Состояние данных для отображения
@@ -34,7 +39,7 @@ const ProfilePagePodkasts = () => {
 
     // Функция для загрузки данных с сервера
     //async-----------|
-    const fetchData =  (section) => {
+    const fetchData = (section) => {
         setLoading(true);
         try {
             // const response = await fetch('../mocks/CardData.json');
@@ -59,7 +64,7 @@ const ProfilePagePodkasts = () => {
                     break;
                 default:
                     setContent([]);
-                    // response = [];
+                // response = [];
             }
             // const data = await response.json();
             // setContent(data);
@@ -105,59 +110,66 @@ const ProfilePagePodkasts = () => {
     return (
 
         <MainContainer>
-            <ProfileContainer>
-                <Pic src={UserPic} alt="User" />
+            <HeaderComponent/>
+            <ProfileDiv>
+                <ProfileContainer>
+                    <Pic src={UserPic} alt="User"/>
 
-                <InfoDiv>
-                    <Username>Имя Фамилия</Username>
-                    <Description>Описание профиля</Description>
-                    <LinkDiv>
-                        <LinkLogo src={LinkIcon} alt="Link Icon" />
-                        <LinkText href="https://vk.com/user" target="_blank" rel="noopener noreferrer">
-                            vk.com/user
-                        </LinkText>
-                    </LinkDiv>
-                    <EditButtonDiv>
-                        <EditButton>Изменить профиль</EditButton>
-                    </EditButtonDiv>
-                </InfoDiv>
-            </ProfileContainer>
+                    <InfoDiv>
+                        <Username>Имя Фамилия</Username>
+                        <Description>Описание профиля</Description>
+                        <LinkDiv>
+                            <LinkLogo src={LinkIcon} alt="Link Icon"/>
+                            <LinkText href="https://vk.com/user" target="_blank" rel="noopener noreferrer">
+                                vk.com/user
+                            </LinkText>
+                        </LinkDiv>
+                        <EditButtonDiv onClick={() => navigate("/EditProfile")}>
+                            <EditButton>Изменить профиль</EditButton>
+                        </EditButtonDiv>
 
-            <StatsContainer>
-                <StarIcon src={Star} alt="" />
-                <StatsItem
-                    onClick={() => {
-                        navigate("/Users/followers"); // Передаем правильный параметр для подписчиков
-                    }}
-                    style={{ cursor: "pointer" }}
-                >
-                    <StatText>100 подписчиков</StatText>
-                </StatsItem>
+                    </InfoDiv>
+                </ProfileContainer>
 
-                <StarIcon src={Star} alt="" />
+                <StatsContainer>
+                    <StarIcon src={Star} alt=""/>
+                    <StatsItem
+                        onClick={() => {
+                            navigate("/Users/followers"); // Передаем правильный параметр для подписчиков
+                        }}
+                        style={{cursor: "pointer"}}
+                    >
+                        <StatText>100 подписчиков</StatText>
+                    </StatsItem>
 
-                <StatsItem
-                    onClick={() => {
-                        navigate("/Users/subscriptions"); // Передаем правильный параметр для подписок
-                    }}
-                    style={{ cursor: "pointer" }}
-                >
-                    <StatText>50 подписок</StatText>
-                </StatsItem>
+                    <StarIcon src={Star} alt=""/>
 
-                <StarIcon src={Star} alt="" />
-                <StatsItem>
-                    <StatText>50 публикаций</StatText>
-                </StatsItem>
-            </StatsContainer>
+                    <StatsItem
+                        onClick={() => {
+                            navigate("/Users/subscriptions"); // Передаем правильный параметр для подписок
+                        }}
+                        style={{cursor: "pointer"}}
+                    >
+                        <StatText>50 подписок</StatText>
+                    </StatsItem>
 
-            <Sections setActiveSection={setActiveSection} />
+                    <StarIcon src={Star} alt=""/>
+                    <StatsItem>
+                        <StatText>50 публикаций</StatText>
+                    </StatsItem>
+                </StatsContainer>
 
-            <ContentContainer>
-                {renderContent()}
-            </ContentContainer>
+                <Sections setActiveSection={setActiveSection}/>
+
+                <ContentContainer>
+                    {renderContent()}
+                </ContentContainer>
+            </ProfileDiv>
+            <FooterContainer>
+                <FooterNavigation/>
+            </FooterContainer>
         </MainContainer>
     );
 };
 
-export default ProfilePagePodkasts;
+export default ProfilePageNew;

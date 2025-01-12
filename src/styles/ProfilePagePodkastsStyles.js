@@ -1,12 +1,25 @@
 import styled from "styled-components";
 
-export const MainContainer = styled.div `
+export const MainContainer = styled.div`
     width: 100%;
     max-width: 600px;
     display: flex;
     flex-direction: column;
-    margin: 0;
+    margin: 0 auto; 
+    min-height: 100vh; 
+    box-sizing: border-box;
+    overflow-y: auto; 
+`;
+export const ProfileDiv = styled.div`
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
     padding: 10px;
+    min-height: 100vh;
+    box-sizing: border-box;
+    overflow-y: auto;
 `
 
 
@@ -133,4 +146,11 @@ export const StatText = styled.span`
 export const SectionComponent = styled.div`
     margin: 0;
     width: 100%;
+`
+export const FooterContainer = styled.div`
+    margin-top: 20%;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 20px;
 `
