@@ -76,7 +76,7 @@ const Library = () => {
                 </tr>
                 </tbody>
             </table>
-            <CategoryFilter onFilter={handleFilterData} />
+            <CategoryFilter onFilter={handleFilterData}/>
             <div className={styles.cardContainer}>
                 {filteredData.length > 0 ? (
                     filteredData.map((item) => (

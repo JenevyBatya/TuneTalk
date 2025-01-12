@@ -37,7 +37,7 @@ function FooterNavigation() {
                 navigate('/Subscriptions'); // Переход на страницу "Мои подписки"
                 break;
             case 2:
-                navigate('/Account'); // Переход на страницу "Мой аккаунт"
+                navigate('/Profile'); // Переход на страницу "Мой аккаунт"
                 break;
             default:
                 break;
@@ -47,6 +47,7 @@ function FooterNavigation() {
     return (
         <BottomNavigation
             sx={{
+
                 width: '100%',
                 position: 'fixed',
                 bottom: 0,
@@ -54,7 +55,7 @@ function FooterNavigation() {
                 backgroundColor: '#173E47',
                 maxWidth: '600px',
                 marginTop: '80px',
-                zIndex: 1000, // Устанавливаем z-index, чтобы подвал был на переднем плане
+                zIndex: 1000,
             }}
             value={value}
             onChange={(event, newValue) => handleNavigation(newValue)}

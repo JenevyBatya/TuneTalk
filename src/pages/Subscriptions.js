@@ -51,7 +51,7 @@ const Subscriptions = () => {
         loadMoreData();
     }, []);
     return (
-        <div>
+        <div className={styles.mainContainer}>
             <HeaderComponent />
             <div className={styles.subscriptionsTitle}>
                 <table className={styles.chapterName} style={{marginTop: '3vh', marginLeft: '2vh'}}>

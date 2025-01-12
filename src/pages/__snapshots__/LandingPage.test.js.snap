@@ -1,0 +1,109 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LandingPage Component matches the snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="sc-blHHSb dWkdZC"
+  >
+    <div>
+      <div>
+        Header
+      </div>
+      <div
+        class="sc-egkSDF Jeplm"
+      >
+        <div
+          class="sc-dntaoT garjUI"
+        >
+          Хостинг подкастов
+        </div>
+        <div
+          class="sc-ivxoEo inRjlb"
+        >
+          Все русскоязычные подкасты на одной платформе. Возможность переключаться между аудио и видео форматами в один клик. Удобный поиск. Эксклюзивные подборки.
+        </div>
+        <div
+          class="sc-kLhKbu bdlupj"
+        >
+          <div>
+            <img
+              alt="photo 1"
+              class="sc-ixGGxD feERQe"
+              src="rec1.jpg"
+              style="width: 100%; height: auto;"
+            />
+            <img
+              alt="photo 2"
+              class="sc-ixGGxD feERQe"
+              src="rec2.jpg"
+              style="width: 100%; height: auto;"
+            />
+            <img
+              alt="photo 3"
+              class="sc-ixGGxD feERQe"
+              src="rec3.jpg"
+              style="width: 100%; height: auto;"
+            />
+          </div>
+        </div>
+        <div
+          class="sc-dpBQxM iIhucL"
+        >
+          Рекомендуем посмотреть
+        </div>
+      </div>
+      <div
+        class="sc-dstKZu jXwizn"
+      >
+        <div
+          class="sc-fAUdSK kLKyXb"
+        >
+          Любимые авторы в одном месте
+        </div>
+        <div
+          class="sc-ghWlax fgRdex"
+        >
+          Мы собрали всех ваших любимых авторов, чтобы вы наслаждались ими без лишних сложностей.
+        </div>
+        <div
+          class="sc-kLhKbu bdlupj"
+        >
+          <div>
+            <img
+              alt="auth 1"
+              class="sc-ixGGxD feERQe"
+              src="auth1.jpg"
+              style="width: 100%; height: auto; object-fit: cover;"
+            />
+            <img
+              alt="auth 2"
+              class="sc-ixGGxD feERQe"
+              src="auth2.jpg"
+              style="width: 100%; height: auto; object-fit: cover;"
+            />
+            <img
+              alt="auth 3"
+              class="sc-ixGGxD feERQe"
+              src="auth3.jpg"
+              style="width: 100%; height: auto; object-fit: cover;"
+            />
+          </div>
+        </div>
+        <div
+          class="sc-dpBQxM iIhucL"
+        >
+          <a
+            class="sc-khLCKb bcnzYB"
+            href="/Registration"
+          >
+            Зарегистрироваться
+          </a>
+        </div>
+      </div>
+    </div>
+    <div>
+      Footer
+    </div>
+  </div>
+</DocumentFragment>
+`;
