@@ -94,7 +94,9 @@ const LandingPage = () => {
 
                 </PhotoDiv>
                 <RecommendDiv>
-                <StyledButton as={Link} to="/Registration">
+                <StyledButton as={Link} to="/Registration" onClick={() =>{
+                    ym(99501749,'reachGoal','landing-reg')
+                }}>
                     Зарегистрироваться
                 </StyledButton>
                 </RecommendDiv>
