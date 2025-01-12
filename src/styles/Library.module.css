@@ -14,6 +14,7 @@
 
 .cardContainer {
     margin-top: 15px;
+    margin-bottom: 100px;
 }
 
 .cardWrapper {
@@ -26,4 +27,7 @@
 
 .noDataText {
     font-weight: bold;
+}
+.mainContainer{
+    margin-bottom: 30%;
 }

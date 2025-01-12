@@ -1,4 +1,7 @@
-import React, { useState, useEffect } from "react";
+/* eslint-disable */
+import React, {useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {login} from "../features/authSlice";
 import {
     ErrorText,
     Form,
@@ -6,11 +9,11 @@ import {
     LoginLink,
     MainContainer,
     StyledButton,
-    FormContainer
+    FormContainer,
 } from "../styles/LoginPageStyles";
-import { FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput } from "@mui/material";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
-import {Link} from "react-router-dom";
+import {FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput} from "@mui/material";
+import {Visibility, VisibilityOff} from "@mui/icons-material";
+import {useNavigate} from "react-router-dom";
 
 export const LoginPage = () => {
     const [identifier, setIdentifier] = useState("");
@@ -18,41 +21,48 @@ export const LoginPage = () => {
     const [loginError, setLoginError] = useState("");
     const [showPassword, setShowPassword] = useState(false);
 
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const {isLoading, error} = useSelector((state) => state.auth);
     const isValidEmail = (email) => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return emailRegex.test(email);
     };
-
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         if (!identifier || !password) {
             setLoginError("Both fields are required");
-        } else if (isValidEmail(identifier) || identifier.length >= 3) {
+            return;
+        }
+
+        if (isValidEmail(identifier) || identifier.length >= 3) {
             setLoginError("");
-            console.log("Logging in with:", { identifier, password });
+            try {
+                await dispatch(login({identifier, password})).unwrap();
+                navigate("/library");
+            } catch (err) {
+                setLoginError(err || "Login failed, please try again.");
+            }
         } else {
             setLoginError("Please enter a valid email or username (min 3 characters)");
         }
     };
-
-    // Добавляем useEffect для обработки авто-заполнения
     useEffect(() => {
         if (identifier || password) {
-            // Принудительно заставляем метки подняться, если поля заполнены
             setIdentifier(identifier);
             setPassword(password);
         }
     }, [identifier, password]);
-
     return (
         <MainContainer>
             <FormContainer>
                 <HeadingText>Вход в аккаунт</HeadingText>
                 <Form onSubmit={handleSubmit}>
                     <FormControl fullWidth margin="normal" variant="outlined">
-                        <InputLabel shrink={!!identifier}>Логин или Email</InputLabel>
+                        <InputLabel htmlFor="identifier-input" shrink={!!identifier}>Логин или Email</InputLabel>
                         <OutlinedInput
+                            id="identifier-input"
                             type="text"
                             value={identifier}
                             onChange={(e) => setIdentifier(e.target.value)}
@@ -60,9 +70,11 @@ export const LoginPage = () => {
                             required
                         />
                     </FormControl>
+
                     <FormControl fullWidth margin="normal" variant="outlined">
-                        <InputLabel shrink={!!password}>Пароль</InputLabel>
+                        <InputLabel htmlFor="password-input" shrink={!!password}>Пароль</InputLabel>
                         <OutlinedInput
+                            id="password-input"
                             type={showPassword ? "text" : "password"}
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
@@ -70,20 +82,21 @@ export const LoginPage = () => {
                             required
                             endAdornment={
                                 <InputAdornment position="end">
-                                    <IconButton
-                                        onClick={() => setShowPassword(!showPassword)}
-                                        edge="end"
-                                    >
-                                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                                    <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
+                                        {showPassword ? <VisibilityOff/> : <Visibility/>}
                                     </IconButton>
                                 </InputAdornment>
                             }
                         />
                     </FormControl>
-                    {loginError && <ErrorText>{loginError}</ErrorText>}
-                    <StyledButton type="submit" as={Link} to="/Library"м>Войти</StyledButton>
+                    {error?.message && <ErrorText>{error.message}</ErrorText>}
+                    <StyledButton type="submit" disabled={isLoading}>
+                        {isLoading ? "Загрузка..." : "Войти"}
+                    </StyledButton>
                 </Form>
-                <LoginLink>Нет аккаунта? <a href="/Registration">Создать</a></LoginLink>
+                <LoginLink>
+                    Нет аккаунта? <a href="/registration">Создать</a>
+                </LoginLink>
             </FormContainer>
         </MainContainer>
     );

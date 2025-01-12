@@ -1,6 +1,7 @@
 import React from 'react';
 import {Card, CardContent, Typography, Button, Chip, Avatar, Box} from '@mui/material';
 import {styled} from '@mui/system';
+import {useNavigate} from "react-router-dom";
 
 export const StyledButton = styled(Button)(({theme}) => ({
     backgroundColor: '#173E47',
@@ -12,6 +13,7 @@ export const StyledButton = styled(Button)(({theme}) => ({
     },
 }));
 const GreenSquare = styled(Box)(({theme}) => ({
+    marginTop: '5%',
     backgroundColor: '#C0EF00',
     width: '90%',
     display: 'flex',
@@ -25,7 +27,9 @@ const TagChip = styled(Chip)(({theme}) => ({
     border: 'none',
     color: '#FF6600',
 }));
-const CustomCard = ({name, description, tags=[], duration, author, subscribers, cardPhoto}) => {
+const CustomCard = ({id,name, description, tags=[], duration, author, subscribers, cardPhoto}) => {
+    const navigate = useNavigate();
+
     return (
         <GreenSquare>
             <Card
@@ -74,9 +78,7 @@ const CustomCard = ({name, description, tags=[], duration, author, subscribers, 
                                 </Typography>
                             </Box>
                         </Box>
-
-                        {/* Кнопка "Слушать" */}
-                        <StyledButton variant="contained" sx={{marginLeft: 2, width: '62%'}}>Слушать</StyledButton>
+                        <StyledButton variant="contained" sx={{marginLeft: 2, width: '62%'}} onClick={() => navigate(`/Audio-podcast/${id}`)}>Слушать</StyledButton>
                     </Box>
                 </CardContent>
 
@@ -89,6 +91,7 @@ const CustomCard = ({name, description, tags=[], duration, author, subscribers, 
                         display: 'flex',
                         justifyContent: 'center',
                         alignItems: 'center',
+                        borderRadius: '5px'
                     }}
                 >
                     <img
