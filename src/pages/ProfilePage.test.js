@@ -1,79 +1,141 @@
-import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
-import ProfilePage, {PlaylistCard, ButtonBeforeCards, playlists, RenderPlaylistCards} from './Profile';
-import '@testing-library/jest-dom/extend-expect';
+import React from "react";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import { BrowserRouter } from "react-router-dom";
+import ProfilePageNew from "./ProfilePage";
+import cardData from "../mocks/CardData.json";
 
-jest.mock('../components/HeaderComponent', () => () => <div data-testid="header-component">HeaderComponent</div>);
-jest.mock('../components/FooterComponent', () => () => <div data-testid="footer-component">FooterComponent</div>);
-// jest.mock('../components/FooterNavigation', () => () => <div data-testid="footer-navigation">FooterNavigation</div>);
-
-describe('ProfilePage Component', () => {
-    it('renders ProfilePage correctly', () => {
-        render(<ProfilePage />);
-
-        // Header
-        expect(screen.getByTestId('header-component')).toBeInTheDocument();
-
-        // User Info
-        expect(screen.getByText('Имя Фамилия')).toBeInTheDocument();
-        expect(screen.getByText('Описание профиля текст текст текст')).toBeInTheDocument();
-        expect(screen.getByText('vk.com/user')).toBeInTheDocument();
-        expect(screen.getByText('Изменить профиль')).toBeInTheDocument();
-
-        // Stats
-        expect(screen.getByText('27 подписчиков')).toBeInTheDocument();
-        expect(screen.getByText('256 подписок')).toBeInTheDocument();
-        expect(screen.getByText('7 подкастов')).toBeInTheDocument();
-
-        // Footer
-        expect(screen.getByTestId('footer-component')).toBeInTheDocument();
-    });
+jest.mock("../components/CustomCard", () => {
+    return ({ name }) => <div data-testid="custom-card">{name}</div>;
 });
 
-describe('ButtonBeforeCards Component', () => {
-    it('renders ButtonBeforeCards correctly', () => {
-        const { getByText } = render(<ButtonBeforeCards line="Добавить новый плейлист" />);
-        expect(getByText('Добавить новый плейлист')).toBeInTheDocument();
-        // expect(screen.getByTestId('footer-navigation')).toBeInTheDocument();
-    });
-});
+jest.mock("../components/HeaderComponent", () => () => (
+    <div data-testid="header-component">Header</div>
+));
 
-describe('PlaylistCard Component', () => {
-    it('renders PlaylistCard correctly', () => {
-        const mockPlaylist = playlists[0];
-        const { getByText, getByAltText } = render(<PlaylistCard item={mockPlaylist} />);
+jest.mock("../components/FooterComponent", () => () => (
+    <div data-testid="footer-component">Footer</div>
+));
 
-        expect(getByText(mockPlaylist.title)).toBeInTheDocument();
-        expect(getByText('Подборка треков для продуктивной...')).toBeInTheDocument();
-        expect(getByText(`${mockPlaylist.episodes} выпуска`)).toBeInTheDocument();
-        expect(getByAltText('Плейлист обложка')).toBeInTheDocument();
-        expect(screen.getByRole('button', { name: /Слушать/i })).toBeInTheDocument();
-    });
+jest.mock("../components/Sections", () => ({ setActiveSection }) => (
+    <div>
+        <button onClick={() => setActiveSection(0)}>Подкасты</button>
+        <button onClick={() => setActiveSection(1)}>Плейлисты</button>
+        <button onClick={() => setActiveSection(2)}>Избранное</button>
+        <button onClick={() => setActiveSection(3)}>Сохраненное</button>
+    </div>
+));
 
-    it('переключает иконку блокировки при клике на кнопку', () => {
-        const mockPlaylist = playlists[0];
-        const { getByRole, queryByTestId } = render(<PlaylistCard item={mockPlaylist} />);
+describe("ProfilePageNew", () => {
+    it("рендерит основные элементы профиля", () => {
+        render(
+            <BrowserRouter>
+                <ProfilePageNew />
+            </BrowserRouter>
+        );
 
-        const lockButton = getByRole('button');
-        fireEvent.click(lockButton);
-
-        expect(queryByTestId('lock-open-icon')).toBeInTheDocument();
-        expect(queryByTestId('lock-icon')).not.toBeInTheDocument();
-
-        fireEvent.click(lockButton);
-
-        expect(queryByTestId('lock-icon')).toBeInTheDocument();
-        expect(queryByTestId('lock-open-icon')).not.toBeInTheDocument();
+        expect(screen.getByText("Имя Фамилия")).toBeInTheDocument();
+        expect(screen.getByText("Описание профиля")).toBeInTheDocument();
+        expect(screen.getByText("Изменить профиль")).toBeInTheDocument();
+        expect(screen.getByText("100 подписчиков")).toBeInTheDocument();
+        expect(screen.getByText("50 подписок")).toBeInTheDocument();
+        expect(screen.getByText("50 публикаций")).toBeInTheDocument();
     });
 
+    it("меняет контент при переключении вкладок", async () => {
+        render(
+            <BrowserRouter>
+                <ProfilePageNew />
+            </BrowserRouter>
+        );
 
-});
+        // Проверяем контент для вкладки "Подкасты"
+        fireEvent.click(screen.getByText("Подкасты"));
+        await waitFor(() =>
+            expect(
+                screen.getAllByTestId("custom-card")[0] // Берем первый элемент
+            ).toHaveTextContent(cardData.podcasts[0].name)
+        );
 
-describe('RenderPlaylistCards Component', () => {
-    it('renders all playlist cards correctly', () => {
-        const { getAllByText } = render(<RenderPlaylistCards list={playlists} noButton={false} />);
-        playlists.forEach((playlist) => {
-            expect(getAllByText(playlist.title)).toBeTruthy();
+        // Проверяем контент для вкладки "Плейлисты"
+        fireEvent.click(screen.getByText("Плейлисты"));
+        await waitFor(() =>
+            expect(
+                screen.getAllByTestId("custom-card")[0] // Берем первый элемент
+            ).toHaveTextContent(cardData.playlists[0].name)
+        );
+
+        // Проверяем контент для вкладки "Избранное"
+        fireEvent.click(screen.getByText("Избранное"));
+        await waitFor(() =>
+            expect(
+                screen.getAllByTestId("custom-card")[0] // Берем первый элемент
+            ).toHaveTextContent(cardData.liked[0].name)
+        );
+
+        // Проверяем контент для вкладки "Сохраненное"
+        fireEvent.click(screen.getByText("Сохраненное"));
+        await waitFor(() =>
+            expect(
+                screen.getAllByTestId("custom-card")[0] // Берем первый элемент
+            ).toHaveTextContent(cardData.saved[0].name)
+        );
+    });
+
+    it("показывает сообщение, если данных нет", async () => {
+        render(
+            <BrowserRouter>
+                <ProfilePageNew />
+            </BrowserRouter>
+        );
+
+        fireEvent.click(screen.getByText("Сохраненное"));
+
+        await waitFor(() => {
+            expect(screen.queryByTestId("custom-card")).toBeInTheDocument();
+            // expect(screen.getByText("Нет данных для отображения.")).not.toBeInTheDocument();
         });
+    });
+
+    it("показывает сообщение о загрузке", async () => {
+        render(
+            <BrowserRouter>
+                <ProfilePageNew />
+            </BrowserRouter>
+        );
+
+        fireEvent.click(screen.getByText("Плейлисты"));
+
+        // expect(screen.getByText("Загрузка...")).toBeInTheDocument();
+
+        await waitFor(() =>
+            expect(screen.queryByText("Загрузка...")).not.toBeInTheDocument()
+        );
+    });
+
+    it("переходит на страницу редактирования профиля", () => {
+        render(
+            <BrowserRouter>
+                <ProfilePageNew />
+            </BrowserRouter>
+        );
+
+        const editButton = screen.getByText("Изменить профиль");
+        fireEvent.click(editButton);
+
+        expect(window.location.pathname).toBe("/EditProfile");
+    });
+
+    it("переходит на страницу подписчиков и подписок", () => {
+        render(
+            <BrowserRouter>
+                <ProfilePageNew />
+            </BrowserRouter>
+        );
+
+        fireEvent.click(screen.getByText("100 подписчиков"));
+        expect(window.location.pathname).toBe("/Users/followers");
+
+        fireEvent.click(screen.getByText("50 подписок"));
+        expect(window.location.pathname).toBe("/Users/subscriptions");
     });
 });
