@@ -181,7 +181,7 @@ export const likedPodcasts = [
 export default function ProfilePage() {
     return (
         <div>
-            <HeaderComponent />
+            <HeaderComponent/>
             <Container maxWidth="md" sx={profilePageStyles.container}>
                 <Box display="flex" alignItems="center" mb={3}>
                     <Avatar
@@ -198,10 +198,10 @@ export default function ProfilePage() {
                             Описание профиля текст текст текст
                         </Typography>
                         <Typography variant="body2" color="textSecondary" sx={profilePageStyles.profileLink}>
-                            <Link /> vk.com/user
+                            <Link/> vk.com/user
                         </Typography>
                         <Box sx={profilePageStyles.buttonContainer}>
-                            <Box sx={profilePageStyles.overlayBox} />
+                            <Box sx={profilePageStyles.overlayBox}/>
                             <Button variant="contained" sx={profilePageStyles.button}>
                                 <Typography sx={profilePageStyles.buttonText}>Изменить профиль</Typography>
                             </Button>
@@ -211,14 +211,14 @@ export default function ProfilePage() {
 
                 <Box sx={profilePageStyles.statsBox}>
                     <Typography variant="body2" sx={profilePageStyles.statText}>27 подписчиков</Typography>
-                    <Star sx={profilePageStyles.starIcon} />
+                    <Star sx={profilePageStyles.starIcon}/>
                     <Typography variant="body2" sx={profilePageStyles.statText}>256 подписок</Typography>
-                    <Star sx={profilePageStyles.starIcon} />
+                    <Star sx={profilePageStyles.starIcon}/>
                     <Typography variant="body2" sx={profilePageStyles.statText}>7 подкастов</Typography>
                 </Box>
 
                 {ButtonGroup()}
-                <FooterComponent />
+                <FooterComponent/>
             </Container>
         </div>
     );
