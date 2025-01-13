@@ -1,3 +1,5 @@
+import cardPhoto from "../assets/cardPhoto.svg";
+
 export const fetchData = async (page) => {
     const limit = 10;
     const start = (page - 1) * limit;
@@ -9,7 +11,7 @@ export const fetchData = async (page) => {
         duration: "60 min",
         author: `Author ${i + 1}`,
         subscribes: 1,
-        photo: "mockedPhoto.svg",
+        photo: cardPhoto
     }));
     const result = serverData.slice(start, start + limit);
     return result.length > 0 ? result : null;

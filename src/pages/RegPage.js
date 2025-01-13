@@ -178,7 +178,8 @@ const RegPage = () => {
                     </GoogleButton>
                 </Form>
                 <LoginLink>
-                    Уже есть аккаунт? <a href="/Login">Войти</a>
+                    //TODO: исправь на Link
+                    Уже есть аккаунт? <a href="/#/Login">Войти</a>
                 </LoginLink>
             </FormContainer>
         </MainContainer>
