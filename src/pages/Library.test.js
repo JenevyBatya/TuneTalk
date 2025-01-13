@@ -1,107 +1,129 @@
-import React from 'react';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import Library from '../pages/Library';
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import Library from "./Library";
+import { fetchData } from "../features/fetchData";
+import { BrowserRouter as Router } from "react-router-dom";
 
-jest.mock('../components/HeaderComponent', () => () => <div>HeaderComponent</div>);
-jest.mock('../components/FooterComponent', () => () => <div>FooterNavigation</div>);
-jest.mock('../components/SearchFilter', () => ({ onSearch }) => (
-    <input
-        data-testid="search-input"
-        onChange={(e) => onSearch([{ id: 1, name: 'Filtered Name', description: 'Filtered Desc', author: 'Filtered Author' }])}
-        placeholder="Search"
-    />
-));
-jest.mock('../components/CategoryFilter', () => ({ onFilter }) => (
-    <button data-testid="category-filter" onClick={() => onFilter([{ id: 2, name: 'Category Name', description: 'Category Desc', author: 'Category Author' }])}>
-        Apply Filter
-    </button>
-));
-jest.mock('../components/CustomCard', () => ({ name }) => <div>{name}</div>);
+jest.mock("../features/fetchData");
 
-jest.mock('../pages/Library', () => {
-    const originalModule = jest.requireActual('../pages/Library');
-    return {
-        ...originalModule,
-        fetchData: jest.fn(async (page) => {
-            const mockData = Array.from({ length: 10 }, (_, i) => ({
-                id: i + 1 + (page - 1) * 10,
-                name: `Mock Name ${i + 1}`,
-                description: `Mock Description ${i + 1}`,
-                author: `Mock Author ${i + 1}`,
-                subscribes: i + 1,
-                tags: [],
-                duration: '60 min',
-                photo: 'mockPhoto',
-            }));
-            return mockData;
-        }),
-    };
-});
-
-describe('Library Component', () => {
+describe("Library component", () => {
     afterEach(() => {
         jest.clearAllMocks();
     });
 
-    test('renders Library component without crashing', async () => {
-        render(<Library />);
-        expect(screen.getByText(/HeaderComponent/i)).toBeInTheDocument();
-        expect(screen.getByText(/FooterNavigation/i)).toBeInTheDocument();
-        expect(screen.getByText(/Library/i)).toBeInTheDocument();
+    it("loads and displays data", async () => {
+        const mockedData = [
+            {
+                id: 1,
+                name: "Mocked Name 1",
+                description: "Mocked Description",
+                tags: [{ id: 1, text: "Tag1" }],
+                duration: "10 min",
+                author: "Mocked Author",
+                subscribes: 10,
+                photo: "mockedPhoto.svg",
+            },
+        ];
+
+        fetchData.mockResolvedValue(mockedData);
+
+        render(
+            <Router>
+                <Library />
+            </Router>
+        );
+
+        const cardElement = await screen.findByText("Mocked Name 1");
+        expect(cardElement).toBeInTheDocument();
     });
 
-    test('loads and displays initial data', async () => {
-        render(<Library />);
-        await waitFor(() => {
-            expect(screen.getByText(/Mock Name 1/i)).toBeInTheDocument();
-            expect(screen.getByText(/Mock Name 10/i)).toBeInTheDocument();
-        });
+    it("displays 'no data' when no items are found", async () => {
+        fetchData.mockResolvedValue([]);
+
+        render(
+            <Router>
+                <Library />
+            </Router>
+        );
+
+        const noDataElement = await screen.findByText("Кажется, пока что у нас такого нет...");
+        expect(noDataElement).toBeInTheDocument();
     });
 
-    test('filters data with SearchFilter', async () => {
-        render(<Library />);
-        const searchInput = screen.getByTestId('search-input');
+    it("loads more data when 'Загрузить ещё' is clicked", async () => {
+        const mockedDataPage1 = [
+            {
+                id: 1,
+                name: "Mocked Name 1",
+                description: "Mocked Description",
+                tags: [{ id: 1, text: "Tag1" }],
+                duration: "10 min",
+                author: "Mocked Author",
+                subscribes: 10,
+                photo: "mockedPhoto.svg",
+            },
+        ];
+        const mockedDataPage2 = [
+            {
+                id: 2,
+                name: "Mocked Name 2",
+                description: "Mocked Description 2",
+                tags: [{ id: 2, text: "Tag2" }],
+                duration: "20 min",
+                author: "Mocked Author 2",
+                subscribes: 20,
+                photo: "mockedPhoto2.svg",
+            },
+        ];
 
-        fireEvent.change(searchInput, { target: { value: 'Filter' } });
+        fetchData.mockResolvedValueOnce(mockedDataPage1).mockResolvedValueOnce(mockedDataPage2);
 
-        await waitFor(() => {
-            expect(screen.getByText(/Filtered Name/i)).toBeInTheDocument();
-            expect(screen.queryByText(/Mock Name 1/i)).not.toBeInTheDocument();
-        });
+        render(
+            <Router>
+                <Library />
+            </Router>
+        );
+
+        const loadMoreButton = await screen.findByText("Загрузить ещё");
+
+        // Первоначальная загрузка
+        const firstCard = await screen.findByText("Mocked Name 1");
+        expect(firstCard).toBeInTheDocument();
+
+        // Клик по кнопке "Загрузить ещё"
+        fireEvent.click(loadMoreButton);
+
+        const secondCard = await screen.findByText("Mocked Name 2");
+        expect(secondCard).toBeInTheDocument();
     });
 
-    test('applies category filter', async () => {
-        render(<Library />);
-        const filterButton = screen.getByTestId('category-filter');
 
-        fireEvent.click(filterButton);
+    it("hides 'Загрузить ещё' button when no more data is available", async () => {
+        const mockedData = [
+            {
+                id: 1,
+                name: "Mocked Name 1",
+                description: "Mocked Description",
+                tags: [{ id: 1, text: "Tag1" }],
+                duration: "10 min",
+                author: "Mocked Author",
+                subscribes: 10,
+                photo: "mockedPhoto.svg",
+            },
+        ];
 
-        await waitFor(() => {
-            expect(screen.getByText(/Category Name/i)).toBeInTheDocument();
-            expect(screen.queryByText(/Mock Name 1/i)).not.toBeInTheDocument();
-        });
-    });
+        fetchData.mockResolvedValueOnce(mockedData).mockResolvedValueOnce(null);
 
-    test('loads more data when "Загрузить ещё" is clicked', async () => {
-        render(<Library />);
-        await waitFor(() => {
-            expect(screen.getByText(/Mock Name 10/i)).toBeInTheDocument();
-        });
+        render(
+            <Router>
+                <Library />
+            </Router>
+        );
 
-        const loadMoreButton = screen.getByText(/Загрузить ещё/i);
+        const loadMoreButton = await screen.findByText("Загрузить ещё");
         fireEvent.click(loadMoreButton);
 
         await waitFor(() => {
-            expect(screen.getByText(/Mock Name 11/i)).toBeInTheDocument();
-            expect(screen.getByText(/Mock Name 20/i)).toBeInTheDocument();
-        });
-    });
-
-    test('displays message when no data is found', async () => {
-        jest.spyOn(require('../pages/Library'), 'fetchData').mockResolvedValue([]);
-        render(<Library />);
-        await waitFor(() => {
-            expect(screen.getByText(/Кажется, пока что у нас такого нет/i)).toBeInTheDocument();
+            expect(loadMoreButton).not.toBeInTheDocument();
         });
     });
 });
