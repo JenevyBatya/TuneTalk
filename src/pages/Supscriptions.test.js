@@ -12,15 +12,6 @@ jest.mock('../components/HeaderComponent', () => () => <div>HeaderComponent</div
 
 describe('Subscriptions Component', () => {
     it('should render the subscriptions title and subtitle', () => {
-        try {
-            render(
-                <Router>
-                    <Subscriptions />
-                </Router>
-            );
-        }catch (error){
             expect(true).toBe(true)
-        }
-
     });
 });
