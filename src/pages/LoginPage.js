@@ -66,7 +66,7 @@ export const LoginPage = () => {
                             type="text"
                             value={identifier}
                             onChange={(e) => setIdentifier(e.target.value)}
-                            label="Логин или Email"
+                            label="Email"
                             required
                         />
                     </FormControl>

@@ -1,19 +1,43 @@
 import React from "react";
-import { Box, Typography, Avatar, TextField, Button } from "@mui/material";
-import {StyledButton} from "./CustomCard";
+import { Box, Typography, Avatar, TextField} from "@mui/material";
+import { StyledButton } from "./CustomCard";
+import {addCommentToBackend} from "../features/fetchData";
 
-const Comments = ({ comments }) => {
+const Comments = ({ comments, setComments }) => {
     const [newComment, setNewComment] = React.useState("");
 
-    const handleAddComment = () => {
+    const handleAddComment = async () => {
         if (newComment.trim()) {
-            console.log("Добавлен комментарий:", newComment);
+            const username = localStorage.getItem("username") || "Unknown user";
+
+            const commentData = {
+                id: Date.now(), // Уникальный ID для нового комментария
+                author: username,
+                text: newComment,
+            };
+            setComments((prevComments) => [...prevComments, commentData]);
             setNewComment("");
+            try {
+                // TODO MOCK
+                await addCommentToBackend(commentData);
+            } catch (error) {
+                console.error("Ошибка при добавлении комментария:", error);
+            }
         }
     };
 
     return (
         <Box>
+            <Box
+                sx={{
+                    maxHeight: "300px", // Ограничение высоты (регулируйте по необходимости)
+                    overflowY: "auto", // Включаем прокрутку
+                    padding: 1,
+                    marginBottom: 2,
+                    backgroundColor: "#f9f9f9",
+                    borderRadius: "10px",
+                }}
+            >
             {comments.map((comment) => (
                 <Box
                     key={comment.id}
@@ -32,7 +56,7 @@ const Comments = ({ comments }) => {
                     </Box>
                 </Box>
             ))}
-
+            </Box>
             <TextField
                 value={newComment}
                 onChange={(e) => setNewComment(e.target.value)}
@@ -41,11 +65,16 @@ const Comments = ({ comments }) => {
                 multiline
                 rows={2}
                 variant="outlined"
-                sx={{ marginBottom: 1, backgroundColor: "#F1F1F1", borderRadius: "20px", "& .MuiOutlinedInput-root": {
+                sx={{
+                    marginBottom: 1,
+                    backgroundColor: "#F1F1F1",
+                    borderRadius: "20px",
+                    "& .MuiOutlinedInput-root": {
                         "& fieldset": {
                             border: "none",
-                        }
-                    },}}
+                        },
+                    },
+                }}
             />
             <StyledButton
                 variant="contained"
