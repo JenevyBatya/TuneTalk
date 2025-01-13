@@ -35,7 +35,7 @@
     "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-scripts test --silent",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -46,7 +46,9 @@
   },
   "jest": {
     "moduleNameMapper": {
-      "^axios$": "axios/dist/node/axios.cjs"
+      "^axios$": "axios/dist/node/axios.cjs",
+      "setupFilesAfterEnv": ["<rootDir>/jest.setup.js"],
+      "silent": true
     },
     "coverageThreshold": {
       "global": {
