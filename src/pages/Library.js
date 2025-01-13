@@ -7,30 +7,31 @@ import FooterNavigation from "../components/FooterComponent";
 import HeaderComponent from "../components/HeaderComponent";
 import cardPhoto from '../assets/cardPhoto.svg';
 import styles from '../styles/Library.module.css';
+import {fetchData} from "../features/fetchData";
 
-const Library = () => {
+export const Library = () => {
     const [data, setData] = useState([]);
     const searchFields = ['name', 'description', 'author'];
     const [filteredData, setFilteredData] = useState(data);
     const [page, setPage] = useState(1);
     const [hasMore, setHasMore] = useState(true);
     // Mock server request, TODO server request
-    const fetchData = async (page) => {
-        const limit = 10;
-        const start = (page - 1) * limit;
-        const serverData = Array.from({ length: 20 }, (_, i) => ({
-            id: i + 1,
-            name: `Name ${i + 1}`,
-            description: "Description/Theme",
-            tags: [{ id: 1, text: "tags" }, { id: 2, text: "tags" }, { id: 3, text: "tags" }],
-            duration: "60 min",
-            author: `Author ${i + 1}`,
-            subscribes: 1,
-            photo: cardPhoto
-        }));
-        const result = serverData.slice(start, start + limit);
-        return result.length > 0 ? result : null;
-    };
+    // const fetchData = async (page) => {
+    //     const limit = 10;
+    //     const start = (page - 1) * limit;
+    //     const serverData = Array.from({ length: 20 }, (_, i) => ({
+    //         id: i + 1,
+    //         name: `Name ${i + 1}`,
+    //         description: "Description/Theme",
+    //         tags: [{ id: 1, text: "tags" }, { id: 2, text: "tags" }, { id: 3, text: "tags" }],
+    //         duration: "60 min",
+    //         author: `Author ${i + 1}`,
+    //         subscribes: 1,
+    //         photo: cardPhoto
+    //     }));
+    //     const result = serverData.slice(start, start + limit);
+    //     return result.length > 0 ? result : null;
+    // };
     const loadMoreData = async () => {
         const newData = await fetchData(page);
         if (newData) {
