@@ -1,6 +1,6 @@
 // import logo from './logo.svg';
 import './App.css';
-import {HashRouter, Route, Routes, useLocation} from "react-router-dom";
+import {HashRouter, Route, Router, Routes, useLocation} from "react-router-dom";
 import LandingPage from "./pages/LandingPage";
 import LoginPage from "./pages/LoginPage";
 import RegPage from "./pages/RegPage";
