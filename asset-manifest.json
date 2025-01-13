@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.css": "/TuneTalk/static/css/main.981edeaf.css",
-    "main.js": "/TuneTalk/static/js/main.d018aa4a.js",
-    "static/js/453.291811c6.chunk.js": "/TuneTalk/static/js/453.291811c6.chunk.js",
+    "main.css": "/TuneTalk/static/css/main.5d8a9eb6.css",
+    "main.js": "/TuneTalk/static/js/main.da3c01ec.js",
+    "static/js/885.5d5ba978.chunk.js": "/TuneTalk/static/js/885.5d5ba978.chunk.js",
     "static/media/cardPhoto.svg": "/TuneTalk/static/media/cardPhoto.edef861dbac8be28b335dd38d386d7f8.svg",
-    "static/media/Playlist.svg": "/TuneTalk/static/media/Playlist.9aa6a900f8078577d48ec01b27a077de.svg",
+    "static/media/SLAVA SKRIPKA Бобр.mp3": "/TuneTalk/static/media/SLAVA SKRIPKA Бобр.7a999ef916477038b6e4.mp3",
     "static/media/auth3.jpg": "/TuneTalk/static/media/auth3.287f32aa54aa37ee24d1.jpg",
     "static/media/auth1.jpg": "/TuneTalk/static/media/auth1.255c61e946c4bcb2a924.jpg",
     "static/media/rec2.jpg": "/TuneTalk/static/media/rec2.a847a84acfa55dc737c5.jpg",
@@ -17,16 +17,20 @@
     "static/media/slick.eot": "/TuneTalk/static/media/slick.a4e97f5a2a64f0ab1323.eot",
     "static/media/slick.ttf": "/TuneTalk/static/media/slick.c94f7671dcc99dce43e2.ttf",
     "static/media/slick.woff": "/TuneTalk/static/media/slick.295183786cd8a1389865.woff",
-    "static/media/googleLogo.svg": "/TuneTalk/static/media/googleLogo.d07cda15d09b15c9eb8afe9af06cb1e9.svg",
     "index.html": "/TuneTalk/index.html",
+    "static/media/LinkIcon.svg": "/TuneTalk/static/media/LinkIcon.a60bf2c41aaa882d2dc17607d4c83a7c.svg",
+    "static/media/googleLogo.svg": "/TuneTalk/static/media/googleLogo.d07cda15d09b15c9eb8afe9af06cb1e9.svg",
+    "static/media/Liked.svg": "/TuneTalk/static/media/Liked.3c89d990a364fdba30ab838deed09eff.svg",
     "static/media/searchIcon.svg": "/TuneTalk/static/media/searchIcon.456b0c92bef389d4074b7f2d59e657df.svg",
     "static/media/filterIcon.svg": "/TuneTalk/static/media/filterIcon.03dafc619f5d9d9936d12cf1720119ef.svg",
-    "main.981edeaf.css.map": "/TuneTalk/static/css/main.981edeaf.css.map",
-    "main.d018aa4a.js.map": "/TuneTalk/static/js/main.d018aa4a.js.map",
-    "453.291811c6.chunk.js.map": "/TuneTalk/static/js/453.291811c6.chunk.js.map"
+    "static/media/ProfileStar.svg": "/TuneTalk/static/media/ProfileStar.846ca7222052d61b78966ca31ea968bb.svg",
+    "static/media/Saved.svg": "/TuneTalk/static/media/Saved.13e3afd951b8b8e0b4d5ae9a4f752dfb.svg",
+    "main.5d8a9eb6.css.map": "/TuneTalk/static/css/main.5d8a9eb6.css.map",
+    "main.da3c01ec.js.map": "/TuneTalk/static/js/main.da3c01ec.js.map",
+    "885.5d5ba978.chunk.js.map": "/TuneTalk/static/js/885.5d5ba978.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.981edeaf.css",
-    "static/js/main.d018aa4a.js"
+    "static/css/main.5d8a9eb6.css",
+    "static/js/main.da3c01ec.js"
   ]
 }
