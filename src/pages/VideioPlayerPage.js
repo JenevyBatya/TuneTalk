@@ -7,7 +7,6 @@ import FooterNavigation from "../components/FooterComponent";
 import HeaderComponent from "../components/HeaderComponent";
 import SubscribeButton from "../components/ButtonForSubscribe";
 
-// Mock for video podcast
 const mockVideoPodcastData = {
     videoSrc: "https://www.youtube.com/embed/dQw4w9WgXcQ",
     name: "Самый хороший подкаст",
