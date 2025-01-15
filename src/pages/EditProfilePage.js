@@ -36,19 +36,57 @@ const Input = styled.input`
     font-size: 14px;
 `;
 
-const FileInput = styled.input`
-    font-size: 14px;
-    padding: 5px;
+const AvatarContainer = styled.div`
+    position: relative;
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 20px;
+    border-radius: 50%;
+    background-color: #f0f0f0; 
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 `;
 
-const AvatarPreview = styled.img`
-    width: 100px;
-    height: 100px;
+const StyledAvatarPreview = styled.img`
+    width: 100%;
+    height: 100%;
     border-radius: 50%;
     object-fit: cover;
-    margin: 0 auto 15px;
-    display: block;
+    border: 3px solid #ddd;
+    background-color: #f0f0f0;
 `;
+
+const ChangeAvatarButton = styled.label`
+    position: absolute;
+    bottom: 7px;
+    right: 7px;
+    background-color: #173E47;
+    color: white;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border: 2px solid white;
+    font-size: 18px;
+    aspect-ratio: 1; 
+    box-sizing: border-box;
+z-index: 100;
+    
+    &:hover {
+        background-color: #0d2b33;
+    }
+
+    input {
+        display: none;
+    }
+`;
+
+
 
 const SaveButton = styled.button`
     padding: 10px;
@@ -81,7 +119,7 @@ const CancelButton = styled.button`
 const EditProfilePage = () => {
     const navigate = useNavigate();
 
-    const [avatar, setAvatar] = useState("https://via.placeholder.com/100"); // Мок аватара
+    const [avatar, setAvatar] = useState("https://via.placeholder.com/120"); // Мок аватара
     const [username, setUsername] = useState("Ваше имя");
     const [socialLink, setSocialLink] = useState("https://example.com");
 
@@ -105,14 +143,6 @@ const EditProfilePage = () => {
 
         console.log("Обновленные данные профиля:", updatedProfile);
 
-        // Здесь можно отправить данные на сервер
-        // fetch('/api/profile', {
-        //     method: 'POST',
-        //     headers: { 'Content-Type': 'application/json' },
-        //     body: JSON.stringify(updatedProfile)
-        // }).then(response => response.json())
-        //   .then(data => console.log(data));
-
         alert("Профиль успешно обновлен!");
         navigate("/Profile");
     };
@@ -122,8 +152,13 @@ const EditProfilePage = () => {
             <Header>Редактирование профиля</Header>
             <Form onSubmit={handleSubmit}>
                 <Label>Аватар</Label>
-                <AvatarPreview src={avatar} alt="Avatar Preview" />
-                <FileInput type="file" accept="image/*" onChange={handleAvatarChange} />
+                <AvatarContainer>
+                    <StyledAvatarPreview src={avatar} alt="Avatar Preview" />
+                    <ChangeAvatarButton>
+                        <span>✏️</span>
+                        <input type="file" accept="image/*" onChange={handleAvatarChange} />
+                    </ChangeAvatarButton>
+                </AvatarContainer>
 
                 <Label>Имя пользователя</Label>
                 <Input
