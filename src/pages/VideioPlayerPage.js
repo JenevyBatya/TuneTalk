@@ -3,15 +3,14 @@ import { Box, Typography, Avatar, Chip, Divider } from "@mui/material";
 import VideoPlayer from "../components/VideoPlayer";
 import Comments from "../components/Comments";
 import cardPhoto from '../assets/cardPhoto.svg';
-import mockVideo from '../assets/Подкаст.mov';
 import FooterNavigation from "../components/FooterComponent";
 import HeaderComponent from "../components/HeaderComponent";
 import SubscribeButton from "../components/ButtonForSubscribe";
 
 // Mock for video podcast
 const mockVideoPodcastData = {
-    videoSrc: mockVideo,
-    name: "Самый хороший подкакст",
+    videoSrc: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    name: "Самый хороший подкаст",
     description: "Description of the video podcast...",
     author: "Азамат Мусагалиев",
     subscribers: 456,
@@ -21,10 +20,9 @@ const mockVideoPodcastData = {
     likes: 567,
 };
 
-
 const mockComments = [
     { id: 1, author: "Иван", text: "Отличный видеоподкаст!", avatar: "" },
-    { id: 2, author: "Мария", text: "Этот синий такой серьёзный, ужас!", avatar: "" },
+    { id: 2, author: "Мария", text: "поняла.", avatar: "" },
 ];
 
 const VideoPodcastPage = () => {
@@ -81,8 +79,8 @@ const VideoPodcastPage = () => {
                 <Divider sx={{ marginY: 2 }} />
                 <Comments comments={comments} />
             </Box>
-            <div style={{marginBottom:'20%'}}>
-            <FooterNavigation />
+            <div style={{ marginBottom: '20%' }}>
+                <FooterNavigation />
             </div>
         </div>
     );
