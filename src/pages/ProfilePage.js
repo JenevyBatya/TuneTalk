@@ -16,9 +16,9 @@ import {
     MainContainer,
     StarIcon,
     FooterContainer,
-    ProfileDiv
+    ProfileDiv, AddButton
 } from "../styles/ProfilePagePodkastsStyles";
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
 import UserPic from "../assets/auth2.jpg";
 import LinkIcon from "../assets/icons/LinkIcon.svg";
@@ -158,7 +158,7 @@ const ProfilePageNew = () => {
                         <StatText>50 публикаций</StatText>
                     </StatsItem>
                 </StatsContainer>
-
+                <AddButton as={Link} to="/#audiocutterlink#" >Новый подкаст</AddButton>
                 <Sections setActiveSection={setActiveSection}/>
 
                 <ContentContainer>

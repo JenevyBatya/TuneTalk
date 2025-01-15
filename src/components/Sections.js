@@ -23,7 +23,6 @@ const SectionBackground = styled.div`
 const SectionButton = styled.div`
     border-radius: 10px;
     background: ${(props) => (props.active ? ' #FF7510' : 'white')};
-    color: black;
     font-size: 12px;
     height: 30px;
     width: auto;
@@ -42,7 +41,8 @@ const SectionButton = styled.div`
     text-align: center;
 
     &:hover {
-        color: #FFFFFF;
+        color: #282c34;
+
     }
 `;
 

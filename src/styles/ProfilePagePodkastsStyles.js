@@ -90,19 +90,21 @@ export const EditButtonDiv = styled.div`
     background-color: #173E47;
     cursor: pointer;
     width: fit-content;
+    height: auto;
 `;
 
 export const EditButton = styled.button`
     background: white;
     color: #173E47;
     font-size: 12px;
-    height: 30px;
+    min-height: 30px;
     width: auto;
     font-weight: bold;
     border: none;
     border-radius: 10px;
     padding: 5px 10px;
     cursor: pointer;
+    height: auto;
 `;
 
 export const StatsContainer = styled.div`
@@ -129,6 +131,7 @@ export const StatsItem = styled.div`
 
     &:hover {
         background-color: #f0f0f0; 
+        color: #282c34;
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
         border-radius: 8px; 
     }
@@ -153,4 +156,26 @@ export const FooterContainer = styled.div`
     width: 100%;
     text-align: center;
     margin-bottom: 20px;
+`
+export const AddButton = styled.button `
+    border-radius: 13px;
+    border: 0;
+    background: #173E47;
+    text-align: center;
+    align-content: center;
+    font-size: 14px;
+    color: white;
+    width: 80%;
+    margin-bottom: 3%;
+    height: 40%;
+    min-height: 45px;
+    box-shadow: none;
+    margin-left: auto;
+    margin-right: auto;
+    text-decoration: none;
+
+    &:hover {
+
+        background: #3e6670;
+    }
 `
