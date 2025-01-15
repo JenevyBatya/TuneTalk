@@ -20,6 +20,7 @@ import {
 } from "../styles/ProfilePagePodkastsStyles";
 import {Link, useNavigate} from "react-router-dom";
 
+
 import UserPic from "../assets/auth2.jpg";
 import LinkIcon from "../assets/icons/LinkIcon.svg";
 import Star from "../assets/icons/ProfileStar.svg";
@@ -159,6 +160,7 @@ const ProfilePageNew = () => {
                     </StatsItem>
                 </StatsContainer>
                 <AddButton as={Link} to="/#audiocutterlink#" >Новый подкаст</AddButton>
+
                 <Sections setActiveSection={setActiveSection}/>
 
                 <ContentContainer>

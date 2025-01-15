@@ -86,8 +86,6 @@ z-index: 100;
     }
 `;
 
-
-
 const SaveButton = styled.button`
     padding: 10px;
     background-color: #173E47;
@@ -119,7 +117,9 @@ const CancelButton = styled.button`
 const EditProfilePage = () => {
     const navigate = useNavigate();
 
+
     const [avatar, setAvatar] = useState("https://via.placeholder.com/120"); // Мок аватара
+
     const [username, setUsername] = useState("Ваше имя");
     const [socialLink, setSocialLink] = useState("https://example.com");
 
@@ -143,6 +143,16 @@ const EditProfilePage = () => {
 
         console.log("Обновленные данные профиля:", updatedProfile);
 
+
+        // Здесь можно отправить данные на сервер
+        // fetch('/api/profile', {
+        //     method: 'POST',
+        //     headers: { 'Content-Type': 'application/json' },
+        //     body: JSON.stringify(updatedProfile)
+        // }).then(response => response.json())
+        //   .then(data => console.log(data));
+
+
         alert("Профиль успешно обновлен!");
         navigate("/Profile");
     };
@@ -159,6 +169,7 @@ const EditProfilePage = () => {
                         <input type="file" accept="image/*" onChange={handleAvatarChange} />
                     </ChangeAvatarButton>
                 </AvatarContainer>
+
 
                 <Label>Имя пользователя</Label>
                 <Input

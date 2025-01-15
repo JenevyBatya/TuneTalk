@@ -42,7 +42,6 @@ const SectionButton = styled.div`
 
     &:hover {
         color: #282c34;
-
     }
 `;
 

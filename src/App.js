@@ -11,6 +11,7 @@ import EditProfilePage from "./pages/EditProfilePage";
 import ProfilePageNew from "./pages/ProfilePage";
 import VideoPage from "./pages/VideioPlayerPage";
 
+
 function Root() {
     return (
         <HashRouter>
@@ -25,6 +26,7 @@ function Root() {
                 <Route path="/EditProfile" element={<EditProfilePage />} />
                 <Route path="/Audio-podcast/:id" element={<AudioPodcastPage />} />
                 <Route path="/Video-podcast/:id" element={<VideoPage/>}/>
+
             </Routes>
         </HashRouter>
     );

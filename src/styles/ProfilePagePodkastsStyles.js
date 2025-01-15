@@ -157,6 +157,7 @@ export const FooterContainer = styled.div`
     text-align: center;
     margin-bottom: 20px;
 `
+
 export const AddButton = styled.button `
     border-radius: 13px;
     border: 0;
@@ -179,3 +180,4 @@ export const AddButton = styled.button `
         background: #3e6670;
     }
 `
+

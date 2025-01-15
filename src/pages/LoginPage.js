@@ -15,6 +15,7 @@ import {FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput} from
 import {Visibility, VisibilityOff} from "@mui/icons-material";
 import {Link, useNavigate} from "react-router-dom";
 
+
 export const LoginPage = () => {
     const [identifier, setIdentifier] = useState("");
     const [password, setPassword] = useState("");
