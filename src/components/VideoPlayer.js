@@ -18,7 +18,7 @@ const VideoPlayer = ({ videoSrc, duration, likes, cardPhoto, name }) => {
                 {name}
             </Typography>
             <Typography variant="body2" color="text.secondary">
-                Длительность: {duration} | Лайков: {likes}
+                Длительность: {duration}
             </Typography>
         </Box>
     );
