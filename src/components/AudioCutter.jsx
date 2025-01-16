@@ -138,23 +138,6 @@ const AudioCutter = ({coverFile, title, description, tags, username}) => {
         }
     };
 
-    const handlePlaybackSliderChange = (event, newValue) => {
-        setIsDragging(true);
-        if (isPlaying) {
-            stopAudio();
-            setWasPlaying(true);
-        }
-        setPlaybackPosition(newValue);
-    };
-
-    const handlePlaybackSliderCommit = () => {
-        setIsDragging(false);
-        if (wasPlaying) {
-            stopAudio();
-            playAudio();
-        }
-    };
-
     const handleVolumeChange = (event, newValue) => {
         setVolume(newValue);
         if (gainNode) {
@@ -200,7 +183,7 @@ const AudioCutter = ({coverFile, title, description, tags, username}) => {
             formData.append('username', username);
 
             try {
-                await axios.post('http://26.227.27.136:80/audio/upload', formData, {
+                await axios.post('http://138.124.127.129/api/audio/upload', formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data',
                     },
@@ -310,29 +293,6 @@ const AudioCutter = ({coverFile, title, description, tags, username}) => {
                     <AudioWaveform audioFile={audioFile}
                                    playbackPosition={playbackPosition}
                                    isPlaying={isPlaying}
-                    />
-                    <Slider
-                        value={playbackPosition}
-                        min={0}
-                        max={isTrimmed ? trimmedBuffer.duration : audioBuffer.duration}
-                        onChange={handlePlaybackSliderChange}
-                        onChangeCommitted={handlePlaybackSliderCommit}
-                        valueLabelDisplay="auto"
-                        sx={{
-                            '& .MuiSlider-thumb': {
-                                backgroundColor: '#FF7510',
-                                width: 25,
-                                height: 25,
-                            },
-                            '& .MuiSlider-rail': {
-                                backgroundColor: '#ff7e00',
-                                opacity: 0.5,
-                            },
-                            '& .MuiSlider-track': {
-                                backgroundColor: '#FF7510',
-                                border: 'none',
-                            },
-                        }}
                     />
                     <Typography>
                         {formatTime(playbackPosition)} / {formatTime(audioBuffer.duration)}
