@@ -11,6 +11,7 @@ import {styled} from "@mui/system";
 import CheckIcon from '@mui/icons-material/Check';
 import filterIcon from "../assets/icons/filterIcon.svg";
 import {StyledButton} from "./CustomCard";
+import CategoryChipFilter from "./CategoryChipFilter";
 
 
 
@@ -24,7 +25,7 @@ const CustomRadio = styled(Radio)({
         fontSize: '1rem',
     },
 });
-const CategoryChip = styled(Chip)(({ theme, selected }) => ({
+export const CategoryChip = styled(Chip)(({ theme, selected }) => ({
     backgroundColor: selected ? '#D4FF00' : '#E5E5E5',
     color: '#000',
     borderRadius: '10px',
@@ -125,42 +126,11 @@ const CategoryFilter = ({onFilter}) => {
                     />
                 </RadioGroup>
             </Box>
-
-            {/* Фильтрация по категориям */}
-            <div>
-                <Typography variant="h6" sx={{paddingLeft:'1rem'}}>Категории</Typography>
-                <Box padding = '1rem'
-                    display="flex"
-                    flexWrap="wrap" gap={1}
-                    justifyContent="flex-start"
-                    maxWidth="300px" //TODO change the size
-                >
-                    {displayedCategories.map((category) => (
-                        <CategoryChip
-                            key={category}
-                            label={
-                                <>
-                                    {category}
-                                    {selectedCategories.includes(category) && (
-                                        <CheckIcon style={{ marginLeft: 4, fontSize: '1.2rem' }} />
-                                    )}
-                                </>
-
-                        }
-                            selected={selectedCategories.includes(category)}
-                            onClick={() => handleCategoryChange(category)}
-                            clickable
-                        />
-                    ))}
-                    {/* Кнопка для показа всех категорий */}
-                        <CategoryChip
-                            label="..."
-                            onClick={() => setShowAllCategories(!showAllCategories)}
-                            clickable
-                            style={{ backgroundColor: '#E5E5E5', color: '#000' }}
-                        />
-                </Box>
-            </div>
+                    <CategoryChipFilter
+                        selectedCategories={selectedCategories}
+                        setSelectedCategories={setSelectedCategories}
+                        containerStyle={{ maxWidth: "300px" }}
+                    />
             {/* Кнопка для применения фильтров */}
             <Box display="flex" justifyContent="center" alignItems="center" marginBottom='4vh'>
             <StyledButton onClick={applyFilters} variant="contained" color="primary">

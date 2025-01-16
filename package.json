@@ -30,12 +30,9 @@
     "redux-mock-store": "^1.5.5",
     "redux-thunk": "^3.1.0",
     "slick-carousel": "^1.8.1",
-
     "tune-talk": "file:",
-    "waves-ui": "github:wavesjs/ui",
-
     "use-sound": "^4.0.3",
-
+    "waves-ui": "github:wavesjs/ui",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -87,7 +84,8 @@
     "gh-pages": "^6.2.0",
     "react-redux": "^9.2.0",
     "react-slick": "^0.30.2",
-    "styled-components": "^6.1.13"
+    "styled-components": "^6.1.13",
+    "wavesurfer.js": "^7.8.16"
   },
   "optionalDependencies": {
     "type": "module"

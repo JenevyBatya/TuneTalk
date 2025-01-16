@@ -24,6 +24,7 @@ import {
 } from "../styles/LandingPageStyles";
 import {Link} from "react-router-dom";
 import Bugsnag from "@bugsnag/js";
+import HeaderComponent from "../components/HeaderComponent";
 
 const images = [photo1, photo2, photo3];
 const authors = [auth1, auth2, auth3];

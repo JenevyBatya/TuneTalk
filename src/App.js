@@ -30,6 +30,7 @@ function Root() {
                 <Route path="/EditProfile" element={<EditProfilePage />} />
                 <Route path="/Audio-podcast/:id" element={<AudioPodcastPage />} />
                 <Route path="/Video-podcast/:id" element={<VideoPage/>}/>
+                <Route path="/AudioCutter" element={<AudioCutterPage/>}/>
 
 
             </Routes>
