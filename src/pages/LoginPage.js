@@ -13,7 +13,8 @@ import {
 } from "../styles/LoginPageStyles";
 import {FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput} from "@mui/material";
 import {Visibility, VisibilityOff} from "@mui/icons-material";
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
+
 
 export const LoginPage = () => {
     const [identifier, setIdentifier] = useState("");
@@ -95,7 +96,7 @@ export const LoginPage = () => {
                     </StyledButton>
                 </Form>
                 <LoginLink>
-                    Нет аккаунта? <a href="/registration">Создать</a>
+                    Нет аккаунта? <Link to="/Registration">Создать</Link>
                 </LoginLink>
             </FormContainer>
         </MainContainer>
