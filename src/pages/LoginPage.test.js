@@ -1,13 +1,14 @@
 import React from "react";
 import { render, fireEvent, screen } from "@testing-library/react";
 import {Provider, useDispatch, useSelector} from "react-redux";
-import { BrowserRouter as Router } from "react-router-dom";
+import {BrowserRouter, BrowserRouter as Router} from "react-router-dom";
 import LoginPage from "./LoginPage"; // Путь к компоненту
 import "@testing-library/jest-dom/extend-expect";
 import { configureStore } from "@reduxjs/toolkit";
 import configureMockStore from "redux-mock-store";
 
-import thunk from "redux-thunk"; // Для дополнительных проверок
+import thunk from "redux-thunk";
+import userEvent from "@testing-library/user-event"; // Для дополнительных проверок
 
 // Замокать Redux
 jest.mock("react-redux", () => ({
@@ -20,6 +21,8 @@ jest.mock("react-router-dom", () => ({
     ...jest.requireActual("react-router-dom"),
     useNavigate: jest.fn(),
 }));
+
+jest.mock("./RegPage", () => () => <div>Создать аккаунт</div>);
 
 const mockStore = configureMockStore(); // Создаем mock store
 const store = mockStore({
