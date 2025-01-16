@@ -8,12 +8,13 @@ import Subscriptions from "./pages/Subscriptions";
 import FollowersPage from "./pages/FollowersPage";
 import EditProfilePage from "./pages/EditProfilePage";
 import ProfilePageNew from "./pages/ProfilePage";
+import AudioCutterPage from './pages/AudioCutterPage';
 
 export function App() {
     return (
         <Router>
             <Routes>
-                <Route path='/' element={<LandingPage/>}/>
+                <Route path='/' element={<AudioCutterPage/>}/>
                 <Route path='/Registration' element={<RegPage/>}/>
                 <Route path='/Login' element={<LoginPage/>}/>
                 <Route path="/Library" element={<Library/>}/>

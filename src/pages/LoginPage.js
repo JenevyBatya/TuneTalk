@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import {
     ErrorText,
     Form,
@@ -12,6 +12,7 @@ import {
 import {FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput} from "@mui/material";
 import {Visibility, VisibilityOff} from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
+import { Link } from 'react-router-dom';
 
 export const LoginPage = () => {
     const [identifier, setIdentifier] = useState("");
@@ -32,7 +33,7 @@ export const LoginPage = () => {
             } else if (isValidEmail(identifier) || identifier.length >= 3) {
                 setLoginError("");
                 console.log("Logging in with:", {identifier, password});
-                const response = await axios.post('http://localhost:8080/auth/login', {
+                const response = await axios.post('http://26.227.27.136:80/auth/login', {
                     email: identifier,
                     password: password
                 });
@@ -101,6 +102,8 @@ export const LoginPage = () => {
                     <StyledButton type="submit">Войти</StyledButton>
                 </Form>
                 <LoginLink>Нет аккаунта? <a href="/registration">Создать</a></LoginLink>
+                <Link to="/registration">Создать</Link>
+                <Link to="/registration">Создать</Link>
             </FormContainer>
         </MainContainer>
     );

@@ -8,7 +8,6 @@ import photo3 from "../assets/rec3.jpg";
 import auth1 from "../assets/auth1.jpg"
 import auth2 from "../assets/auth2.jpg"
 import auth3 from "../assets/auth3.jpg"
-
 import {
     HeadingText1,
     HeadingText2,
@@ -23,13 +22,12 @@ import {
     Photo, RecommendDiv
 } from "../styles/LandingPageStyles";
 import {Link} from "react-router-dom";
-import FooterNavigation from "../components/FooterComponent";
-import HeaderComponent from "../components/HeaderComponent";
 import Bugsnag from "@bugsnag/js";
+import HeaderComponent from '../components/HeaderComponent';
+import FooterNavigation from '../components/FooterComponent';
 
 const images = [photo1, photo2, photo3];
 const authors = [auth1, auth2, auth3];
-
 const LandingPage = () => {
     const settings = {
         dots: true,
