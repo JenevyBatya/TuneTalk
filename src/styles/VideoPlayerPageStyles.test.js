@@ -16,8 +16,8 @@ import {
     CommentInput,
 } from './VideoPlayerPageStyles';
 
-describe('Styled Components Tests', () => {
-    test('PageContainer renders correctly with expected styles', () => {
+describe('Тесты для стилизованных компонентов', () => {
+    test('PageContainer отображается с ожидаемыми стилями', () => {
         render(<PageContainer>Page Content</PageContainer>);
         const container = screen.getByText('Page Content');
         expect(container).toHaveStyle(`
@@ -29,7 +29,7 @@ describe('Styled Components Tests', () => {
     `);
     });
 
-    test('VideoContainer has expected styles', () => {
+    test('VideoContainer имеет ожидаемые стили', () => {
         render(<VideoContainer>Video Content</VideoContainer>);
         const videoContainer = screen.getByText('Video Content');
         expect(videoContainer).toHaveStyle(`
@@ -39,7 +39,7 @@ describe('Styled Components Tests', () => {
     `);
     });
 
-    test('InfoContainer renders with background and padding', () => {
+    test('InfoContainer отображается с фоном и отступами', () => {
         render(<InfoContainer>Info Content</InfoContainer>);
         const infoContainer = screen.getByText('Info Content');
         expect(infoContainer).toHaveStyle(`
@@ -50,19 +50,19 @@ describe('Styled Components Tests', () => {
     `);
     });
 
-    test('Title renders with correct font size', () => {
+    test('Title отображается с правильным размером шрифта', () => {
         render(<Title>Video Title</Title>);
         const title = screen.getByText('Video Title');
         expect(title).toHaveStyle('font-size: 18px; margin: 0 0 5px;');
     });
 
-    test('Stats renders with correct color and font size', () => {
+    test('Stats отображаются с правильным цветом и размером шрифта', () => {
         render(<Stats>Video Stats</Stats>);
         const stats = screen.getByText('Video Stats');
         expect(stats).toHaveStyle('font-size: 14px; color: #aaa; margin: 5px 0;');
     });
 
-    test('Tags and Tag render with expected styles', () => {
+    test('Tags и Tag отображаются с ожидаемыми стилями', () => {
         render(
             <Tags>
                 <Tag>#Tag1</Tag>
@@ -75,13 +75,13 @@ describe('Styled Components Tests', () => {
         expect(tag2).toHaveStyle('color: #ffa500; font-size: 12px; margin-right: 10px;');
     });
 
-    test('ActionsContainer aligns items correctly', () => {
+    test('ActionsContainer выравнивает элементы правильно', () => {
         render(<ActionsContainer>Actions Content</ActionsContainer>);
         const actions = screen.getByText('Actions Content');
         expect(actions).toHaveStyle('display: flex; align-items: center; justify-content: space-between;');
     });
 
-    test('SubscribeButton renders with correct styles', () => {
+    test('SubscribeButton отображается с правильными стилями', () => {
         render(<SubscribeButton>Subscribe</SubscribeButton>);
         const button = screen.getByText('Subscribe');
         expect(button).toHaveStyle(`
@@ -94,7 +94,7 @@ describe('Styled Components Tests', () => {
     `);
     });
 
-    test('CommentSection and CommentInput render with expected styles', () => {
+    test('CommentSection и CommentInput отображаются с ожидаемыми стилями', () => {
         render(
             <CommentSection>
                 <CommentInput placeholder="Write a comment..." />

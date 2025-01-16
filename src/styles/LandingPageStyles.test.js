@@ -16,8 +16,8 @@ import {
     RecommendDiv,
 } from './LandingPageStyles';
 
-describe('Styled Components', () => {
-    test('MainContainer renders correctly with the expected styles', () => {
+describe('Стили для компонентов', () => {
+    test('MainContainer отображается с ожидаемыми стилями', () => {
         const { getByText } = render(<MainContainer>Main Container Content</MainContainer>);
         const container = getByText('Main Container Content');
         expect(container).toHaveStyle(`
@@ -27,7 +27,7 @@ describe('Styled Components', () => {
     `);
     });
 
-    test('Header renders with sticky position and correct background color', () => {
+    test('Header отображается с фиксированным положением и правильным фоном', () => {
         const { getByText } = render(<Header>Header Content</Header>);
         const header = getByText('Header Content');
         expect(header).toHaveStyle(`
@@ -37,8 +37,7 @@ describe('Styled Components', () => {
     `);
     });
 
-
-    test('RecBlock renders correctly with the expected styles', () => {
+    test('RecBlock отображается с ожидаемыми стилями', () => {
         const { getByText } = render(<RecBlock>Rec Block Content</RecBlock>);
         const block = getByText('Rec Block Content');
         expect(block).toHaveStyle(`
@@ -47,7 +46,7 @@ describe('Styled Components', () => {
     `);
     });
 
-    test('Photo renders with correct dimensions', () => {
+    test('Photo отображается с правильными размерами', () => {
         const { getByAltText } = render(<Photo src="test.jpg" alt="Test Image" />);
         const image = getByAltText('Test Image');
         expect(image).toHaveStyle(`
@@ -56,7 +55,7 @@ describe('Styled Components', () => {
     `);
     });
 
-    test('RecommendDiv renders with correct styles', () => {
+    test('RecommendDiv отображается с правильными стилями', () => {
         const { getByText } = render(<RecommendDiv>Recommended</RecommendDiv>);
         const recommendDiv = getByText('Recommended');
         expect(recommendDiv).toHaveStyle(`
@@ -65,7 +64,7 @@ describe('Styled Components', () => {
     `);
     });
 
-    test('HeadingText1 and HeadingText2 render with expected colors', () => {
+    test('HeadingText1 и HeadingText2 отображаются с ожидаемыми цветами', () => {
         const { getByText } = render(
             <>
                 <HeadingText1>Heading 1</HeadingText1>
@@ -79,7 +78,7 @@ describe('Styled Components', () => {
         expect(heading2).toHaveStyle('color: #074753;');
     });
 
-    test('Text1 and Text2 render with expected styles', () => {
+    test('Text1 и Text2 отображаются с ожидаемыми стилями', () => {
         const { getByText } = render(
             <>
                 <Text1>Text 1</Text1>

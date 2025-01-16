@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import WaveSurfer from 'wavesurfer.js';
+import WaveSurfer  from "wavesurfer.js";
 
 const AudioWaveform = ({ audioFile, playbackPosition, isPlaying }) => {
     const waveformRef = useRef(null);

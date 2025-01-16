@@ -2,14 +2,14 @@ import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 import Sections from './Sections';
 
-describe('Sections Component', () => {
+describe('Компонент Sections', () => {
     let setActiveSectionMock;
 
     beforeEach(() => {
         setActiveSectionMock = jest.fn();
     });
 
-    it('renders all section buttons with correct labels', () => {
+    it('Отображение всех кнопок секций с правильными метками', () => {
         const { getByText, getByAltText } = render(<Sections setActiveSection={setActiveSectionMock} />);
 
         expect(getByText('Подкасты')).toBeInTheDocument();
@@ -18,15 +18,14 @@ describe('Sections Component', () => {
         expect(getByAltText('Сохраненное')).toBeInTheDocument();
     });
 
-    it('applies "active" styles to the first section by default', () => {
+    it('Применение стилей "активный" к первой секции по умолчанию', () => {
         const { getByText } = render(<Sections setActiveSection={setActiveSectionMock} />);
 
         const podcastsButton = getByText('Подкасты').closest('div');
         expect(podcastsButton).toHaveStyle('background: #FF7510');
-
     });
 
-    it('updates active section and calls setActiveSection on button click', () => {
+    it('Обновление активной секции и вызов setActiveSection при клике на кнопку', () => {
         const { getByText } = render(<Sections setActiveSection={setActiveSectionMock} />);
 
         const playlistsButton = getByText('Плейлисты').closest('div');
@@ -36,25 +35,22 @@ describe('Sections Component', () => {
         expect(playlistsButton).toHaveStyle('background: #FF7510');
     });
 
-    it('highlights the correct section on click', () => {
+    it('Подсветка корректной секции при клике', () => {
         const { getByText } = render(<Sections setActiveSection={setActiveSectionMock} />);
 
         const podcastsButton = getByText('Подкасты').closest('div');
         const playlistsButton = getByText('Плейлисты').closest('div');
 
-
         expect(podcastsButton).toHaveStyle('background: #FF7510');
         expect(playlistsButton).toHaveStyle('background: white');
 
-
         fireEvent.click(playlistsButton);
-
 
         expect(podcastsButton).toHaveStyle('background: white');
         expect(playlistsButton).toHaveStyle('background: #FF7510');
     });
 
-    it('calls setActiveSection with the correct index for icon sections', () => {
+    it('Вызов setActiveSection с корректным индексом для секций-иконок', () => {
         const { getByAltText } = render(<Sections setActiveSection={setActiveSectionMock} />);
 
         const likedIconButton = getByAltText('Избранное').closest('div');

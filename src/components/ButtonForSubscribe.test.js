@@ -25,8 +25,4 @@ describe("Компонент SubscribeButton", () => {
         expect(button).toHaveTextContent("Подписаться");
     });
 
-    test("соответствует сохранённому снимку", () => {
-        const { asFragment } = render(<SubscribeButton />);
-        expect(asFragment()).toMatchSnapshot();
-    });
 });

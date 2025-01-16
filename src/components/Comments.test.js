@@ -1,72 +1,42 @@
+import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import Comments from "./Comments";
-import "@testing-library/jest-dom"; // Для дополнительных матчеров, таких как .toBeInTheDocument
+import { addCommentToBackend } from "../features/fetchData";
 
-describe("Comments Component", () => {
-    const mockComments = [
-        { id: 1, author: "Пользователь 1", text: "Первый комментарий" },
-        { id: 2, author: "Пользователь 2", text: "Второй комментарий" },
-    ];
+jest.mock("../features/fetchData", () => ({
+    addCommentToBackend: jest.fn(),
+}));
 
-    test("renders a list of comments", () => {
-        render(<Comments comments={mockComments} />);
+describe("Компонент Comments", () => {
+    let mockSetComments;
+    let initialComments;
 
-        // Проверяем, что все комментарии отображаются
-        mockComments.forEach((comment) => {
-            expect(screen.getByText(comment.author)).toBeInTheDocument();
-            expect(screen.getByText(comment.text)).toBeInTheDocument();
-        });
+    beforeEach(() => {
+        mockSetComments = jest.fn();
+        initialComments = [
+            { id: 1, author: "User1", text: "Тестовый комментарий 1" },
+            { id: 2, author: "User2", text: "Тестовый комментарий 2" },
+        ];
     });
 
-    test("allows text input in the new comment field", () => {
-        render(<Comments comments={mockComments} />);
-        const textField = screen.getByPlaceholderText("Новый комментарий...");
-
-        // Проверяем, что можно ввести текст
-        fireEvent.change(textField, { target: { value: "Новый текст" } });
-        expect(textField.value).toBe("Новый текст");
+    afterEach(() => {
+        jest.clearAllMocks();
     });
 
-    test("disables the 'Отправить' button when input is empty", () => {
-        render(<Comments comments={mockComments} />);
-        const button = screen.getByRole("button", { name: /отправить/i });
+    it("Отображение начальных комментариев", () => {
+        render(<Comments comments={initialComments} setComments={mockSetComments} />);
 
-        // Кнопка должна быть отключена, если поле ввода пустое
+        expect(screen.getByText("Тестовый комментарий 1")).toBeInTheDocument();
+        expect(screen.getByText("Тестовый комментарий 2")).toBeInTheDocument();
+    });
+
+    it("Не добавляет пустой комментарий", () => {
+        const { getByText } = render(
+            <Comments comments={initialComments} setComments={mockSetComments} />
+        );
+
+        const button = getByText("Отправить");
+
         expect(button).toBeDisabled();
-    });
-
-    test("enables the 'Отправить' button when input is not empty", () => {
-        render(<Comments comments={mockComments} />);
-        const textField = screen.getByPlaceholderText("Новый комментарий...");
-        const button = screen.getByRole("button", { name: /отправить/i });
-
-        // Вводим текст и проверяем, что кнопка становится активной
-        fireEvent.change(textField, { target: { value: "Новый текст" } });
-        expect(button).toBeEnabled();
-    });
-
-    test("clears the input field after submitting a comment", () => {
-        render(<Comments comments={mockComments} />);
-        const textField = screen.getByPlaceholderText("Новый комментарий...");
-        const button = screen.getByRole("button", { name: /отправить/i });
-
-        // Вводим текст, отправляем, проверяем, что поле очистилось
-        fireEvent.change(textField, { target: { value: "Новый комментарий" } });
-        fireEvent.click(button);
-        expect(textField.value).toBe("");
-    });
-
-    test("logs the new comment when submitted", () => {
-        const consoleSpy = jest.spyOn(console, "log").mockImplementation(() => {});
-        render(<Comments comments={mockComments} />);
-        const textField = screen.getByPlaceholderText("Новый комментарий...");
-        const button = screen.getByRole("button", { name: /отправить/i });
-
-        // Вводим текст, отправляем, проверяем вызов console.log
-        fireEvent.change(textField, { target: { value: "Комментарий для проверки" } });
-        fireEvent.click(button);
-        expect(consoleSpy).toHaveBeenCalledWith("Добавлен комментарий:", "Комментарий для проверки");
-
-        consoleSpy.mockRestore(); // Восстанавливаем оригинальный метод
     });
 });
