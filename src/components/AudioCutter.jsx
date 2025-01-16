@@ -299,8 +299,8 @@ const AudioCutter = () => {
     const animationRef = useRef(null);
     const [isTrimmed, setIsTrimmed] = useState(false);
     const [wasPlaying, setWasPlaying] = useState(false);
-    const [tags, setTags] = useState('tag1, tag2'); //MOCK
-    const [username, setUsername] = useState('mockUser'); //MOCK
+    const [tags, setTags] = useState(['tag1', 'tag2']);  //MOCK
+    const [authorEmail, setAuthorEmail] = useState('s@gmail.com'); //MOCK
 
     useEffect(() => {
         const context = new (window.AudioContext || window.webkitAudioContext)();
@@ -462,20 +462,22 @@ const AudioCutter = () => {
                     interleaved[i * renderedBuffer.numberOfChannels + channel] = channelData[i];
                 }
             }
-    
+            const duration = Math.floor(renderedBuffer.length / renderedBuffer.sampleRate);
             const wavBlob = encodeWAV(interleaved, renderedBuffer.sampleRate, renderedBuffer.numberOfChannels);
             const formData = new FormData();
             formData.append('file', wavBlob, isTrimmed ? 'trimmed-audio.wav' : 'original-audio.wav');
             if (coverFile) {
                 formData.append('cover', coverFile);
             }
+            console.log(tags);
             formData.append('title', title);
             formData.append('description', description);
             formData.append('tags', tags);
-            formData.append('username', username);
+            formData.append('authorEmail', authorEmail);
+            formData.append('duration', duration)
     
             try {
-                await axios.post('http://26.227.27.136:80/audio/upload', formData, {
+                await axios.post('http://localhost:80/audio/upload', formData, {//http://26.227.27.136:80/audio/upload
                     headers: {
                         'Content-Type': 'multipart/form-data',
                     },
