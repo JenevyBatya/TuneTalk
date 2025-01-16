@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from 'react';
 import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css";
@@ -23,8 +24,6 @@ import {
 } from "../styles/LandingPageStyles";
 import {Link} from "react-router-dom";
 import Bugsnag from "@bugsnag/js";
-import HeaderComponent from '../components/HeaderComponent';
-import FooterNavigation from '../components/FooterComponent';
 
 const images = [photo1, photo2, photo3];
 const authors = [auth1, auth2, auth3];
@@ -92,15 +91,15 @@ const LandingPage = () => {
 
                 </PhotoDiv>
                 <RecommendDiv>
-                <StyledButton as={Link} to="/Registration">
+                <StyledButton as={Link} to="/Registration" onClick={() =>{
+                    ym(99501749,'reachGoal','landing-reg')
+                }}>
                     Зарегистрироваться
                 </StyledButton>
                 </RecommendDiv>
 
             </RegBlock>
             </div>
-
-            <FooterNavigation/>
         </MainContainer>
     );
 }

@@ -1,5 +1,8 @@
-import axios from 'axios';
-import React, {useState, useEffect} from "react";
+
+/* eslint-disable */
+import React, {useEffect, useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {login} from "../features/authSlice";
 import {
     ErrorText,
     Form,
@@ -7,12 +10,13 @@ import {
     LoginLink,
     MainContainer,
     StyledButton,
-    FormContainer
+    FormContainer,
 } from "../styles/LoginPageStyles";
 import {FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput} from "@mui/material";
 import {Visibility, VisibilityOff} from "@mui/icons-material";
-import { useNavigate } from "react-router-dom";
-import { Link } from 'react-router-dom';
+
+import {Link, useNavigate} from "react-router-dom";
+
 
 export const LoginPage = () => {
     const [identifier, setIdentifier] = useState("");
@@ -20,37 +24,31 @@ export const LoginPage = () => {
     const [loginError, setLoginError] = useState("");
     const [showPassword, setShowPassword] = useState(false);
 
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const {isLoading, error} = useSelector((state) => state.auth);
     const isValidEmail = (email) => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return emailRegex.test(email);
     };
-    const history = useNavigate(); // Для программного редиректа
-    const handleSubmit = async(e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        try{
-            if (!identifier || !password) {
-                setLoginError("Both fields are required");
-            } else if (isValidEmail(identifier) || identifier.length >= 3) {
-                setLoginError("");
-                console.log("Logging in with:", {identifier, password});
-                const response = await axios.post('http://26.227.27.136:80/auth/login', {
-                    email: identifier,
-                    password: password
-                });
-                if (response.status === 200){
-                    // Перенаправление на другую страницу после успешного входа
-                    history('/library');
-                }
-            } else {
-                setLoginError("Please enter a valid email or username (min 3 characters)");
+
+        if (!identifier || !password) {
+            setLoginError("Both fields are required");
+            return;
+        }
+
+        if (isValidEmail(identifier) || identifier.length >= 3) {
+            setLoginError("");
+            try {
+                await dispatch(login({identifier, password})).unwrap();
+                navigate("/library");
+            } catch (err) {
+                setLoginError(err || "Login failed, please try again.");
             }
-        } catch (error) {
-            if (error.status === 400){
-                setLoginError("Check your credentials");
-            }
-            if (error.status === 404){
-                setLoginError("Check your email");
-            }
+        } else {
+            setLoginError("Please enter a valid email or username (min 3 characters)");
         }
     };
     useEffect(() => {
@@ -87,23 +85,23 @@ export const LoginPage = () => {
                             required
                             endAdornment={
                                 <InputAdornment position="end">
-                                    <IconButton
-                                        onClick={() => setShowPassword(!showPassword)}
-                                        edge="end"
-                                    >
+                                    <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
                                         {showPassword ? <VisibilityOff/> : <Visibility/>}
                                     </IconButton>
                                 </InputAdornment>
                             }
                         />
                     </FormControl>
-
-                    {loginError && <ErrorText>{loginError}</ErrorText>}
-                    <StyledButton type="submit">Войти</StyledButton>
+                    {error?.message && <ErrorText>{error.message}</ErrorText>}
+                    <StyledButton type="submit" disabled={isLoading}>
+                        {isLoading ? "Загрузка..." : "Войти"}
+                    </StyledButton>
                 </Form>
-                <LoginLink>Нет аккаунта? <a href="/registration">Создать</a></LoginLink>
-                <Link to="/registration">Создать</Link>
-                <Link to="/registration">Создать</Link>
+
+                <LoginLink>
+                    Нет аккаунта? <Link to="/Registration">Создать</Link>
+                </LoginLink>
+
             </FormContainer>
         </MainContainer>
     );

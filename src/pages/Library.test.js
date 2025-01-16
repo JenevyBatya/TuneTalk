@@ -1,85 +1,129 @@
-import { render, screen, fireEvent } from '@testing-library/react';
-import Library from './Library';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import Library from "./Library";
+import { fetchData } from "../features/fetchData";
+import { BrowserRouter as Router } from "react-router-dom";
 
-// Мокаем зависимые компоненты
-jest.mock('../components/CustomCard', () => () => <div>CustomCard</div>);
-jest.mock('../components/SearchFilter', () => ({ onSearch }) => (
-    <button onClick={() => onSearch([])}>Search</button>
-));
-jest.mock('../components/CategoryFilter', () => ({ onFilter }) => (
-    <button onClick={() => onFilter([])}>Filter</button>
-));
-jest.mock('../components/FooterComponent', () => () => <div>FooterNavigation</div>);
-jest.mock('../components/HeaderComponent', () => () => <div>HeaderComponent</div>);
+jest.mock("../features/fetchData");
 
-describe('Library Component', () => {
-    it('should render the library title and subtitle', () => {
-        render(
-            <Router>
-                <Library />
-            </Router>
-        );
-
-        // Проверка отображения заголовков
-        expect(screen.getByText(/Library/i)).toBeInTheDocument();
-        expect(screen.getByText(/библиотека/i)).toBeInTheDocument();
+describe("Library component", () => {
+    afterEach(() => {
+        jest.clearAllMocks();
     });
 
-    it('should render CustomCard components based on filtered data', () => {
+    it("loads and displays data", async () => {
+        const mockedData = [
+            {
+                id: 1,
+                name: "Mocked Name 1",
+                description: "Mocked Description",
+                tags: [{ id: 1, text: "Tag1" }],
+                duration: "10 min",
+                author: "Mocked Author",
+                subscribes: 10,
+                photo: "mockedPhoto.svg",
+            },
+        ];
+
+        fetchData.mockResolvedValue(mockedData);
+
         render(
             <Router>
                 <Library />
             </Router>
         );
 
-        // Проверка наличия CustomCard
-        expect(screen.getAllByText('CustomCard').length).toBe(2);
+        const cardElement = await screen.findByText("Mocked Name 1");
+        expect(cardElement).toBeInTheDocument();
     });
 
-    it('should show no data message if filtered data is empty', () => {
+    it("displays 'no data' when no items are found", async () => {
+        fetchData.mockResolvedValue([]);
+
         render(
             <Router>
                 <Library />
             </Router>
         );
 
-        // Клик по фильтру, чтобы очистить данные
-        fireEvent.click(screen.getByText('Filter'));
-
-        // Проверка отображения текста "Кажется, пока что у нас такого нет..."
-        expect(screen.getByText('Кажется, пока что у нас такого нет...')).toBeInTheDocument();
+        const noDataElement = await screen.findByText("Кажется, пока что у нас такого нет...");
+        expect(noDataElement).toBeInTheDocument();
     });
 
-    it('should call handleFilterData when category filter is applied', () => {
+    it("loads more data when 'Загрузить ещё' is clicked", async () => {
+        const mockedDataPage1 = [
+            {
+                id: 1,
+                name: "Mocked Name 1",
+                description: "Mocked Description",
+                tags: [{ id: 1, text: "Tag1" }],
+                duration: "10 min",
+                author: "Mocked Author",
+                subscribes: 10,
+                photo: "mockedPhoto.svg",
+            },
+        ];
+        const mockedDataPage2 = [
+            {
+                id: 2,
+                name: "Mocked Name 2",
+                description: "Mocked Description 2",
+                tags: [{ id: 2, text: "Tag2" }],
+                duration: "20 min",
+                author: "Mocked Author 2",
+                subscribes: 20,
+                photo: "mockedPhoto2.svg",
+            },
+        ];
+
+        fetchData.mockResolvedValueOnce(mockedDataPage1).mockResolvedValueOnce(mockedDataPage2);
+
         render(
             <Router>
                 <Library />
             </Router>
         );
 
-        // Получаем кнопку фильтра
-        const filterButton = screen.getByText('Filter');
+        const loadMoreButton = await screen.findByText("Загрузить ещё");
 
-        // Проверяем, что фильтр вызывает handleFilterData
-        fireEvent.click(filterButton);
-        expect(screen.queryByText('CustomCard')).toBeNull();
-        expect(screen.getByText('Кажется, пока что у нас такого нет...')).toBeInTheDocument();
+        // Первоначальная загрузка
+        const firstCard = await screen.findByText("Mocked Name 1");
+        expect(firstCard).toBeInTheDocument();
+
+        // Клик по кнопке "Загрузить ещё"
+        fireEvent.click(loadMoreButton);
+
+        const secondCard = await screen.findByText("Mocked Name 2");
+        expect(secondCard).toBeInTheDocument();
     });
 
-    it('should call setFilteredData when search filter is applied', () => {
+
+    it("hides 'Загрузить ещё' button when no more data is available", async () => {
+        const mockedData = [
+            {
+                id: 1,
+                name: "Mocked Name 1",
+                description: "Mocked Description",
+                tags: [{ id: 1, text: "Tag1" }],
+                duration: "10 min",
+                author: "Mocked Author",
+                subscribes: 10,
+                photo: "mockedPhoto.svg",
+            },
+        ];
+
+        fetchData.mockResolvedValueOnce(mockedData).mockResolvedValueOnce(null);
+
         render(
             <Router>
                 <Library />
             </Router>
         );
 
-        // Получаем кнопку поиска
-        const searchButton = screen.getByText('Search');
+        const loadMoreButton = await screen.findByText("Загрузить ещё");
+        fireEvent.click(loadMoreButton);
 
-        // Проверяем, что кнопка поиска вызывает setFilteredData
-        fireEvent.click(searchButton);
-        expect(screen.queryByText('CustomCard')).toBeNull();
-        expect(screen.getByText('Кажется, пока что у нас такого нет...')).toBeInTheDocument();
+        await waitFor(() => {
+            expect(loadMoreButton).not.toBeInTheDocument();
+        });
     });
 });
