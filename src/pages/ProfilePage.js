@@ -16,9 +16,10 @@ import {
     MainContainer,
     StarIcon,
     FooterContainer,
-    ProfileDiv
+    ProfileDiv, AddButton
 } from "../styles/ProfilePagePodkastsStyles";
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
+
 
 import UserPic from "../assets/auth2.jpg";
 import LinkIcon from "../assets/icons/LinkIcon.svg";
@@ -27,7 +28,6 @@ import Sections from "../components/Sections";
 import ContentContainer from "../components/ContentContainer";
 import CustomCard from "../components/CustomCard";
 import cardData from "../mocks/CardData.json";
-import FooterComponent from "../components/FooterComponent";
 import FooterNavigation from "../components/FooterComponent";
 import HeaderComponent from "../components/HeaderComponent";
 
@@ -158,6 +158,7 @@ const ProfilePageNew = () => {
                         <StatText>50 публикаций</StatText>
                     </StatsItem>
                 </StatsContainer>
+                <AddButton as={Link} to="/AudioCutter" >Новый подкаст</AddButton>
 
                 <Sections setActiveSection={setActiveSection}/>
 

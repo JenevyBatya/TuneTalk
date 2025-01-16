@@ -1,17 +1,37 @@
-import React, { useState } from "react";
-import { Box, Typography, InputAdornment, IconButton, FormControl, InputLabel, OutlinedInput, LinearProgress } from "@mui/material";
-import { Login, Visibility, VisibilityOff } from "@mui/icons-material";
-import { ErrorText, Form, GoogleButton, HeadingText, StyledButton, FormContainer, MainContainer, LoginLink } from "../styles/RegPageStyles";
+import React, {useState} from "react";
+import {
+    Box,
+    Typography,
+    InputAdornment,
+    IconButton,
+    FormControl,
+    InputLabel,
+    OutlinedInput,
+    LinearProgress
+} from "@mui/material";
+import {Visibility, VisibilityOff} from "@mui/icons-material";
+import {
+    ErrorText,
+    Form,
+    GoogleButton,
+    HeadingText,
+    StyledButton,
+    FormContainer,
+    MainContainer,
+    LoginLink
+} from "../styles/RegPageStyles";
 import google from "../assets/icons/googleLogo.svg";
-import { useNavigate } from "react-router-dom"; // Используем useHistory для программного перехода
-import axios from 'axios';
+import {Link, useNavigate} from "react-router-dom";
+
+import {register} from "../features/authSlice";
+import {useDispatch, useSelector} from "react-redux";
 
 const getPasswordStrength = (password) => {
-    if (password.length < 8) return { strength: "Слабый", color: "red", value: 20 };
+    if (password.length < 8) return {strength: "Слабый", color: "red", value: 20};
     if (password.match(/[A-Z]/) && password.match(/[0-9]/) && password.length >= 12) {
-        return { strength: "Сильный", color: "green", value: 100 };
+        return {strength: "Сильный", color: "green", value: 100};
     }
-    return { strength: "Средний", color: "orange", value: 60 };
+    return {strength: "Средний", color: "orange", value: 60};
 };
 
 
@@ -25,8 +45,10 @@ const RegPage = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const passwordStrength = getPasswordStrength(password);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
-    const history = useNavigate(); // Для программного редиректа
+    const {isLoading, error} = useSelector((state) => state.auth);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -36,30 +58,19 @@ const RegPage = () => {
         } else if (password.length < 6) {
             setPasswordError("Пароль должен содержать не менее 6 символов");
         } else {
+            setPasswordError("");
             try {
-                setPasswordError("");
-
-                // Отправляем запрос на сервер
-                const response = await axios.post('http://localhost:8080/auth/register', {
-                    username: username,
-                    email: email,
-                    password: password
-                });
-                if (response.status === 201 || response.status === 200){
-                    // Перенаправление на другую страницу после успешной регистрации
-                    history('/library'); // После регистрации перенаправляем на /library
-                } else {
-                    alert('Login is unavailable')
-                }
+                await dispatch(register({username, email, password})).unwrap();
+                navigate("/library");
             } catch (error) {
-                if (error.status === 400){
-                    setPasswordError("You should fill all fields");
+                if (error?.status === 400) {
+                    setPasswordError("Все поля обязательны для заполнения");
                 }
-                if (error.status === 418){
-                    setPasswordError("Email is already taken");
+                if (error?.status === 418) {
+                    setPasswordError("Email уже занят");
                 }
-                if (error.status === 427){
-                    setPasswordError("Username is already taken");
+                if (error?.status === 427) {
+                    setPasswordError("Логин уже занят");
                 }
             }
         }
@@ -107,7 +118,7 @@ const RegPage = () => {
                                         onClick={() => setShowPassword(!showPassword)}
                                         edge="end"
                                     >
-                                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                                        {showPassword ? <VisibilityOff/> : <Visibility/>}
                                     </IconButton>
                                 </InputAdornment>
                             }
@@ -129,8 +140,8 @@ const RegPage = () => {
                                             passwordStrength.value <= 30
                                                 ? 'linear-gradient(to right, #ff0000, #ff7f7f)' // Красный для слабого
                                                 : passwordStrength.value <= 60
-                                                ? 'linear-gradient(to right, #ffcc00, #ffff66)' // Желтый для среднего
-                                                : 'linear-gradient(to right, #66ff66, #00cc00)', // Зеленый для сильного
+                                                    ? 'linear-gradient(to right, #ffcc00, #ffff66)' // Желтый для среднего
+                                                    : 'linear-gradient(to right, #66ff66, #00cc00)', // Зеленый для сильного
                                     },
                                     bgcolor: '#ddd',
                                 }}
@@ -152,21 +163,25 @@ const RegPage = () => {
                                         onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                                         edge="end"
                                     >
-                                        {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
+                                        {showConfirmPassword ? <VisibilityOff/> : <Visibility/>}
                                     </IconButton>
                                 </InputAdornment>
                             }
                         />
                     </FormControl>
                     {passwordError && <ErrorText>{passwordError}</ErrorText>}
-                    <StyledButton type="submit">Создать аккаунт</StyledButton>
+                    <StyledButton type="submit">
+                        {isLoading ? "Регистрация..." : "Создать аккаунт"}
+                    </StyledButton>
                     <GoogleButton>
-                        <img src={google} alt="Google Logo" style={{ marginRight: 10 }} />
+                        <img src={google} alt="Google Logo" style={{marginRight: 10}}/>
                         Продолжить с Google
                     </GoogleButton>
                 </Form>
+
                 <LoginLink>
-                    Уже есть аккаунт? <a href="/Login">Войти</a>
+                    Уже есть аккаунт? <Link to="/Login">Войти</Link>
+
                 </LoginLink>
             </FormContainer>
         </MainContainer>

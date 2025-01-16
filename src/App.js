@@ -1,30 +1,41 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import LandingPage from './pages/LandingPage';
-import RegPage from './pages/RegPage';
+import './App.css';
+import { HashRouter, Routes, Route } from "react-router-dom";
+import LandingPage from "./pages/LandingPage";
 import LoginPage from "./pages/LoginPage";
+import RegPage from "./pages/RegPage";
 import Library from "./pages/Library";
 import Subscriptions from "./pages/Subscriptions";
+import AudioPodcastPage from "./pages/AudioPodcastPage";
 import FollowersPage from "./pages/FollowersPage";
 import EditProfilePage from "./pages/EditProfilePage";
 import ProfilePageNew from "./pages/ProfilePage";
-import AudioCutterPage from './pages/AudioCutterPage';
 
-export function App() {
+import AudioCutterPage from './pages/AudioCutterPage';
+import VideoPage from "./pages/VideioPlayerPage";
+
+
+
+function Root() {
     return (
-        <Router>
+        <HashRouter>
             <Routes>
-                <Route path='/' element={<AudioCutterPage/>}/>
-                <Route path='/Registration' element={<RegPage/>}/>
-                <Route path='/Login' element={<LoginPage/>}/>
-                <Route path="/Library" element={<Library/>}/>
-                <Route path="/Subscriptions" element={<Subscriptions/>}/>
-                {/*<Route path="/Account" element={<ProfilePage />} />*/}
-                <Route path="/Users/:type" element={<FollowersPage/>}/>
-                <Route path="/Profile" element={<ProfilePageNew/>}/>
-                <Route path="/EditProfile" element={<EditProfilePage/>}/>
+
+                <Route path="/" element={<LandingPage />} />
+                <Route path="/Registration" element={<RegPage />} />
+                <Route path="/Login" element={<LoginPage />} />
+                <Route path="/Library" element={<Library />} />
+                <Route path="/Subscriptions" element={<Subscriptions />} />
+                <Route path="/Users/:type" element={<FollowersPage />} />
+                <Route path="/Profile" element={<ProfilePageNew />} />
+                <Route path="/EditProfile" element={<EditProfilePage />} />
+                <Route path="/Audio-podcast/:id" element={<AudioPodcastPage />} />
+                <Route path="/Video-podcast/:id" element={<VideoPage/>}/>
+                <Route path="/AudioCutter" element={<AudioCutterPage/>}/>
+
 
             </Routes>
-        </Router>
+        </HashRouter>
     );
 }
+
+export default Root;
