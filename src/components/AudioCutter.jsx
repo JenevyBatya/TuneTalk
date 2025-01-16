@@ -22,7 +22,7 @@ export const AudioCutterStyledButton = styled(Button)(({theme}) => ({
     },
 }));
 
-const AudioCutter = ({coverFile, title, description, tags, username}) => {
+const AudioCutter = ({coverFile, title, description, username}) => {
     const [audioFile, setAudioFile] = useState(null);
     const [audioBuffer, setAudioBuffer] = useState(null);
     const [audioContext, setAudioContext] = useState(null);
