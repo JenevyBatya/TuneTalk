@@ -9,6 +9,8 @@ import Bugsnag from '@bugsnag/js';
 import BugsnagPluginReact from '@bugsnag/plugin-react';
 import { Provider } from 'react-redux';
 import { store } from './app/store';
+import register from "./registerServiceWorker";
+
 
 const { REACT_APP_BUGSNAG_API_KEY } = process.env;
 
@@ -20,6 +22,20 @@ Bugsnag.start({
 const ErrorBoundary = Bugsnag.getPlugin('react').createErrorBoundary(React);
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
+if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+        navigator.serviceWorker
+            .register("/service-worker.js")
+            .then((registration) => {
+                console.log("Service Worker registered with scope:", registration.scope);
+            })
+            .catch((error) => {
+                console.error("Service Worker registration failed:", error);
+            });
+    });
+}
+
+
 root.render(
     <ErrorBoundary>
         <Provider store={store}>
@@ -27,3 +43,5 @@ root.render(
         </Provider>
     </ErrorBoundary>
 );
+register();
+
