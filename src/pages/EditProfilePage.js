@@ -36,7 +36,7 @@ const Input = styled.input`
     font-size: 14px;
 `;
 
-const AvatarContainer = styled.div`
+export const AvatarContainer = styled.div`
     position: relative;
     width: 120px;
     height: 120px;
@@ -49,7 +49,7 @@ const AvatarContainer = styled.div`
     justify-content: center;
 `;
 
-const StyledAvatarPreview = styled.img`
+export const StyledAvatarPreview = styled.img`
     width: 100%;
     height: 100%;
     border-radius: 50%;
@@ -58,7 +58,7 @@ const StyledAvatarPreview = styled.img`
     background-color: #f0f0f0;
 `;
 
-const ChangeAvatarButton = styled.label`
+export const ChangeAvatarButton = styled.label`
     position: absolute;
     bottom: 7px;
     right: 7px;

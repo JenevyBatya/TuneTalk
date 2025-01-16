@@ -1,32 +1,32 @@
 import React from "react";
 import { render, fireEvent, screen } from "@testing-library/react";
 import {Provider, useDispatch, useSelector} from "react-redux";
-import { BrowserRouter as Router } from "react-router-dom";
-import LoginPage from "./LoginPage"; // Путь к компоненту
+import {BrowserRouter as Router} from "react-router-dom";
+import LoginPage from "./LoginPage";
 import "@testing-library/jest-dom/extend-expect";
 import { configureStore } from "@reduxjs/toolkit";
 import configureMockStore from "redux-mock-store";
+import thunk from "redux-thunk";
+import userEvent from "@testing-library/user-event";
 
-import thunk from "redux-thunk"; // Для дополнительных проверок
-
-// Замокать Redux
 jest.mock("react-redux", () => ({
     useDispatch: jest.fn(),
     useSelector: jest.fn(),
 }));
 
-// Замокать Navigate из react-router-dom
 jest.mock("react-router-dom", () => ({
     ...jest.requireActual("react-router-dom"),
     useNavigate: jest.fn(),
 }));
 
-const mockStore = configureMockStore(); // Создаем mock store
+jest.mock("./RegPage", () => () => <div>Создать аккаунт</div>);
+
+const mockStore = configureMockStore();
 const store = mockStore({
     auth: { isLoading: false, error: null },
 });
 
-describe("LoginPage Component", () => {
+describe("Компонент LoginPage", () => {
     let mockDispatch;
     let mockNavigate;
 
@@ -44,20 +44,19 @@ describe("LoginPage Component", () => {
         jest.clearAllMocks();
     });
 
-    it("renders login form with fields and button", () => {
+    it("отображает форму входа с полями и кнопкой", () => {
         render(
             <Router>
                 <LoginPage />
             </Router>
         );
 
-        // Проверяем, что все элементы формы присутствуют
         expect(screen.getByLabelText(/Логин или Email/i)).toBeInTheDocument();
         expect(screen.getByLabelText(/Пароль/i)).toBeInTheDocument();
         expect(screen.getByRole("button", { name: /Войти/i })).toBeInTheDocument();
     });
 
-    it("displays validation errors when fields are empty", async () => {
+    it("отображает ошибки валидации при пустых полях", async () => {
         render(
             <Router>
                 <LoginPage/>
@@ -65,15 +64,10 @@ describe("LoginPage Component", () => {
         );
 
         fireEvent.click(screen.getByRole("button", {name: /Войти/i}));
-
-        // await expect(
-        //     screen.findByText(/Both fields are required/i)
-        // ).resolves.toBeInTheDocument();
-
     });
 
-    it("displays server error when login fails", () => {
-        useSelector.mockReturnValueOnce({ isLoading: false, error: { message: "Invalid credentials" } });
+    it("отображает ошибку сервера при неудачном входе", () => {
+        useSelector.mockReturnValueOnce({ isLoading: false, error: { message: "Неверные данные для входа" } });
 
         render(
             <Router>
@@ -81,10 +75,10 @@ describe("LoginPage Component", () => {
             </Router>
         );
 
-        expect(screen.getByText(/Invalid credentials/i)).toBeInTheDocument();
+        expect(screen.getByText(/Неверные данные для входа/i)).toBeInTheDocument();
     });
 
-    it("navigates to /library on successful login", async () => {
+    it("переходит на /library при успешном входе", async () => {
         mockDispatch.mockResolvedValueOnce({ type: "auth/login/fulfilled" });
 
         render(
@@ -105,8 +99,7 @@ describe("LoginPage Component", () => {
         expect(mockNavigate).not.toHaveBeenCalledWith("/library");
     });
 
-
-    it("shows loading state when isLoading is true", () => {
+    it("показывает состояние загрузки, когда isLoading равно true", () => {
         useSelector.mockReturnValueOnce({ isLoading: true, error: null });
 
         render(

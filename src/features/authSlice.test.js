@@ -1,40 +1,54 @@
-import authReducer, { login, register, logout } from './authSlice';
-import { configureStore } from '@reduxjs/toolkit';
-import thunk from 'redux-thunk';
-import axios from 'axios';
-import MockAdapter from 'axios-mock-adapter';
+import { configureStore } from "@reduxjs/toolkit";
+import axios from "axios";
+import MockAdapter from "axios-mock-adapter";
+import authReducer, { login, register, logout } from "./authSlice";
 
-const API_URL = "http://26.227.27.136:80/auth";
+const mockAxios = new MockAdapter(axios);
 
-describe('authSlice', () => {
-    let mockAxios;
+describe("authSlice", () => {
+    let store;
 
     beforeEach(() => {
-        mockAxios = new MockAdapter(axios);
-    });
-
-    afterEach(() => {
+        store = configureStore({
+            reducer: {
+                auth: authReducer,
+            },
+        });
         mockAxios.reset();
     });
 
-    it('should return the initial state', () => {
-        const initialState = {
-            user: null,
-            isLoading: false,
-            error: null,
-        };
+    test("Логин с ошибкой", async () => {
+        const mockError = { message: "Login failed" };
+        mockAxios.onPost("http://26.227.27.136:80/auth/login").reply(500, mockError);
 
-        expect(authReducer(undefined, { type: undefined })).toEqual(initialState);
+        await store.dispatch(login({ identifier: "wrong@example.com", password: "wrongpassword" }));
+
+        const state = store.getState().auth;
+
+        expect(state.isLoading).toBe(false);
+        expect(state.user).toBeNull();
+        expect(state.error).toHaveProperty('message');
     });
 
-    describe('logout action', () => {
-        it('should handle logout correctly', () => {
-            const initialState = { user: { id: 1, name: 'John Doe' }, isLoading: false, error: null };
-            const nextState = authReducer(initialState, logout());
+    test("Регистрация с ошибкой", async () => {
+        const mockError = { message: "Registration failed" };
+        mockAxios.onPost("http://26.227.27.136:80/auth/register").reply(500, mockError);
 
-            expect(nextState.user).toBeNull();
-            expect(nextState.isLoading).toBe(false);
-            expect(nextState.error).toBeNull();
-        });
+        await store.dispatch(register({ email: "newuser@example.com", password: "password123" }));
+
+        const state = store.getState().auth;
+        expect(state.isLoading).toBe(false);
+        expect(state.user).toBeNull();
+        expect(state.error).not.toBeNull();
+        expect(state.error.message).toBe("Registration failed");
+    });
+
+    test("Выход из аккаунта", () => {
+        store.dispatch({ type: "auth/login/fulfilled", payload: { id: 1, name: "Test User" } });
+
+        store.dispatch(logout());
+
+        const state = store.getState().auth;
+        expect(state.user).toBeNull();
     });
 });

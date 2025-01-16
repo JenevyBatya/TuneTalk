@@ -5,12 +5,12 @@ import { BrowserRouter as Router } from "react-router-dom";
 
 jest.mock("../features/fetchData");
 
-describe("Library component", () => {
+describe("Компонент Library", () => {
     afterEach(() => {
         jest.clearAllMocks();
     });
 
-    it("loads and displays data", async () => {
+    it("загружает и отображает данные", async () => {
         const mockedData = [
             {
                 id: 1,
@@ -36,7 +36,7 @@ describe("Library component", () => {
         expect(cardElement).toBeInTheDocument();
     });
 
-    it("displays 'no data' when no items are found", async () => {
+    it("отображает сообщение 'Нет данных', когда нет элементов", async () => {
         fetchData.mockResolvedValue([]);
 
         render(
@@ -49,7 +49,7 @@ describe("Library component", () => {
         expect(noDataElement).toBeInTheDocument();
     });
 
-    it("loads more data when 'Загрузить ещё' is clicked", async () => {
+    it("загружает дополнительные данные при клике на 'Загрузить ещё'", async () => {
         const mockedDataPage1 = [
             {
                 id: 1,
@@ -85,19 +85,16 @@ describe("Library component", () => {
 
         const loadMoreButton = await screen.findByText("Загрузить ещё");
 
-        // Первоначальная загрузка
         const firstCard = await screen.findByText("Mocked Name 1");
         expect(firstCard).toBeInTheDocument();
 
-        // Клик по кнопке "Загрузить ещё"
         fireEvent.click(loadMoreButton);
 
         const secondCard = await screen.findByText("Mocked Name 2");
         expect(secondCard).toBeInTheDocument();
     });
 
-
-    it("hides 'Загрузить ещё' button when no more data is available", async () => {
+    it("скрывает кнопку 'Загрузить ещё', когда данных больше нет", async () => {
         const mockedData = [
             {
                 id: 1,

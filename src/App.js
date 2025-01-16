@@ -9,13 +9,18 @@ import AudioPodcastPage from "./pages/AudioPodcastPage";
 import FollowersPage from "./pages/FollowersPage";
 import EditProfilePage from "./pages/EditProfilePage";
 import ProfilePageNew from "./pages/ProfilePage";
+
+import AudioCutterPage from './pages/AudioCutterPage';
 import VideoPage from "./pages/VideioPlayerPage";
+import OtherProfilePage from "./pages/OtherProfilePage";
+
 
 
 function Root() {
     return (
         <HashRouter>
             <Routes>
+
                 <Route path="/" element={<LandingPage />} />
                 <Route path="/Registration" element={<RegPage />} />
                 <Route path="/Login" element={<LoginPage />} />
@@ -23,9 +28,12 @@ function Root() {
                 <Route path="/Subscriptions" element={<Subscriptions />} />
                 <Route path="/Users/:type" element={<FollowersPage />} />
                 <Route path="/Profile" element={<ProfilePageNew />} />
+                <Route path="/OtherProfile" element={<OtherProfilePage/>} />
                 <Route path="/EditProfile" element={<EditProfilePage />} />
                 <Route path="/Audio-podcast/:id" element={<AudioPodcastPage />} />
                 <Route path="/Video-podcast/:id" element={<VideoPage/>}/>
+                <Route path="/AudioCutter" element={<AudioCutterPage/>}/>
+
 
             </Routes>
         </HashRouter>

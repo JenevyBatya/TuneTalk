@@ -42,6 +42,9 @@
     "identity-obj-proxy": "^3.0.0",
     "jest": "^27.4.3",
     "jest-axe": "^9.0.0",
+
+    "rc-slider": "^11.1.8",
+
     "jest-resolve": "^27.4.2",
     "jest-watch-typeahead": "^1.0.0",
     "mini-css-extract-plugin": "^2.4.5",
@@ -51,6 +54,7 @@
     "postcss-normalize": "^10.0.1",
     "postcss-preset-env": "^7.0.1",
     "prompts": "^2.4.2",
+
     "react": "^18.3.1",
     "react-app-polyfill": "^3.0.0",
     "react-dev-utils": "^12.0.1",
@@ -67,6 +71,13 @@
     "sass-loader": "^12.3.0",
     "semver": "^7.3.5",
     "slick-carousel": "^1.8.1",
+
+    "tune-talk": "file:",
+    "use-sound": "^4.0.3",
+    "waves-ui": "github:wavesjs/ui",
+    "web-vitals": "^2.1.4",
+    "wavesurfer.js": "^7.8.16"
+
     "source-map-loader": "^3.0.0",
     "style-loader": "^3.3.1",
     "tailwindcss": "^3.0.2",
@@ -77,13 +88,17 @@
     "webpack-dev-server": "^4.6.0",
     "webpack-manifest-plugin": "^4.0.2",
     "workbox-webpack-plugin": "^6.4.1"
+
   },
   "scripts": {
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
-    "start": "node scripts/start.js",
-    "build": "node scripts/build.js",
-    "test": "node scripts/test.js --silent --updateSnapshot"
+
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --silent --updateSnapshot --coverage",
+    "eject": "react-scripts eject"
+
   },
   "eslintConfig": {
     "extends": [

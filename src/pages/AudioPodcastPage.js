@@ -24,8 +24,7 @@ const mockPodcastData = {
 
 // Mock for comments
 const mockComments = [
-    { id: 1, author: "Иван", text: "Очень полезный выпуск, спасибо!", avatar: "" },
-    { id: 2, author: "Мария", text: "Здорово", avatar: "" },
+    { id: 1, author: "Иван", text: "sigma sigma boy", avatar: "" },
 ];
 
 
@@ -34,7 +33,7 @@ const AudioPodcastPage = () => {
     const [comments, setComments] = useState([]);
 
     useEffect(() => {
-        // Имитация загрузки данных
+        // TODO change from mock to real request
         setPodcast(mockPodcastData);
         setComments(mockComments);
     }, []);
@@ -44,7 +43,7 @@ const AudioPodcastPage = () => {
     return (
         <div>
             <HeaderComponent />
-            <Box sx={{ padding: 3 }}>
+            <Box sx={{ padding: 3, marginBottom: '15px' }}>
             <AudioPlayer audioSrc={podcast.audioSrc} duration={podcast.duration} likes={podcast.likes} cardPhoto={podcast.cardPhoto} name={podcast.name}/>
 
             {/* Автор и информация */}
@@ -76,7 +75,7 @@ const AudioPodcastPage = () => {
             </Box>
 
             <Divider sx={{ marginY: 2 }} />
-            <Comments comments={comments} />
+            <Comments comments={comments} setComments={setComments}/>
         </Box>
         <FooterNavigation />
     </div>

@@ -1,8 +1,7 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
-import {BrowserRouter as Router, useNavigate} from "react-router-dom";
+import { BrowserRouter as Router, useNavigate } from "react-router-dom";
 import EditProfilePage from "./EditProfilePage";
-
 
 jest.mock("react-router-dom", () => ({
     ...jest.requireActual("react-router-dom"),
@@ -17,7 +16,7 @@ describe("EditProfilePage", () => {
         jest.mocked(useNavigate).mockReturnValue(mockNavigate);
     });
 
-    it("переходит на страницу профиля при нажатии 'Отменить'", () => {
+    it("должна переходить на страницу профиля при нажатии 'Отменить'", () => {
         render(
             <Router>
                 <EditProfilePage />
@@ -31,7 +30,7 @@ describe("EditProfilePage", () => {
         expect(mockNavigate).toHaveBeenCalledWith("/Profile");
     });
 
-    it("отправляет данные профиля при сохранении", () => {
+    it("должна отправлять данные профиля при сохранении", () => {
         render(
             <Router>
                 <EditProfilePage />
@@ -43,6 +42,5 @@ describe("EditProfilePage", () => {
         fireEvent.click(saveButton);
 
         expect(mockNavigate).toHaveBeenCalledWith("/Profile");
-
     });
 });

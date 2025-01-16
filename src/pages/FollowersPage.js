@@ -128,7 +128,10 @@ const FollowersPage = () => {
             />
             {displayedUsers.length > 0 ? (
                 displayedUsers.map((user) => (
-                    <UserItem key={user.id}>
+                    <UserItem
+                        key={user.id}
+                        onClick={() => navigate(`/otherProfile/${user.id}`, { state: { user } })}
+                    >
                         <Avatar src={user.avatar} alt={user.name} />
                         <UserName>{user.name}</UserName>
                     </UserItem>
@@ -136,6 +139,7 @@ const FollowersPage = () => {
             ) : (
                 <p>Нет данных для отображения</p>
             )}
+
         </MainContainer>
     );
 };

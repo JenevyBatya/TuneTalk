@@ -76,7 +76,7 @@ const VideoPodcastPage = () => {
                 </Box>
 
                 <Divider sx={{ marginY: 2 }} />
-                <Comments comments={comments} />
+                <Comments comments={comments} setComments={setComments}/>
             </Box>
             <div style={{ marginBottom: '20%' }}>
                 <FooterNavigation />
