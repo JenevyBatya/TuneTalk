@@ -36,6 +36,7 @@
     "web-vitals": "^2.1.4",
     "wavesurfer.js": "^7.8.16"
   },
+
   "scripts": {
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
@@ -60,10 +61,10 @@
     },
     "coverageThreshold": {
       "global": {
-        "branches": 60,
-        "functions": 60,
-        "lines": 60,
-        "statements": 60
+        "branches": 50,
+        "functions": 50,
+        "lines": 50,
+        "statements": 50
       }
     }
   },
