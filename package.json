@@ -76,7 +76,7 @@
     "use-sound": "^4.0.3",
     "waves-ui": "github:wavesjs/ui",
     "web-vitals": "^2.1.4",
-    "wavesurfer.js": "^7.8.16"
+    "wavesurfer.js": "^7.8.16",
 
     "source-map-loader": "^3.0.0",
     "style-loader": "^3.3.1",
