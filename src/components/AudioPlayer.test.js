@@ -3,21 +3,19 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import AudioPlayer from './AudioPlayer';
 import useSound from 'use-sound';
 
-// Мокаем use-sound
 jest.mock('use-sound');
 
-describe('AudioPlayer Component', () => {
+describe('Компонент AudioPlayer', () => {
     const mockAudioSrc = 'test.mp3';
     const mockLikes = 10;
     const mockCardPhoto = 'test.jpg';
     const mockName = 'Test Audio';
 
-    // Мокаем возвращаемое значение use-sound
     const mockPlay = jest.fn();
     const mockPause = jest.fn();
     const mockSound = {
-        duration: jest.fn().mockReturnValue(120), // продолжительность в секундах
-        seek: jest.fn().mockImplementation(() => 30), // возвращаем текущую позицию
+        duration: jest.fn().mockReturnValue(120),
+        seek: jest.fn().mockImplementation(() => 30),
     };
 
     beforeEach(() => {
@@ -28,27 +26,24 @@ describe('AudioPlayer Component', () => {
         jest.clearAllMocks();
     });
 
-    it('should render without crashing', () => {
+    it('должен рендериться без ошибок', () => {
         render(<AudioPlayer audioSrc={mockAudioSrc} likes={mockLikes} cardPhoto={mockCardPhoto} name={mockName} />);
         expect(screen.getByText(mockName)).toBeInTheDocument();
         expect(screen.getByText(`${mockLikes}`)).toBeInTheDocument();
     });
 
-
-
-    it('should format time correctly', () => {
+    it('должен корректно форматировать время', () => {
         render(<AudioPlayer audioSrc={mockAudioSrc} likes={mockLikes} cardPhoto={mockCardPhoto} name={mockName} />);
 
-        const currentTimeText = screen.getByText(/^\d+:\d+/); // Текст времени, например, 1:30
+        const currentTimeText = screen.getByText(/^\d+:\d+/);
         expect(currentTimeText).toBeInTheDocument();
     });
 
-    it('should handle error if useSound returns undefined', () => {
+    it('должен обрабатывать ошибку, если useSound возвращает undefined', () => {
         useSound.mockReturnValueOnce(undefined);
 
         render(<AudioPlayer audioSrc={mockAudioSrc} likes={mockLikes} cardPhoto={mockCardPhoto} name={mockName} />);
 
-        // Проверяем, что ошибки не возникло (по сути, компонент не ломается)
         expect(screen.getByText(mockName)).toBeInTheDocument();
     });
 });

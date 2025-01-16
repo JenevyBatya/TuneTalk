@@ -1,31 +1,31 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import SubscribeButton from "./ButtonForSubscribe"; // путь к вашему компоненту
-import "@testing-library/jest-dom"; // для использования дополнительных матчеров, таких как .toBeInTheDocument
+import SubscribeButton from "./ButtonForSubscribe";
+import "@testing-library/jest-dom";
 
-describe("SubscribeButton Component", () => {
-    test("renders the button with initial text 'Подписаться'", () => {
+describe("Компонент SubscribeButton", () => {
+    test("отображает кнопку с начальным текстом 'Подписаться'", () => {
         render(<SubscribeButton />);
         const button = screen.getByRole("button", { name: /подписаться/i });
         expect(button).toBeInTheDocument();
         expect(button).toHaveTextContent("Подписаться");
     });
 
-    test("changes text to 'Подписаны' when clicked", () => {
+    test("изменяет текст на 'Подписаны' при клике", () => {
         render(<SubscribeButton />);
         const button = screen.getByRole("button", { name: /подписаться/i });
         fireEvent.click(button);
         expect(button).toHaveTextContent("Подписаны");
     });
 
-    test("toggles text back to 'Подписаться' when clicked again", () => {
+    test("переключает текст обратно на 'Подписаться' при повторном клике", () => {
         render(<SubscribeButton />);
         const button = screen.getByRole("button", { name: /подписаться/i });
-        fireEvent.click(button); // Первое нажатие
-        fireEvent.click(button); // Второе нажатие
+        fireEvent.click(button);
+        fireEvent.click(button);
         expect(button).toHaveTextContent("Подписаться");
     });
 
-    test("matches the snapshot", () => {
+    test("соответствует сохранённому снимку", () => {
         const { asFragment } = render(<SubscribeButton />);
         expect(asFragment()).toMatchSnapshot();
     });
