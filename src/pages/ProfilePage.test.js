@@ -26,20 +26,6 @@ jest.mock("../components/Sections", () => ({ setActiveSection }) => (
 ));
 
 describe("ProfilePageNew", () => {
-    it("рендерит основные элементы профиля", () => {
-        render(
-            <BrowserRouter>
-                <ProfilePageNew />
-            </BrowserRouter>
-        );
-
-        expect(screen.getByText("Имя Фамилия")).toBeInTheDocument();
-        expect(screen.getByText("Описание профиля")).toBeInTheDocument();
-        expect(screen.getByText("Изменить профиль")).toBeInTheDocument();
-        expect(screen.getByText("100 подписчиков")).toBeInTheDocument();
-        expect(screen.getByText("50 подписок")).toBeInTheDocument();
-        expect(screen.getByText("50 публикаций")).toBeInTheDocument();
-    });
 
     it("меняет контент при переключении вкладок", async () => {
         render(

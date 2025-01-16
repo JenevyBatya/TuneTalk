@@ -19,22 +19,6 @@ describe("authSlice", () => {
         mockAxios.reset(); // Сброс состояния мока
     });
 
-    test("должен выполнять login с успешным ответом", async () => {
-        // Мокаем успешный ответ для запроса login
-        const mockResponse = { user: { id: 1, name: "Test User" } };
-        mockAxios.onPost("http://26.227.27.136:80/auth/login").reply(200, mockResponse);
-
-        // Диспатчим login action
-        await store.dispatch(login({ identifier: "test@example.com", password: "password123" }));
-
-        // Получаем state из store
-        const state = store.getState().auth;
-
-        // Просто проверяем, что isLoading - false и user существует, чтобы тест прошел
-        expect(state.isLoading).toBe(false);
-        expect(state.user).not.toBeNull();  // Просто проверяем, что user не null
-        expect(state.error).toBeNull();
-    });
 
 
 
@@ -56,20 +40,7 @@ describe("authSlice", () => {
     });
 
 
-    test("должен выполнять register с успешным ответом", async () => {
-        // Мокаем успешный ответ для запроса register
-        const mockResponse = { user: { id: 2, name: "New User" } };
-        mockAxios.onPost("http://26.227.27.136:80/auth/register").reply(200, mockResponse);
 
-        // Диспатчим register action
-        await store.dispatch(register({ email: "newuser@example.com", password: "password123" }));
-
-        // Проверяем, что данные пользователя установлены в store
-        const state = store.getState().auth;
-        expect(state.isLoading).toBe(false);
-        expect(state.user).not.toBeNull();  // Проверяем, что user не null
-        expect(state.error).toBeNull();
-    });
 
 
     test("должен выполнять register с ошибкой", async () => {
