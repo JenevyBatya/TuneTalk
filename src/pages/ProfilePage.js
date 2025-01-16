@@ -37,6 +37,7 @@ const ProfilePageNew = () => {
     const [activeSection, setActiveSection] = useState(0); // Состояние текущей вкладки
     const [content, setContent] = useState([]); // Состояние данных для отображения
     const [loading, setLoading] = useState(false); // Состояние загрузки
+    const username = localStorage.getItem("username");
 
     // Функция для загрузки данных с сервера
     //async-----------|
@@ -117,7 +118,7 @@ const ProfilePageNew = () => {
                     <Pic src={UserPic} alt="User"/>
 
                     <InfoDiv>
-                        <Username>Имя Фамилия</Username>
+                        <Username>{username}</Username>
                         <Description>Описание профиля</Description>
                         <LinkDiv>
                             <LinkLogo src={LinkIcon} alt="Link Icon"/>
