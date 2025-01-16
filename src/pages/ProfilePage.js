@@ -28,7 +28,6 @@ import Sections from "../components/Sections";
 import ContentContainer from "../components/ContentContainer";
 import CustomCard from "../components/CustomCard";
 import cardData from "../mocks/CardData.json";
-import FooterComponent from "../components/FooterComponent";
 import FooterNavigation from "../components/FooterComponent";
 import HeaderComponent from "../components/HeaderComponent";
 
@@ -160,7 +159,7 @@ const ProfilePageNew = () => {
                         <StatText>50 публикаций</StatText>
                     </StatsItem>
                 </StatsContainer>
-                <AddButton as={Link} to="/#audiocutterlink#" >Новый подкаст</AddButton>
+                <AddButton as={Link} to="/AudioCutter" >Новый подкаст</AddButton>
 
                 <Sections setActiveSection={setActiveSection}/>
 

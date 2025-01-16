@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 
+
 import Root from './App';
 
 import './fonts/static/Jost-Light.ttf';
@@ -17,13 +18,16 @@ Bugsnag.start({
     plugins: [new BugsnagPluginReact()]
 });
 
+
 const ErrorBoundary = Bugsnag.getPlugin('react').createErrorBoundary(React);
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
+
     <ErrorBoundary>
         <Provider store={store}>
             <Root />
         </Provider>
     </ErrorBoundary>
+
 );

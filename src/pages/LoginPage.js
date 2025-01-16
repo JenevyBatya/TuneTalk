@@ -1,3 +1,4 @@
+
 /* eslint-disable */
 import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
@@ -13,6 +14,7 @@ import {
 } from "../styles/LoginPageStyles";
 import {FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput} from "@mui/material";
 import {Visibility, VisibilityOff} from "@mui/icons-material";
+
 import {Link, useNavigate} from "react-router-dom";
 
 
@@ -95,9 +97,11 @@ export const LoginPage = () => {
                         {isLoading ? "Загрузка..." : "Войти"}
                     </StyledButton>
                 </Form>
+
                 <LoginLink>
                     Нет аккаунта? <Link to="/Registration">Создать</Link>
                 </LoginLink>
+
             </FormContainer>
         </MainContainer>
     );

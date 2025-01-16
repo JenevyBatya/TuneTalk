@@ -1,7 +1,7 @@
 import {createSlice, createAsyncThunk} from "@reduxjs/toolkit";
 import axios from "axios";
 
-const API_URL = "http://26.227.27.136:80/auth";
+const API_URL = "http://138.124.127.129/api";
 
 export const login = createAsyncThunk("auth/login", async (credentials, thunkAPI) => {
     try {
