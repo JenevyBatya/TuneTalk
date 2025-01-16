@@ -7,15 +7,15 @@ jest.mock("../features/fetchData", () => ({
     addCommentToBackend: jest.fn(),
 }));
 
-describe("Comments Component", () => {
+describe("Компонент Comments", () => {
     let mockSetComments;
     let initialComments;
 
     beforeEach(() => {
         mockSetComments = jest.fn();
         initialComments = [
-            { id: 1, author: "User1", text: "Test comment 1" },
-            { id: 2, author: "User2", text: "Test comment 2" },
+            { id: 1, author: "User1", text: "Тестовый комментарий 1" },
+            { id: 2, author: "User2", text: "Тестовый комментарий 2" },
         ];
     });
 
@@ -23,24 +23,20 @@ describe("Comments Component", () => {
         jest.clearAllMocks();
     });
 
-    it("renders initial comments", () => {
+    it("Отображение начальных комментариев", () => {
         render(<Comments comments={initialComments} setComments={mockSetComments} />);
 
-        // Проверяем, что изначальные комментарии отображаются
-        expect(screen.getByText("Test comment 1")).toBeInTheDocument();
-        expect(screen.getByText("Test comment 2")).toBeInTheDocument();
+        expect(screen.getByText("Тестовый комментарий 1")).toBeInTheDocument();
+        expect(screen.getByText("Тестовый комментарий 2")).toBeInTheDocument();
     });
 
-
-    it("does not add an empty comment", () => {
+    it("Не добавляет пустой комментарий", () => {
         const { getByText } = render(
             <Comments comments={initialComments} setComments={mockSetComments} />
         );
 
         const button = getByText("Отправить");
 
-        // Кнопка "Отправить" должна быть отключена при пустом комментарии
         expect(button).toBeDisabled();
     });
-
 });

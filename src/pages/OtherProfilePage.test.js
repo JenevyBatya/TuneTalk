@@ -4,14 +4,12 @@ import { MemoryRouter, useLocation, useNavigate } from "react-router-dom";
 import OtherProfilePage from "../pages/OtherProfilePage";
 import cardData from "../mocks/CardData.json";
 
-// Моки для react-router-dom
 jest.mock("react-router-dom", () => ({
     ...jest.requireActual("react-router-dom"),
     useNavigate: jest.fn(),
     useLocation: jest.fn(),
 }));
 
-// Моки для компонентов
 jest.mock("../components/Sections", () => jest.fn(({ setActiveSection }) => (
     <div data-testid="sections">
         <button onClick={() => setActiveSection(0)}>Подкасты</button>
@@ -25,7 +23,7 @@ jest.mock("../components/FooterComponent", () => jest.fn(() => <footer>Footer</f
 jest.mock("../components/HeaderComponent", () => jest.fn(() => <header>Header</header>));
 jest.mock("../components/ButtonForSubscribe", () => jest.fn(() => <button>Подписаться</button>));
 
-describe("OtherProfilePage", () => {
+describe("Страница OtherProfilePage", () => {
     const mockNavigate = jest.fn();
     const mockUser = {
         avatar: "test-avatar.png",
@@ -39,15 +37,14 @@ describe("OtherProfilePage", () => {
         useLocation.mockReturnValue({ state: { user: mockUser } });
     });
 
-
-    it("Открывает соответствующую страницу при клике на подписчиков", () => {
+    it("Открывает страницу подписчиков при клике на количество подписчиков", () => {
         render(<OtherProfilePage />, { wrapper: MemoryRouter });
 
         fireEvent.click(screen.getByText("100 подписчиков"));
         expect(mockNavigate).toHaveBeenCalledWith("/Users/followers");
     });
 
-    it("Открывает соответствующую страницу при клике на подписки", () => {
+    it("Открывает страницу подписок при клике на количество подписок", () => {
         render(<OtherProfilePage />, { wrapper: MemoryRouter });
 
         fireEvent.click(screen.getByText("50 подписок"));

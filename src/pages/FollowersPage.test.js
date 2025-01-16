@@ -3,14 +3,13 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import { MemoryRouter, Routes, Route } from "react-router-dom";
 import FollowersPage from "./FollowersPage";
 
-// Mock useNavigate
 jest.mock("react-router-dom", () => ({
     ...jest.requireActual("react-router-dom"),
     useNavigate: jest.fn(),
 }));
 
-describe("FollowersPage Component", () => {
-    test("renders followers when type is 'followers'", () => {
+describe("Компонент FollowersPage", () => {
+    test("должна отображать подписчиков, когда тип 'followers'", () => {
         render(
             <MemoryRouter initialEntries={["/followers"]}>
                 <Routes>
@@ -24,7 +23,7 @@ describe("FollowersPage Component", () => {
         expect(screen.getByText("Bob")).toBeInTheDocument();
     });
 
-    test("renders subscriptions when type is 'subscriptions'", () => {
+    test("должна отображать подписки, когда тип 'subscriptions'", () => {
         render(
             <MemoryRouter initialEntries={["/subscriptions"]}>
                 <Routes>
@@ -38,7 +37,7 @@ describe("FollowersPage Component", () => {
         expect(screen.getByText("Music Vibes")).toBeInTheDocument();
     });
 
-    test("filters users based on search query", () => {
+    test("должна фильтровать пользователей по запросу поиска", () => {
         render(
             <MemoryRouter initialEntries={["/followers"]}>
                 <Routes>
@@ -54,7 +53,7 @@ describe("FollowersPage Component", () => {
         expect(screen.queryByText("Bob")).not.toBeInTheDocument();
     });
 
-    test("shows no data message when search query has no match", () => {
+    test("должна показывать сообщение о том, что нет данных, когда запрос поиска не даёт совпадений", () => {
         render(
             <MemoryRouter initialEntries={["/followers"]}>
                 <Routes>
@@ -69,7 +68,7 @@ describe("FollowersPage Component", () => {
         expect(screen.getByText("Нет данных для отображения")).toBeInTheDocument();
     });
 
-    test("navigates back to profile on 'Назад' button click", () => {
+    test("должна переходить на страницу профиля при клике на кнопку 'Назад'", () => {
         const navigate = jest.fn();
         jest.spyOn(require("react-router-dom"), "useNavigate").mockImplementation(() => navigate);
 

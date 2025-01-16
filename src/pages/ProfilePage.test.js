@@ -25,15 +25,14 @@ jest.mock("../components/Sections", () => ({ setActiveSection }) => (
     </div>
 ));
 
-describe("ProfilePageNew", () => {
+describe("Страница ProfilePageNew", () => {
 
-    it("меняет контент при переключении вкладок", async () => {
+    it("Меняет контент при переключении вкладок", async () => {
         render(
             <BrowserRouter>
                 <ProfilePageNew />
             </BrowserRouter>
         );
-
 
         fireEvent.click(screen.getByText("Подкасты"));
         await waitFor(() =>
@@ -42,7 +41,6 @@ describe("ProfilePageNew", () => {
             ).toHaveTextContent(cardData.podcasts[0].name)
         );
 
-
         fireEvent.click(screen.getByText("Плейлисты"));
         await waitFor(() =>
             expect(
@@ -50,14 +48,12 @@ describe("ProfilePageNew", () => {
             ).toHaveTextContent(cardData.playlists[0].name)
         );
 
-
         fireEvent.click(screen.getByText("Избранное"));
         await waitFor(() =>
             expect(
                 screen.getAllByTestId("custom-card")[0]
             ).toHaveTextContent(cardData.liked[0].name)
         );
-
 
         fireEvent.click(screen.getByText("Сохраненное"));
         await waitFor(() =>
@@ -67,7 +63,7 @@ describe("ProfilePageNew", () => {
         );
     });
 
-    it("показывает сообщение, если данных нет", async () => {
+    it("Показывает сообщение, если данных нет", async () => {
         render(
             <BrowserRouter>
                 <ProfilePageNew />
@@ -78,11 +74,10 @@ describe("ProfilePageNew", () => {
 
         await waitFor(() => {
             expect(screen.queryByTestId("custom-card")).toBeInTheDocument();
-
         });
     });
 
-    it("показывает сообщение о загрузке", async () => {
+    it("Показывает сообщение о загрузке", async () => {
         render(
             <BrowserRouter>
                 <ProfilePageNew />
@@ -91,14 +86,12 @@ describe("ProfilePageNew", () => {
 
         fireEvent.click(screen.getByText("Плейлисты"));
 
-
-
         await waitFor(() =>
             expect(screen.queryByText("Загрузка...")).not.toBeInTheDocument()
         );
     });
 
-    it("переходит на страницу редактирования профиля", () => {
+    it("Переходит на страницу редактирования профиля", () => {
         render(
             <BrowserRouter>
                 <ProfilePageNew />
@@ -111,7 +104,7 @@ describe("ProfilePageNew", () => {
         expect(window.location.pathname).toBe("/EditProfile");
     });
 
-    it("переходит на страницу подписчиков и подписок", () => {
+    it("Переходит на страницу подписчиков и подписок", () => {
         render(
             <BrowserRouter>
                 <ProfilePageNew />

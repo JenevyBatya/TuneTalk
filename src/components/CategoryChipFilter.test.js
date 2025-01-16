@@ -2,7 +2,7 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import CategoryChipFilter from "./CategoryChipFilter";
 import "@testing-library/jest-dom";
 
-describe("CategoryChipFilter component", () => {
+describe("Компонент CategoryChipFilter", () => {
     const mockSetSelectedCategories = jest.fn();
 
     const renderComponent = (selectedCategories = []) =>
@@ -13,7 +13,7 @@ describe("CategoryChipFilter component", () => {
             />
         );
 
-    test("renders initial categories", () => {
+    test("Отображение начальных категорий", () => {
         renderComponent();
         const categories = ["Криминал", "Секс", "Дизайн", "Образование", "Драма", "Воспитание"];
         categories.forEach((category) => {
@@ -22,8 +22,7 @@ describe("CategoryChipFilter component", () => {
         expect(screen.getByText("...")).toBeInTheDocument();
     });
 
-
-    test("handles category deselection", () => {
+    test("Обработка отмены выбора категории", () => {
         renderComponent(["Криминал"]);
         const category = screen.getByText("Криминал");
 
@@ -32,7 +31,7 @@ describe("CategoryChipFilter component", () => {
         expect(mockSetSelectedCategories).toHaveBeenCalledWith(expect.not.arrayContaining(["Криминал"]));
     });
 
-    test("toggles 'show all categories' button", () => {
+    test("Переключение кнопки 'показать все категории'", () => {
         renderComponent();
         const toggleButton = screen.getByText("...");
 
@@ -46,10 +45,10 @@ describe("CategoryChipFilter component", () => {
         expect(screen.queryByText("Наука")).not.toBeInTheDocument();
     });
 
-    test("renders selected categories with check icon", () => {
+    test("Отображение выбранных категорий с иконкой", () => {
         renderComponent(["Криминал"]);
         const category = screen.getByText("Криминал");
 
-        expect(category).toContainHTML("<svg"); // Проверяет наличие иконки CheckIcon
+        expect(category).toContainHTML("<svg");
     });
 });
