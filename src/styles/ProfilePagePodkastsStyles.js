@@ -180,4 +180,11 @@ export const AddButton = styled.button `
         background: #3e6670;
     }
 `
+export const SubscribeDiv = styled.div` 
+    width:auto;
+    align-items: center;
+    //background-color: #173E47;
+    cursor: pointer;
+    
+`
 

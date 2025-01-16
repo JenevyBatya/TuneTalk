@@ -21,6 +21,7 @@ const BlueSquare = styled(Box)(({theme}) => ({
     backgroundColor: '#173E47',
     display: 'flex',
     marginLeft: '11%',
+    width: 'fit-content',
     justifyContent: 'center',
     alignItems: 'center',
 }));
