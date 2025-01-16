@@ -10,6 +10,7 @@ import FollowersPage from "./pages/FollowersPage";
 import EditProfilePage from "./pages/EditProfilePage";
 import ProfilePageNew from "./pages/ProfilePage";
 import VideoPage from "./pages/VideioPlayerPage";
+import OtherProfilePage from "./pages/OtherProfilePage";
 
 
 function Root() {
@@ -23,6 +24,7 @@ function Root() {
                 <Route path="/Subscriptions" element={<Subscriptions />} />
                 <Route path="/Users/:type" element={<FollowersPage />} />
                 <Route path="/Profile" element={<ProfilePageNew />} />
+                <Route path="/OtherProfile" element={<OtherProfilePage/>} />
                 <Route path="/EditProfile" element={<EditProfilePage />} />
                 <Route path="/Audio-podcast/:id" element={<AudioPodcastPage />} />
                 <Route path="/Video-podcast/:id" element={<VideoPage/>}/>

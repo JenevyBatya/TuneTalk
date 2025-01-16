@@ -24,7 +24,7 @@ const AudioPlayer = ({ audioSrc, likes, cardPhoto, name }) => {
                 setCurrentTime(sound.seek() || 0);
             }, 500);
 
-            return () => clearInterval(interval); // del interval before el will be dead
+            return () => clearInterval(interval);
         }
     }, [sound]);
 

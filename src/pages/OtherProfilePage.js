@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import {
     ProfileContainer,
     Pic,
@@ -8,67 +8,60 @@ import {
     LinkDiv,
     LinkLogo,
     LinkText,
-    EditButtonDiv,
-    EditButton,
     StatsContainer,
     StatsItem,
     StatText,
     MainContainer,
     StarIcon,
     FooterContainer,
-    ProfileDiv, AddButton
+    ProfileDiv,
+    SubscribeDiv,
 } from "../styles/ProfilePagePodkastsStyles";
-import {Link, useNavigate} from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
-
-import UserPic from "../assets/auth2.jpg";
-import LinkIcon from "../assets/icons/LinkIcon.svg";
 import Star from "../assets/icons/ProfileStar.svg";
 import Sections from "../components/Sections";
 import ContentContainer from "../components/ContentContainer";
 import CustomCard from "../components/CustomCard";
 import cardData from "../mocks/CardData.json";
-import FooterComponent from "../components/FooterComponent";
 import FooterNavigation from "../components/FooterComponent";
 import HeaderComponent from "../components/HeaderComponent";
+import ButtonForSubscribe from "../components/ButtonForSubscribe";
 
-const ProfilePageNew = () => {
+const OtherProfilePage = () => {
     const navigate = useNavigate();
+    const location = useLocation();
+    const user = location.state?.user; // Получаем данные пользователя из location.state
+
     const [activeSection, setActiveSection] = useState(0); // Состояние текущей вкладки
     const [content, setContent] = useState([]); // Состояние данных для отображения
     const [loading, setLoading] = useState(false); // Состояние загрузки
+    //
+    // useEffect(() => {
+    //     if (!user) {
+    //         navigate("/profile"); // Если данных пользователя нет, перенаправляем на страницу профиля
+    //     }
+    // }, [user, navigate]);
 
-    // Функция для загрузки данных с сервера
-    //async-----------|
     const fetchData = (section) => {
         setLoading(true);
         try {
-            // const response = await fetch('../mocks/CardData.json');
-            // const data = await response.json();
-            // let response;
             switch (section) {
-                case 0: // Подкасты
+                case 0:
                     setContent(cardData.podcasts);
-                    // response = await fetch("/api/podcasts");
                     break;
-                case 1: // Плейлисты
+                case 1:
                     setContent(cardData.playlists);
-                    // response = await fetch("/api/playlists");
                     break;
-                case 2: // Избранное
+                case 2:
                     setContent(cardData.liked);
-                    // response = await fetch("/api/liked");
                     break;
-                case 3: // Сохраненное
+                case 3:
                     setContent(cardData.saved);
-                    // response = await fetch("/api/saved");
                     break;
                 default:
                     setContent([]);
-                // response = [];
             }
-            // const data = await response.json();
-            // setContent(data);
         } catch (error) {
             console.error("Ошибка загрузки данных:", error);
             setContent([]);
@@ -77,12 +70,10 @@ const ProfilePageNew = () => {
         }
     };
 
-    // Загружаем данные при изменении активного раздела
     useEffect(() => {
         fetchData(activeSection);
     }, [activeSection]);
 
-    // Генерация контента для отображения
     const renderContent = () => {
         if (loading) {
             return <div>Загрузка...</div>;
@@ -109,69 +100,51 @@ const ProfilePageNew = () => {
     };
 
     return (
-
         <MainContainer>
-            <HeaderComponent/>
+            <HeaderComponent />
             <ProfileDiv>
                 <ProfileContainer>
-                    <Pic src={UserPic} alt="User"/>
-
+                    <Pic src={user?.avatar || ""} alt={user?.name || "User"} />
                     <InfoDiv>
-                        <Username>Имя Фамилия</Username>
-                        <Description>Описание профиля</Description>
+                        <Username>{user?.name || "Имя Фамилия"}</Username>
+                        <Description>{user?.description || "Описание профиля"}</Description>
                         <LinkDiv>
-                            <LinkLogo src={LinkIcon} alt="Link Icon"/>
-                            <LinkText href="https://vk.com/user" target="_blank" rel="noopener noreferrer">
+                            <LinkLogo src="" alt="Link Icon" />
+                            <LinkText href="#" target="_blank" rel="noopener noreferrer">
                                 vk.com/user
                             </LinkText>
                         </LinkDiv>
-                        <EditButtonDiv onClick={() => navigate("/EditProfile")}>
-                            <EditButton>Изменить профиль</EditButton>
-                        </EditButtonDiv>
-
+                        <SubscribeDiv>
+                            <ButtonForSubscribe />
+                        </SubscribeDiv>
                     </InfoDiv>
                 </ProfileContainer>
 
                 <StatsContainer>
-                    <StarIcon src={Star} alt=""/>
-                    <StatsItem
-                        onClick={() => {
-                            navigate("/Users/followers");
-                        }}
-                        style={{cursor: "pointer"}}
-                    >
+                    <StarIcon src={Star} alt="" />
+                    <StatsItem onClick={() => navigate("/Users/followers")} style={{ cursor: "pointer" }}>
                         <StatText>100 подписчиков</StatText>
                     </StatsItem>
 
-                    <StarIcon src={Star} alt=""/>
-
-                    <StatsItem
-                        onClick={() => {
-                            navigate("/Users/subscriptions");
-                        }}
-                        style={{cursor: "pointer"}}
-                    >
+                    <StarIcon src={Star} alt="" />
+                    <StatsItem onClick={() => navigate("/Users/subscriptions")} style={{ cursor: "pointer" }}>
                         <StatText>50 подписок</StatText>
                     </StatsItem>
 
-                    <StarIcon src={Star} alt=""/>
+                    <StarIcon src={Star} alt="" />
                     <StatsItem>
                         <StatText>50 публикаций</StatText>
                     </StatsItem>
                 </StatsContainer>
-                <AddButton as={Link} to="/#audiocutterlink#" >Новый подкаст</AddButton>
 
-                <Sections setActiveSection={setActiveSection}/>
-
-                <ContentContainer>
-                    {renderContent()}
-                </ContentContainer>
+                <Sections setActiveSection={setActiveSection} />
+                <ContentContainer>{renderContent()}</ContentContainer>
             </ProfileDiv>
             <FooterContainer>
-                <FooterNavigation/>
+                <FooterNavigation />
             </FooterContainer>
         </MainContainer>
     );
 };
 
-export default ProfilePageNew;
+export default OtherProfilePage;
