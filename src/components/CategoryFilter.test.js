@@ -5,14 +5,14 @@ import CategoryFilter from './CategoryFilter';
 
 jest.mock('axios');
 
-describe('CategoryFilter Component', () => {
+describe('Компонент CategoryFilter', () => {
     const onFilterMock = jest.fn();
 
     beforeEach(() => {
         jest.clearAllMocks();
     });
 
-    test('renders filter button and toggles filter visibility', () => {
+    test('отображает кнопку фильтра и переключает видимость фильтра', () => {
         render(<CategoryFilter onFilter={onFilterMock} />);
 
         const filterButton = screen.getByRole('button', { name: /search icon/i });
@@ -25,7 +25,7 @@ describe('CategoryFilter Component', () => {
         expect(screen.queryByText(/фильтрация/i)).not.toBeInTheDocument();
     });
 
-    test('renders categories and allows category selection', () => {
+    test('отображает категории и позволяет выбирать категории', () => {
         render(<CategoryFilter onFilter={onFilterMock} />);
 
         fireEvent.click(screen.getByRole('button', { name: /search icon/i }));
@@ -36,7 +36,7 @@ describe('CategoryFilter Component', () => {
         fireEvent.click(categoryChip);
     });
 
-    test('renders sorting options and changes selected sort order', () => {
+    test('отображает параметры сортировки и меняет выбранный порядок сортировки', () => {
         render(<CategoryFilter onFilter={onFilterMock} />);
 
         fireEvent.click(screen.getByRole('button', { name: /search icon/i }));
@@ -48,7 +48,7 @@ describe('CategoryFilter Component', () => {
         expect(relevanceOption).toBeChecked();
     });
 
-    test('renders duration slider and changes its value', () => {
+    test('отображает слайдер продолжительности и изменяет его значение', () => {
         render(<CategoryFilter onFilter={onFilterMock} />);
 
         fireEvent.click(screen.getByRole('button', { name: /search icon/i }));
@@ -62,8 +62,7 @@ describe('CategoryFilter Component', () => {
         expect(slider.value).toBe('30');
     });
 
-
-    test('applies filters and sends data to the server', async () => {
+    test('применяет фильтры и отправляет данные на сервер', async () => {
         axios.post.mockResolvedValue({ data: { success: true } });
         render(<CategoryFilter onFilter={onFilterMock} />);
 
@@ -81,7 +80,7 @@ describe('CategoryFilter Component', () => {
         expect(onFilterMock).not.toHaveBeenCalled();
     });
 
-    test('handles server error when applying filters', async () => {
+    test('обрабатывает ошибку сервера при применении фильтров', async () => {
         axios.post.mockRejectedValue(new Error('Server error'));
         render(<CategoryFilter onFilter={onFilterMock} />);
 

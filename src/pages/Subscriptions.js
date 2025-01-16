@@ -10,7 +10,7 @@ import {fetchData} from "../features/fetchData";
 
 export const Subscriptions = () => {
     const [data, setData] = useState([]);
-    const searchFields = ['name', 'description', 'author'];
+    // const searchFields = ['name', 'description', 'author'];
     const [page, setPage] = useState(1);
     const [hasMore, setHasMore] = useState(true);
     const [filteredData, setFilteredData] = useState(data);
