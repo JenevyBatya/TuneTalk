@@ -1,3 +1,4 @@
+
 import React, {useEffect, useState} from "react";
 import { Box, Typography } from "@mui/material";
 import CustomCard, {StyledButton} from "../components/CustomCard";
@@ -5,49 +6,68 @@ import SearchFilter from "../components/SearchFilter";
 import CategoryFilter from "../components/CategoryFilter";
 import FooterNavigation from "../components/FooterComponent";
 import HeaderComponent from "../components/HeaderComponent";
-import cardPhoto from '../assets/cardPhoto.svg';
-import styles from '../styles/Library.module.css';
-import {fetchData} from "../features/fetchData";
+import styles from "../styles/Library.module.css";
+import axios from "axios";
 
 export const Library = () => {
     const [data, setData] = useState([]);
-    const searchFields = ['name', 'description', 'author'];
+    const searchFields = ['title', 'description', 'authorEmail'];
     const [filteredData, setFilteredData] = useState(data);
     const [page, setPage] = useState(1);
     const [hasMore, setHasMore] = useState(true);
-    // Mock server request, TODO server request
-    // const fetchData = async (page) => {
-    //     const limit = 10;
-    //     const start = (page - 1) * limit;
-    //     const serverData = Array.from({ length: 20 }, (_, i) => ({
-    //         id: i + 1,
-    //         name: `Name ${i + 1}`,
-    //         description: "Description/Theme",
-    //         tags: [{ id: 1, text: "tags" }, { id: 2, text: "tags" }, { id: 3, text: "tags" }],
-    //         duration: "60 min",
-    //         author: `Author ${i + 1}`,
-    //         subscribes: 1,
-    //         photo: cardPhoto
-    //     }));
-    //     const result = serverData.slice(start, start + limit);
-    //     return result.length > 0 ? result : null;
-    // };
-    const loadMoreData = async () => {
-        const newData = await fetchData(page);
-        if (newData) {
-            setData((prev) => [...prev, ...newData]);
-            setFilteredData((prev) => [...prev, ...newData]);
-            setPage((prev) => prev + 1);
-        } else {
-            setHasMore(false);
+    const [loading, setLoading] = useState(false);
+
+    // Функция для загрузки данных с сервера
+    const fetchData = async (page) => {
+        try {
+            const limit = 10;
+            const response = await axios.get(`http://138.124.127.129/api/library/list?page=${page}&limit=${limit}`);
+            const { data, total } = response.data;
+    
+            // Преобразование данных: загрузка обложек
+            const updatedData = await Promise.all(
+                data.map(async (item) => {
+                    const coverResponse = await axios.get(`http://138.124.127.129/api/library/cover/${item.id}`, {
+                        responseType: "blob",
+                    });
+                    const coverURL = URL.createObjectURL(coverResponse.data);
+                    return { ...item, coverURL };
+                })
+            );
+    
+            const hasMoreData = page * limit < total;
+            return { data: updatedData, hasMore: hasMoreData };
+        } catch (error) {
+            console.error("Ошибка при загрузке данных:", error);
+            return { data: [], hasMore: false };
         }
     };
+
+    const loadMoreData = async () => {
+        try {
+            const { data: newData, hasMore: newHasMore } = await fetchData(page);
+            if (newData && newData.length > 0) {
+                setData((prev) => [...prev, ...newData]);
+                setFilteredData((prev) => [...prev, ...newData]);
+                setPage((prev) => prev + 1);
+                setHasMore(newHasMore); // Убедитесь, что переменная обновляется корректно
+            } else {
+                setHasMore(false); // Если данных больше нет, явно указываем false
+            }
+        } catch (error) {
+            console.error("Ошибка при загрузке данных:", error);
+            setHasMore(false); // В случае ошибки больше данных не загружаем
+        }
+    };
+    
     useEffect(() => {
-        loadMoreData();
+        // Проверка, чтобы не загружать данные, если hasMore = false
+        if (hasMore) {
+            loadMoreData();
+        }
     }, []);
 
-
-
+    // Фильтрация данных
     const handleFilterData = (filtered) => {
         setFilteredData(filtered);
     };
@@ -56,62 +76,61 @@ export const Library = () => {
         <div>
             <HeaderComponent />
             <div>
-            <SearchFilter
-                data={data}
-                searchFields={searchFields}
-                onSearch={setFilteredData}
-            />
-            <table className={styles.chapterName}>
-                <tbody>
-                <tr>
-                    <th>
-                        <Typography variant="h4" component="div" className={styles.libraryHeader}>
-                            Library
-                        </Typography>
-                    </th>
-                    <th>
-                        <Typography className={styles.librarySubheader}>
-                            — [ˈlaɪbrərɪ] (en.) библиотека
-                        </Typography>
-                    </th>
-                </tr>
-                </tbody>
-            </table>
-            <CategoryFilter onFilter={handleFilterData}/>
-            <div className={styles.cardContainer}>
-                {filteredData.length > 0 ? (
-                    filteredData.map((item) => (
-                        <div key={item.id} className={styles.cardWrapper}>
-                            <CustomCard
-                                name={item.name}
-                                description={item.description}
-                                tags={item.tags}
-                                duration={item.duration}
-                                author={item.author}
-                                subscribers={item.subscribes}
-                                cardPhoto={item.photo}
-                            />
-                        </div>
-                    ))
-                ) : (
-                    <Box className={styles.noData}>
-                        <Typography variant="body1" className={styles.noDataText}>
-                            Кажется, пока что у нас такого нет...
-                        </Typography>
-                    </Box>
-                )}
-                {hasMore && (
-                    <div style={{marginBottom:'100px'}}>
+
+                <SearchFilter
+                    data={data}
+                    searchFields={searchFields}
+                    onSearch={setFilteredData}
+                />
+                <table className={styles.chapterName}>
+                    <tbody>
+                        <tr>
+                            <th>
+                                <Typography variant="h4" component="div" className={styles.libraryHeader}>
+                                    Library
+                                </Typography>
+                            </th>
+                            <th>
+                                <Typography className={styles.librarySubheader}>
+                                    — [ˈlaɪbrərɪ] (en.) библиотека
+                                </Typography>
+                            </th>
+                        </tr>
+                    </tbody>
+                </table>
+                <CategoryFilter onFilter={handleFilterData} />
+                <div className={styles.cardContainer}>
+                    {filteredData.length > 0 ? (
+                        filteredData.map((item) => (
+                            <div key={item.id} className={styles.cardWrapper}>
+                                <CustomCard
+                                    name={item.title}
+                                    description={item.description}
+                                    tags={item.categories.map((tag) => ({ id: tag, text: tag }))}
+                                    duration={item.duration}
+                                    author={item.username}
+                                    subscribers={Math.floor(Math.random() * 100)} // Заглушка для подписчиков
+                                    cardPhoto={item.coverURL} 
+                                />
+                            </div>
+                        ))
+                    ) : (
+                        <Box className={styles.noData}>
+                            <Typography variant="body1" className={styles.noDataText}>
+                                Кажется, пока что у нас такого нет...
+                            </Typography>
+                        </Box>
+                    )}
+                    {hasMore && (
                         <Box textAlign="center" marginY={2}>
-                            <StyledButton variant="contained" onClick={loadMoreData}>
-                                Загрузить ещё
+                            <StyledButton variant="contained" onClick={loadMoreData} disabled={loading}>
+                                {loading ? "Загрузка..." : "Загрузить ещё"}
                             </StyledButton>
                         </Box>
-                    </div>
-                )}
+                    )}
+                </div>
             </div>
-            </div>
-            <FooterNavigation/>
+            <FooterNavigation />
         </div>
     );
 };
