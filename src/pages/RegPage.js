@@ -22,8 +22,7 @@ import {
 } from "../styles/RegPageStyles";
 import google from "../assets/icons/googleLogo.svg";
 import {Link, useNavigate} from "react-router-dom";
-
-import {register} from "../features/authSlice";
+import {register} from "../features/authActions";
 import {useDispatch, useSelector} from "react-redux";
 
 const getPasswordStrength = (password) => {

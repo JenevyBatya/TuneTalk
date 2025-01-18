@@ -11,10 +11,10 @@ import BugsnagPluginReact from '@bugsnag/plugin-react';
 import { Provider } from 'react-redux';
 import { store } from './app/store';
 
-const { REACT_APP_BUGSNAG_API_KEY } = process.env;
+const { REACT_APP_BUGSNAG_API_KEY } = process.env.REACT_APP_BUGSNAG_API_KEY;
 
 Bugsnag.start({
-    apiKey: REACT_APP_BUGSNAG_API_KEY,
+    apiKey: process.env.REACT_APP_BUGSNAG_API_KEY,
     plugins: [new BugsnagPluginReact()]
 });
 

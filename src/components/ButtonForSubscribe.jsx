@@ -1,8 +1,8 @@
+import {React, useState} from "react";
 import {styled} from "@mui/system";
 import {Box, Button} from "@mui/material";
-import {useState} from "react";
 
-export const StyledButtonForSubscribe = styled(Button)(({theme}) => ({
+export const StyledButtonForSubscribe = styled(Button)(({}) => ({
     backgroundColor: '#fff',
     color: '#173E47',
     borderRadius: '15px',
@@ -17,7 +17,7 @@ export const StyledButtonForSubscribe = styled(Button)(({theme}) => ({
     },
 }));
 
-const BlueSquare = styled(Box)(({theme}) => ({
+const BlueSquare = styled(Box)(({}) => ({
     backgroundColor: '#173E47',
     display: 'flex',
     marginLeft: '11%',

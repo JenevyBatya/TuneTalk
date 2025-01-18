@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import logo from '../assets/Logo.svg';
 import {Link} from "react-router-dom";
 import {Button} from "@mui/material";
+import LogoutButton from "./LogoutButton";
 
 export const Header = styled.header`
   display: flex;
@@ -28,6 +29,7 @@ export const MobileHeader = () => {
             <Button as={Link} to="/" aria-label="На главную">
                 <Logo src={logo} alt="Логотип" />
             </Button>
+            <LogoutButton/>
         </Header>
     );
 };

@@ -47,31 +47,20 @@ const categories = [
 
 
 const CategoryFilter = ({onFilter}) => {
-    const [duration, setDuration] = useState([15, 40]); // Пример диапазона
+    const [duration, setDuration] = useState([15, 40]); // default values
     const [sortOrder, setSortOrder] = useState('date'); // Значения: 'date', 'duration', 'relevance'
     const [selectedCategories, setSelectedCategories] = useState(['Образование', 'Воспитание']);
     const [showFilters, setShowFilters] = useState(false);
-    const [showAllCategories, setShowAllCategories] = useState(false);
 
 
-    // Обновление диапазона времени
     const handleDurationChange = (event, newValue) => {
         setDuration(newValue);
     };
 
-    // Обновление выбранной сортировки
     const handleSortChange = (event) => {
         setSortOrder(event.target.value);
     };
 
-    // Обработка выбора категорий
-    const handleCategoryChange = (category) => {
-        setSelectedCategories((prevCategories) =>
-            prevCategories.includes(category)
-                ? prevCategories.filter((cat) => cat !== category)
-                : [...prevCategories, category]
-        );
-    };
 
     //TODO Отправка запроса на бэк
     const applyFilters = async () => {
@@ -86,7 +75,6 @@ const CategoryFilter = ({onFilter}) => {
             console.error('Ошибка при фильтрации данных:', error);
         }
     };
-    const displayedCategories = showAllCategories ? categories : categories.slice(0, 6);
 
     return (
         <div>
