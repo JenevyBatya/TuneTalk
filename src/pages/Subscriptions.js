@@ -1,11 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import {Box, Typography} from "@mui/material";
 import CustomCard, {StyledButton} from "../components/CustomCard";
-import cardPhoto from '../assets/cardPhoto.svg';
 import CategoryFilter from "../components/CategoryFilter";
 import FooterNavigation from "../components/FooterComponent";
 import HeaderComponent from "../components/HeaderComponent";
-import styles from "../styles/Library.module.css";
+import  "../styles/Library.css";
 import {fetchData} from "../features/fetchData";
 
 export const Subscriptions = () => {
@@ -33,20 +32,19 @@ export const Subscriptions = () => {
         loadMoreData();
     }, []);
     return (
-        <div className={styles.mainContainer}>
+        <div className="mainContainer">
             <HeaderComponent />
-            <div className={styles.subscriptionsTitle}>
-                <table className={styles.chapterName} style={{marginTop: '3vh', marginLeft: '2vh'}}>
+            <div className="subscriptionsTitle">
+                <table className="chapterName" style={{marginTop: '3vh', marginLeft: '2vh'}}>
                     <tbody>
                     <tr>
                         <th>
-                            <Typography variant="h4" component="div" className={styles.subscHeader}>
+                            <Typography variant="h4" component="div" className="subscHeader">
                                 Subscriptions
                             </Typography>
                         </th>
-                        <th className={styles.subscriptionsSubtitle}>
-                            {/*TODO smth with styles*/}
-                            <Typography className={styles.subscriptionsSubtitleText} style={{ color: "#6D6D6D", paddingTop: '1.8vh'}} variant="body2">
+                        <th className="subscriptionsSubtitle">
+                            <Typography className="subscriptionsSubtitleText" style={{ color: "#6D6D6D", paddingTop: '1.8vh'}} variant="body2">
                                 — [səbˈskrɪpʃ(ə)ns] <br />
                                 (en.) подписки
                             </Typography>
@@ -55,13 +53,13 @@ export const Subscriptions = () => {
                     </tbody>
                 </table>
             </div>
-            <div className={styles.categoryFilterBox}>
+            <div className="categoryFilterBox">
                 <CategoryFilter onFilter={handleFilterData} />
             </div>
-            <div className={styles.cardContainer}>
+            <div className="cardContainer">
                 {filteredData.length > 0 ? (
                     filteredData.map((item) => (
-                        <div key={item.id} className={styles.cardWrapper}>
+                        <div key={item.id} className="cardWrapper">
                             <CustomCard
                                 name={item.name}
                                 description={item.description}
@@ -74,8 +72,8 @@ export const Subscriptions = () => {
                         </div>
                     ))
                 ) : (
-                    <div className={styles.noContentBox}>
-                        <Typography variant="h8" component="div" className={styles.noContentText}>
+                    <div className="noContentBox">
+                        <Typography variant="h8" component="div" className="noContentText">
                             Кажется, пока что у нас такого нет...
                         </Typography>
                     </div>

@@ -5,8 +5,7 @@ import SearchFilter from "../components/SearchFilter";
 import CategoryFilter from "../components/CategoryFilter";
 import FooterNavigation from "../components/FooterComponent";
 import HeaderComponent from "../components/HeaderComponent";
-import cardPhoto from '../assets/cardPhoto.svg';
-import styles from '../styles/Library.module.css';
+import '../styles/Library.css';
 import {fetchData} from "../features/fetchData";
 
 export const Library = () => {
@@ -15,23 +14,7 @@ export const Library = () => {
     const [filteredData, setFilteredData] = useState(data);
     const [page, setPage] = useState(1);
     const [hasMore, setHasMore] = useState(true);
-    // Mock server request, TODO server request
-    // const fetchData = async (page) => {
-    //     const limit = 10;
-    //     const start = (page - 1) * limit;
-    //     const serverData = Array.from({ length: 20 }, (_, i) => ({
-    //         id: i + 1,
-    //         name: `Name ${i + 1}`,
-    //         description: "Description/Theme",
-    //         tags: [{ id: 1, text: "tags" }, { id: 2, text: "tags" }, { id: 3, text: "tags" }],
-    //         duration: "60 min",
-    //         author: `Author ${i + 1}`,
-    //         subscribes: 1,
-    //         photo: cardPhoto
-    //     }));
-    //     const result = serverData.slice(start, start + limit);
-    //     return result.length > 0 ? result : null;
-    // };
+
     const loadMoreData = async () => {
         const newData = await fetchData(page);
         if (newData) {
@@ -61,16 +44,16 @@ export const Library = () => {
                 searchFields={searchFields}
                 onSearch={setFilteredData}
             />
-            <table className={styles.chapterName}>
+            <table className="chapterName">
                 <tbody>
                 <tr>
                     <th>
-                        <Typography variant="h4" component="div" className={styles.libraryHeader}>
+                        <Typography variant="h4" component="div" className="libraryHeader">
                             Library
                         </Typography>
                     </th>
                     <th>
-                        <Typography className={styles.librarySubheader}>
+                        <Typography className="librarySubheader">
                             — [ˈlaɪbrərɪ] (en.) библиотека
                         </Typography>
                     </th>
@@ -78,10 +61,10 @@ export const Library = () => {
                 </tbody>
             </table>
             <CategoryFilter onFilter={handleFilterData}/>
-            <div className={styles.cardContainer}>
+            <div className="cardContainer">
                 {filteredData.length > 0 ? (
                     filteredData.map((item) => (
-                        <div key={item.id} className={styles.cardWrapper}>
+                        <div key={item.id} className="cardWrapper">
                             <CustomCard
                                 name={item.name}
                                 description={item.description}
@@ -94,8 +77,8 @@ export const Library = () => {
                         </div>
                     ))
                 ) : (
-                    <Box className={styles.noData}>
-                        <Typography variant="body1" className={styles.noDataText}>
+                    <Box className="noData">
+                        <Typography variant="body1" className="noDataText">
                             Кажется, пока что у нас такого нет...
                         </Typography>
                     </Box>
