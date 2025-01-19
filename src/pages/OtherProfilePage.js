@@ -27,6 +27,7 @@ import cardData from "../mocks/CardData.json";
 import FooterNavigation from "../components/FooterComponent";
 import HeaderComponent from "../components/HeaderComponent";
 import ButtonForSubscribe from "../components/ButtonForSubscribe";
+import LinkIcon from "../assets/icons/LinkIcon.svg"
 
 const OtherProfilePage = () => {
     const navigate = useNavigate();
@@ -109,7 +110,7 @@ const OtherProfilePage = () => {
                         <Username>{user?.name || "Имя Фамилия"}</Username>
                         <Description>{user?.description || "Описание профиля"}</Description>
                         <LinkDiv>
-                            <LinkLogo src="" alt="Link Icon" />
+                            <LinkLogo src={LinkIcon} alt="Link Icon" />
                             <LinkText href="#" target="_blank" rel="noopener noreferrer">
                                 vk.com/user
                             </LinkText>
