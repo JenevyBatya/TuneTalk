@@ -7,6 +7,7 @@ export const StyledButton = styled(Button)(({theme}) => ({
     backgroundColor: '#173E47',
     color: '#fff',
     borderRadius: '10px',
+    width: '150px',
     marginTop: theme.spacing(2),
     '&:hover': {
         backgroundColor: '#173E47',
@@ -79,7 +80,7 @@ const CustomCard = ({id, name, description, tags = [], duration, author, subscri
                         </Box>
                         <StyledButton
                             variant="contained"
-                            sx={{marginLeft: 2, width: '62%'}}
+                            sx={{marginLeft: 2}}
                             onClick={handleNavigate}
                         >
                             {type === "audio" ? "Слушать" : "Смотреть"}
