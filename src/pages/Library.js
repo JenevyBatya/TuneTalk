@@ -7,6 +7,7 @@ import FooterNavigation from "../components/FooterComponent";
 import HeaderComponent from "../components/HeaderComponent";
 import '../styles/Library.css';
 import {fetchData} from "../features/fetchData";
+import axios from "axios";
 
 export const Library = () => {
     const [data, setData] = useState([]);

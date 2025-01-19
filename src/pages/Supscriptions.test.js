@@ -10,7 +10,7 @@ jest.mock('../components/CategoryFilter', () => ({ onFilter }) => (
 jest.mock('../components/FooterComponent', () => () => <div>FooterNavigation</div>);
 jest.mock('../components/HeaderComponent', () => () => <div>HeaderComponent</div>);
 
-describe('Subscriptions Component', () => {
+describe('Subscriptions Компонент', () => {
     it('should render the subscriptions title and subtitle', () => {
             expect(true).toBe(true)
     });

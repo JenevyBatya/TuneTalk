@@ -22,7 +22,7 @@ export const AudioCutterStyledButton = styled(Button)(({theme}) => ({
     },
 }));
 
-const AudioCutter = ({coverFile, title, description, tags, username}) => {
+const AudioCutter = ({coverFile, title, description, username}) => {
     const [audioFile, setAudioFile] = useState(null);
     const [audioBuffer, setAudioBuffer] = useState(null);
     const [audioContext, setAudioContext] = useState(null);
@@ -35,6 +35,10 @@ const AudioCutter = ({coverFile, title, description, tags, username}) => {
     const [isDragging, setIsDragging] = useState(false);
     const [isTrimmed, setIsTrimmed] = useState(false);
     const [wasPlaying, setWasPlaying] = useState(false);
+
+    const [tags, setTags] = useState(['tag1', 'tag2']);  //MOCK
+    const [authorEmail, setAuthorEmail] = useState('s@gmail.com'); //MOCK
+
 
     const audioSourceRef = useRef(null);
     const animationRef = useRef(null);
@@ -171,17 +175,22 @@ const AudioCutter = ({coverFile, title, description, tags, username}) => {
                 }
             }
 
+            const duration = Math.floor(renderedBuffer.length / renderedBuffer.sampleRate);
+
             const wavBlob = encodeWAV(interleaved, renderedBuffer.sampleRate, renderedBuffer.numberOfChannels);
             const formData = new FormData();
             formData.append('file', wavBlob, isTrimmed ? 'trimmed-audio.wav' : 'original-audio.wav');
             if (coverFile) {
                 formData.append('cover', coverFile);
             }
+            console.log(tags);
             formData.append('title', title);
             formData.append('description', description);
             formData.append('tags', tags);
-            formData.append('username', username);
-
+            formData.append('authorEmail', authorEmail);
+            formData.append('duration', duration)
+    
+           
             try {
                 await axios.post('http://138.124.127.129/api/audio/upload', formData, {
                     headers: {

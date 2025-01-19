@@ -3,7 +3,6 @@ import AudioPodcastPage from './AudioPodcastPage';
 import '@testing-library/jest-dom';
 import { useSelector } from 'react-redux';
 
-// Мокаем компоненты и данные
 jest.mock('../components/AudioPlayer', () => () => <div>AudioPlayer</div>);
 jest.mock('../components/Comments', () => () => <div>Comments</div>);
 jest.mock('../components/FooterComponent', () => () => <div>FooterNavigation</div>);
@@ -29,8 +28,7 @@ const mockComments = [
 
 describe('AudioPodcastPage', () => {
 
-
-    it('should render the Subscribe button', async () => {
+    it('должна отображать кнопку подписки', async () => {
         render(<AudioPodcastPage />);
 
         await waitFor(() => {
@@ -38,7 +36,7 @@ describe('AudioPodcastPage', () => {
         });
     });
 
-    it('should render FooterNavigation', async () => {
+    it('должна отображать FooterNavigation', async () => {
         render(<AudioPodcastPage />);
 
         await waitFor(() => {
