@@ -17,14 +17,13 @@ export const Library = () => {
     const [hasMore, setHasMore] = useState(true);
     const [loading, setLoading] = useState(false);
 
-    // Функция для загрузки данных с сервера
+
     const fetchData = async (page) => {
         try {
             const limit = 10;
             const response = await axios.get(`https://small-duck.ru/api/library/list?page=${page}&limit=${limit}`);
             const { data, total } = response.data;
     
-            // Преобразование данных: загрузка обложек
             const updatedData = await Promise.all(
                 data.map(async (item) => {
                     const coverResponse = await axios.get(`https://small-duck.ru/api/library/cover/${item.id}`, {
@@ -42,7 +41,27 @@ export const Library = () => {
             return { data: [], hasMore: false };
         }
     };
-
+    
+    const loadCoverImagesForPodcasts = async (podcasts) => {
+        try {
+            const updatedPodcasts = await Promise.all(
+                podcasts.map(async (podcast) => {
+                    const coverResponse = await axios.get(`https://small-duck.ru/api/library/cover/${podcast.id}`, {
+                        responseType: 'blob',
+                    });
+                    const coverURL = URL.createObjectURL(coverResponse.data);
+                    return { ...podcast, coverURL };
+                })
+            );
+    
+            return updatedPodcasts;
+    
+        } catch (error) {
+            console.error('Ошибка при загрузке обложек:', error);
+            return podcasts;
+        }
+    };
+    
     const loadMoreData = async () => {
         try {
             const { data: newData, hasMore: newHasMore } = await fetchData(page);
@@ -50,26 +69,26 @@ export const Library = () => {
                 setData((prev) => [...prev, ...newData]);
                 setFilteredData((prev) => [...prev, ...newData]);
                 setPage((prev) => prev + 1);
-                setHasMore(newHasMore); // Убедитесь, что переменная обновляется корректно
+                setHasMore(newHasMore); 
             } else {
-                setHasMore(false); // Если данных больше нет, явно указываем false
+                setHasMore(false);
             }
         } catch (error) {
             console.error("Ошибка при загрузке данных:", error);
-            setHasMore(false); // В случае ошибки больше данных не загружаем
+            setHasMore(false); 
         }
     };
     
     useEffect(() => {
-        // Проверка, чтобы не загружать данные, если hasMore = false
         if (hasMore) {
             loadMoreData();
         }
     }, []);
 
-    // Фильтрация данных
-    const handleFilterData = (filtered) => {
-        setFilteredData(filtered);
+    const handleFilterData = async (filtered) => {
+        const updatedFilteredData = await loadCoverImagesForPodcasts(filtered);
+        setFilteredData(updatedFilteredData);
+        
     };
 
     return (

@@ -94,12 +94,11 @@
 import React, { useEffect } from "react";
 import { Box, Typography, Avatar, TextField } from "@mui/material";
 import { StyledButton } from "./CustomCard";
-import { addCommentToBackend, fetchCommentsFromBackend } from "../features/fetchData"; // Импортируем функции
+import { addCommentToBackend, fetchCommentsFromBackend } from "../features/fetchData"; 
 
 const Comments = ({ audioId, comments, setComments }) => {
     const [newComment, setNewComment] = React.useState("");
 
-    // Загрузка комментариев с сервера при монтировании компонента
     useEffect(() => {
         const loadComments = async () => {
             try {
