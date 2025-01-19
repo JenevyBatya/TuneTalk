@@ -21,13 +21,13 @@ export const Library = () => {
     const fetchData = async (page) => {
         try {
             const limit = 10;
-            const response = await axios.get(`http://138.124.127.129/api/library/list?page=${page}&limit=${limit}`);
+            const response = await axios.get(`https://small-duck.ru/api/library/list?page=${page}&limit=${limit}`);
             const { data, total } = response.data;
     
             // Преобразование данных: загрузка обложек
             const updatedData = await Promise.all(
                 data.map(async (item) => {
-                    const coverResponse = await axios.get(`http://138.124.127.129/api/library/cover/${item.id}`, {
+                    const coverResponse = await axios.get(`https://small-duck.ru/api/library/cover/${item.id}`, {
                         responseType: "blob",
                     });
                     const coverURL = URL.createObjectURL(coverResponse.data);
@@ -104,6 +104,7 @@ export const Library = () => {
                         filteredData.map((item) => (
                             <div key={item.id} className={styles.cardWrapper}>
                                 <CustomCard
+                                    id={item.id}
                                     name={item.title}
                                     description={item.description}
                                     tags={item.categories.map((tag) => ({ id: tag, text: tag }))}

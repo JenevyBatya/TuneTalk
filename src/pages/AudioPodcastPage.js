@@ -7,36 +7,51 @@ import mockAudio from '../assets/SLAVA SKRIPKA Бобр.mp3';
 import FooterNavigation from "../components/FooterComponent";
 import HeaderComponent from "../components/HeaderComponent";
 import SubscribeButton from "../components/ButtonForSubscribe";
+import axios from "axios";
+import { useParams } from "react-router-dom";
 
-
-// Mock for podcast
-const mockPodcastData = {
-    audioSrc: mockAudio,
-    name: "Name",
-    description: "Description...",
-    author: "Альфа-Банк",
-    subscribers: 123,
-    tags: ["tags", "tags", "tags"],
-    duration: "21:02",
-    cardPhoto: cardPhoto,
-    likes: 233,
-};
-
-// Mock for comments
-const mockComments = [
-    { id: 1, author: "Иван", text: "sigma sigma boy", avatar: "" },
-];
 
 
 const AudioPodcastPage = () => {
+    const id = useParams();
+    const numericId = Number(id.id);
+
     const [podcast, setPodcast] = useState(null);
     const [comments, setComments] = useState([]);
 
     useEffect(() => {
-        // TODO change from mock to real request
-        setPodcast(mockPodcastData);
-        setComments(mockComments);
-    }, []);
+        // Функция для загрузки данных подкаста
+        const fetchPodcast = async () => {
+          try {
+            // Запрос данных о подкасте по ID
+            
+            const response = await axios.get(`https://small-duck.ru/api/audio/${numericId}`);
+            const podcastData = response.data;
+            // Обновление состояния с данными подкаста
+            setPodcast({
+              audioSrc: `https://small-duck.ru/api/audio/${numericId}/stream`, // URL для потоковой передачи аудио
+              name: podcastData.title,
+              description: podcastData.description,
+              author: podcastData.authorUsername, // Имя пользователя вместо email
+              subscribers: Math.floor(Math.random() * 1000), // Примерное количество подписчиков
+              tags: podcastData.categories,
+              duration: podcastData.duration,
+              cardPhoto: `https://small-duck.ru/api/uploads/${podcastData.coverFile}`, // Путь к файлу обложки
+              likes: Math.floor(Math.random() * 500), // Примерное количество лайков
+            });
+    
+            // Загружаем комментарии (если они есть)
+            setComments([
+              { id: 1, author: "Иван", text: "sigma sigma boy", avatar: "" },
+            ]);
+          } catch (error) {
+            console.error("Ошибка при загрузке подкаста:", error);
+          }
+        };
+    
+        fetchPodcast();
+      }, [id]);
+
 
     if (!podcast) return <div>Загрузка...</div>;
 
@@ -75,7 +90,7 @@ const AudioPodcastPage = () => {
             </Box>
 
             <Divider sx={{ marginY: 2 }} />
-            <Comments comments={comments} setComments={setComments}/>
+            <Comments audioId={numericId} comments={comments} setComments={setComments}/>
         </Box>
         <FooterNavigation />
     </div>
