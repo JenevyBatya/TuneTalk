@@ -3,11 +3,12 @@ import styled from 'styled-components';
 import logo from '../assets/Logo.svg';
 import {Link} from "react-router-dom";
 import {Button} from "@mui/material";
+import HeaderButton from "./HeaderButton";
 
 export const Header = styled.header`
   display: flex;
   align-items: center;
-  justify-content: left;
+  justify-content: space-between;
   background-color: #AECBC9;
   height: calc(env(safe-area-inset-top) + 60px); /* Учитываем высоту безопасной области сверху */
   padding-top: env(safe-area-inset-top); /* Добавляем отступ для "чёлки" */
@@ -28,6 +29,7 @@ export const MobileHeader = () => {
             <Button as={Link} to="/" aria-label="На главную">
                 <Logo src={logo} alt="Логотип" />
             </Button>
+            <HeaderButton style={{marginLeft: 'auto'}}/>
         </Header>
     );
 };

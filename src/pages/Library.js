@@ -1,12 +1,11 @@
-
 import React, {useEffect, useState} from "react";
-import { Box, Typography } from "@mui/material";
+import {Box, Typography} from "@mui/material";
 import CustomCard, {StyledButton} from "../components/CustomCard";
 import SearchFilter from "../components/SearchFilter";
 import CategoryFilter from "../components/CategoryFilter";
 import FooterNavigation from "../components/FooterComponent";
 import HeaderComponent from "../components/HeaderComponent";
-import styles from "../styles/Library.module.css";
+import '../styles/Library.css';
 import axios from "axios";
 
 export const Library = () => {
@@ -22,26 +21,26 @@ export const Library = () => {
         try {
             const limit = 10;
             const response = await axios.get(`https://small-duck.ru/api/library/list?page=${page}&limit=${limit}`);
-            const { data, total } = response.data;
-    
+            const {data, total} = response.data;
+
             const updatedData = await Promise.all(
                 data.map(async (item) => {
                     const coverResponse = await axios.get(`https://small-duck.ru/api/library/cover/${item.id}`, {
                         responseType: "blob",
                     });
                     const coverURL = URL.createObjectURL(coverResponse.data);
-                    return { ...item, coverURL };
+                    return {...item, coverURL};
                 })
             );
-    
+
             const hasMoreData = page * limit < total;
-            return { data: updatedData, hasMore: hasMoreData };
+            return {data: updatedData, hasMore: hasMoreData};
         } catch (error) {
             console.error("Ошибка при загрузке данных:", error);
-            return { data: [], hasMore: false };
+            return {data: [], hasMore: false};
         }
     };
-    
+
     const loadCoverImagesForPodcasts = async (podcasts) => {
         try {
             const updatedPodcasts = await Promise.all(
@@ -50,35 +49,35 @@ export const Library = () => {
                         responseType: 'blob',
                     });
                     const coverURL = URL.createObjectURL(coverResponse.data);
-                    return { ...podcast, coverURL };
+                    return {...podcast, coverURL};
                 })
             );
-    
+
             return updatedPodcasts;
-    
+
         } catch (error) {
             console.error('Ошибка при загрузке обложек:', error);
             return podcasts;
         }
     };
-    
+
     const loadMoreData = async () => {
         try {
-            const { data: newData, hasMore: newHasMore } = await fetchData(page);
+            const {data: newData, hasMore: newHasMore} = await fetchData(page);
             if (newData && newData.length > 0) {
                 setData((prev) => [...prev, ...newData]);
                 setFilteredData((prev) => [...prev, ...newData]);
                 setPage((prev) => prev + 1);
-                setHasMore(newHasMore); 
+                setHasMore(newHasMore);
             } else {
                 setHasMore(false);
             }
         } catch (error) {
             console.error("Ошибка при загрузке данных:", error);
-            setHasMore(false); 
+            setHasMore(false);
         }
     };
-    
+
     useEffect(() => {
         if (hasMore) {
             loadMoreData();
@@ -88,46 +87,45 @@ export const Library = () => {
     const handleFilterData = async (filtered) => {
         const updatedFilteredData = await loadCoverImagesForPodcasts(filtered);
         setFilteredData(updatedFilteredData);
-        
+
     };
 
     return (
         <div>
-            <HeaderComponent />
+            <HeaderComponent/>
             <div>
-
                 <SearchFilter
                     data={data}
                     searchFields={searchFields}
                     onSearch={setFilteredData}
                 />
-                <table className={styles.chapterName}>
+                <table className="chapterName">
                     <tbody>
-                        <tr>
-                            <th>
-                                <Typography variant="h4" component="div" className={styles.libraryHeader}>
-                                    Library
-                                </Typography>
-                            </th>
-                            <th>
-                                <Typography className={styles.librarySubheader}>
-                                    — [ˈlaɪbrərɪ] (en.) библиотека
-                                </Typography>
-                            </th>
-                        </tr>
+                    <tr>
+                        <th>
+                            <Typography variant="h4" component="div" className="libraryHeader">
+                                Library
+                            </Typography>
+                        </th>
+                        <th>
+                            <Typography className="librarySubheader">
+                                — [ˈlaɪbrərɪ] (en.) библиотека
+                            </Typography>
+                        </th>
+                    </tr>
                     </tbody>
                 </table>
-                <CategoryFilter onFilter={handleFilterData} />
-                <div className={styles.cardContainer}>
+                <CategoryFilter onFilter={handleFilterData}/>
+                <div className="cardContainer">
                     {filteredData.length > 0 ? (
                         filteredData.map((item) => (
-                            <div key={item.id} className={styles.cardWrapper}>
+                            <div key={item.id} className="cardWrapper">
                                 <CustomCard
                                     key={index}
                                     id={index} //Это тоже новое
                                     name={item.title}
                                     description={item.description}
-                                    tags={item.categories.map((tag) => ({ id: tag, text: tag }))}
+                                    tags={item.categories.map((tag) => ({id: tag, text: tag}))}
                                     duration={item.duration}
                                     author={item.username}
                                     subscribers={Math.floor(Math.random() * 100)} // Заглушка для подписчиков
@@ -137,22 +135,25 @@ export const Library = () => {
                             </div>
                         ))
                     ) : (
-                        <Box className={styles.noData}>
-                            <Typography variant="body1" className={styles.noDataText}>
+                        <Box className="noData">
+                            <Typography variant="body1" className="noDataText">
                                 Кажется, пока что у нас такого нет...
                             </Typography>
                         </Box>
                     )}
                     {hasMore && (
-                        <Box textAlign="center" marginY={2}>
-                            <StyledButton variant="contained" onClick={loadMoreData} disabled={loading}>
-                                {loading ? "Загрузка..." : "Загрузить ещё"}
-                            </StyledButton>
-                        </Box>
+                        <div style={{marginBottom: '100px'}}>
+                            <Box textAlign="center" marginY={2}>
+                                <StyledButton variant="contained" onClick={loadMoreData}>
+                                    Загрузить ещё
+                                </StyledButton>
+                            </Box>
+                        </div>
                     )}
+
                 </div>
             </div>
-            <FooterNavigation />
+            <FooterNavigation/>
         </div>
     );
 };

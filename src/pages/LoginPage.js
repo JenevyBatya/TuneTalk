@@ -2,7 +2,7 @@
 /* eslint-disable */
 import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {login} from "../features/authSlice";
+import {login} from "../features/authActions";
 import {
     ErrorText,
     Form,

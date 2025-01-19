@@ -4,6 +4,8 @@ import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import PauseIcon from "@mui/icons-material/Pause";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import FastForwardIcon from "@mui/icons-material/FastForward";
+import FastRewindIcon from "@mui/icons-material/FastRewind";
 
 const AudioPlayer = ({ audioSrc, likes, cardPhoto, name }) => {
     const [isPlaying, setIsPlaying] = useState(false);
@@ -11,6 +13,7 @@ const AudioPlayer = ({ audioSrc, likes, cardPhoto, name }) => {
     const [trackDuration, setTrackDuration] = useState(0);
     const [isLiked, setIsLiked] = useState(false);
     const audioRef = React.createRef();
+    const skipTime = 30;
 
     useEffect(() => {
         const audioElement = audioRef.current;
@@ -53,6 +56,21 @@ const AudioPlayer = ({ audioSrc, likes, cardPhoto, name }) => {
     const toggleLike = () => {
         setIsLiked((prev) => !prev);
     };
+    const skipForward = () => {
+        const audioElement = audioRef.current;
+        if (audioElement) {
+            const newTime = Math.min(audioElement.currentTime + skipTime, trackDuration);
+            handleSeek(newTime);
+        }
+    };
+
+    const skipBackward = () => {
+        const audioElement = audioRef.current;
+        if (audioElement) {
+            const newTime = Math.max(audioElement.currentTime - skipTime, 0);
+            handleSeek(newTime);
+        }
+    };
 
     return (
         <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
@@ -84,12 +102,30 @@ const AudioPlayer = ({ audioSrc, likes, cardPhoto, name }) => {
                     }}
                 ></Box>
 
-                {/* Кнопка Play/Pause поверх */}
+                {/* Кнопки поверх */}
+                <Box sx={{ display: "flex", alignItems: "center", zIndex: 2 }}>
+                    {/* Перемотка назад */}
+                    <IconButton
+                        onClick={skipBackward}
+                        sx={{
+                            width: 62,
+                            height: 62,
+                            borderRadius: "50%",
+                            backgroundColor: "#fff",
+                            color: "#173E47",
+                            opacity: 0.75,
+                            boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)",
+                            "&:hover": {
+                                backgroundColor: "#f1f1f1",
+                            },
+                            marginRight: 2,
+                        }}
+                    >
+                        <FastRewindIcon sx={{ fontSize: 36 }} />
+                    </IconButton>
                 <IconButton
                     onClick={togglePlay}
                     sx={{
-                        position: "relative",
-                        zIndex: 2,
                         width: 62,
                         height: 62,
                         borderRadius: "50%",
@@ -104,6 +140,26 @@ const AudioPlayer = ({ audioSrc, likes, cardPhoto, name }) => {
                 >
                     {isPlaying ? <PauseIcon sx={{ fontSize: 36 }} /> : <PlayArrowIcon sx={{ fontSize: 36 }} />}
                 </IconButton>
+                    {/* Перемотка вперед */}
+                    <IconButton
+                        onClick={skipForward}
+                        sx={{
+                            width: 62,
+                            height: 62,
+                            borderRadius: "50%",
+                            backgroundColor: "#fff",
+                            color: "#173E47",
+                            opacity: 0.75,
+                            boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)",
+                            "&:hover": {
+                                backgroundColor: "#f1f1f1",
+                            },
+                            marginLeft: 2,
+                        }}
+                    >
+                        <FastForwardIcon sx={{ fontSize: 36 }} />
+                    </IconButton>
+                </Box>
             </Box>
 
             {/* Название выпуска и лайки */}
