@@ -26,6 +26,7 @@ import cardData from "../mocks/CardData.json"; // Моки данных для �
 import FooterNavigation from "../components/FooterComponent";
 import HeaderComponent from "../components/HeaderComponent";
 import ButtonForSubscribe from "../components/ButtonForSubscribe";
+import LinkIcon from "../assets/icons/LinkIcon.svg"
 
 const OtherProfilePage = () => {
     const navigate = useNavigate();
@@ -112,7 +113,7 @@ const OtherProfilePage = () => {
                         <Username>{user?.name || "Имя Фамилия"}</Username>
                         <Description>{user?.description || "Описание профиля"}</Description>
                         <LinkDiv>
-                            <LinkLogo src="" alt="Link Icon" />
+                            <LinkLogo src={LinkIcon} alt="Link Icon" />
                             <LinkText href={user?.socialLink || "#"} target="_blank" rel="noopener noreferrer">
                                 {user?.socialLink || "Ссылка на соцсеть"}
                             </LinkText>
