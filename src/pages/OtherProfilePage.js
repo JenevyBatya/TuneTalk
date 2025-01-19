@@ -17,16 +17,16 @@ import {
     ProfileDiv,
     SubscribeDiv,
 } from "../styles/ProfilePagePodkastsStyles";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-
+import { useLocation, useNavigate } from "react-router-dom";
 import Star from "../assets/icons/ProfileStar.svg";
 import Sections from "../components/Sections";
 import ContentContainer from "../components/ContentContainer";
 import CustomCard from "../components/CustomCard";
-import cardData from "../mocks/CardData.json";
+import cardData from "../mocks/CardData.json"; // Моки данных для контента
 import FooterNavigation from "../components/FooterComponent";
 import HeaderComponent from "../components/HeaderComponent";
 import ButtonForSubscribe from "../components/ButtonForSubscribe";
+import LinkIcon from "../assets/icons/LinkIcon.svg"
 
 const OtherProfilePage = () => {
     const navigate = useNavigate();
@@ -36,13 +36,8 @@ const OtherProfilePage = () => {
     const [activeSection, setActiveSection] = useState(0); // Состояние текущей вкладки
     const [content, setContent] = useState([]); // Состояние данных для отображения
     const [loading, setLoading] = useState(false); // Состояние загрузки
-    //
-    // useEffect(() => {
-    //     if (!user) {
-    //         navigate("/profile"); // Если данных пользователя нет, перенаправляем на страницу профиля
-    //     }
-    // }, [user, navigate]);
 
+    // Загружаем данные в зависимости от выбранной вкладки
     const fetchData = (section) => {
         setLoading(true);
         try {
@@ -71,9 +66,16 @@ const OtherProfilePage = () => {
     };
 
     useEffect(() => {
+        if (!user) {
+            navigate("/profile"); // Если данных пользователя нет, перенаправляем на страницу профиля
+        }
+    }, [user, navigate]);
+
+    useEffect(() => {
         fetchData(activeSection);
     }, [activeSection]);
 
+    // Отображаем контент в зависимости от выбранной вкладки
     const renderContent = () => {
         if (loading) {
             return <div>Загрузка...</div>;
@@ -86,6 +88,7 @@ const OtherProfilePage = () => {
                 {content.map((item, index) => (
                     <CustomCard
                         key={index}
+                        id={index}
                         name={item.name}
                         description={item.description}
                         tags={item.tags}
@@ -93,6 +96,7 @@ const OtherProfilePage = () => {
                         author={item.author}
                         subscribers={item.subscribers}
                         cardPhoto={item.cardPhoto}
+                        type={item.type}
                     />
                 ))}
             </div>
@@ -109,9 +113,9 @@ const OtherProfilePage = () => {
                         <Username>{user?.name || "Имя Фамилия"}</Username>
                         <Description>{user?.description || "Описание профиля"}</Description>
                         <LinkDiv>
-                            <LinkLogo src="" alt="Link Icon" />
-                            <LinkText href="#" target="_blank" rel="noopener noreferrer">
-                                vk.com/user
+                            <LinkLogo src={LinkIcon} alt="Link Icon" />
+                            <LinkText href={user?.socialLink || "#"} target="_blank" rel="noopener noreferrer">
+                                {user?.socialLink || "Ссылка на соцсеть"}
                             </LinkText>
                         </LinkDiv>
                         <SubscribeDiv>
@@ -121,19 +125,19 @@ const OtherProfilePage = () => {
                 </ProfileContainer>
 
                 <StatsContainer>
-                    <StarIcon src={Star} alt="" />
+                    <StarIcon src={Star} alt="Star Icon" />
                     <StatsItem onClick={() => navigate("/Users/followers")} style={{ cursor: "pointer" }}>
-                        <StatText>100 подписчиков</StatText>
+                        <StatText>{user?.followersCount || "0"} подписчиков</StatText>
                     </StatsItem>
 
-                    <StarIcon src={Star} alt="" />
+                    <StarIcon src={Star} alt="Star Icon" />
                     <StatsItem onClick={() => navigate("/Users/subscriptions")} style={{ cursor: "pointer" }}>
-                        <StatText>50 подписок</StatText>
+                        <StatText>{user?.subscriptionsCount || "0"} подписок</StatText>
                     </StatsItem>
 
-                    <StarIcon src={Star} alt="" />
+                    <StarIcon src={Star} alt="Star Icon" />
                     <StatsItem>
-                        <StatText>50 публикаций</StatText>
+                        <StatText>{user?.postsCount || "0"} публикаций</StatText>
                     </StatsItem>
                 </StatsContainer>
 

@@ -13,8 +13,9 @@ export const fetchData = async (page) => {
         tags: [{ id: 1, text: "tags" }, { id: 2, text: "tags" }, { id: 3, text: "tags" }],
         duration: "60 min",
         author: `Author ${i + 1}`,
-        subscribes: 1,
-        photo: cardPhoto
+        subscribers: Math.floor(Math.random() * 1000), // Генерация подписчиков
+        cardPhoto: cardPhoto,
+        type: i % 2 === 0 ? "audio" : "video",
     }));
     const result = serverData.slice(start, start + limit);
     return result.length > 0 ? result : null;
