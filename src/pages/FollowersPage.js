@@ -130,7 +130,7 @@ const FollowersPage = () => {
                 displayedUsers.map((user) => (
                     <UserItem
                         key={user.id}
-                        onClick={() => navigate(`/otherProfile/${user.id}`, { state: { user } })}
+                        onClick={() => navigate(`/OtherProfile/${user.id}`, { state: { user } })}
                     >
                         <Avatar src={user.avatar} alt={user.name} />
                         <UserName>{user.name}</UserName>
