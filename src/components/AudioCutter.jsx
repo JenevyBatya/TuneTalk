@@ -194,19 +194,21 @@ const AudioCutter = ({coverFile, title, description, username}) => {
 
 
             try {
+                setOpenSnackbar(true);
+                setTimeout(() => {
+                    navigate('/Profile');
+                }, 2000);
                 await axios.post('https://small-duck.ru/api/audio/upload', formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data',
                     },
                 });
-                setOpenSnackbar(true);
-                setTimeout(() => {
-                    navigate('/Profile');
-                }, 2000);
+
 
             } catch (error) {
                 console.error('Upload failed:', error);
             }
+
         }
     };
 

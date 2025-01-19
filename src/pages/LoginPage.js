@@ -63,7 +63,7 @@ export const LoginPage = () => {
                 <HeadingText>Вход в аккаунт</HeadingText>
                 <Form onSubmit={handleSubmit}>
                     <FormControl fullWidth margin="normal" variant="outlined">
-                        <InputLabel htmlFor="identifier-input" shrink={!!identifier}>Логин или Email</InputLabel>
+                        <InputLabel htmlFor="identifier-input" shrink={!!identifier}>Email</InputLabel>
                         <OutlinedInput
                             id="identifier-input"
                             type="text"
