@@ -47,29 +47,20 @@ const categories = [
 
 
 const CategoryFilter = ({onFilter}) => {
-    const [duration, setDuration] = useState([15, 40]); 
+    const [duration, setDuration] = useState([15, 40]);
     const [sortOrder, setSortOrder] = useState('date'); // Значения: 'date', 'duration', 'relevance'
     const [selectedCategories, setSelectedCategories] = useState(['Образование', 'Воспитание']);
     const [showFilters, setShowFilters] = useState(false);
-    const [showAllCategories, setShowAllCategories] = useState(false);
 
 
     const handleDurationChange = (event, newValue) => {
         setDuration(newValue);
     };
 
-
     const handleSortChange = (event) => {
         setSortOrder(event.target.value);
     };
 
-    const handleCategoryChange = (category) => {
-        setSelectedCategories((prevCategories) =>
-            prevCategories.includes(category)
-                ? prevCategories.filter((cat) => cat !== category)
-                : [...prevCategories, category]
-        );
-    };
 
     const applyFilters = async () => {
         try {
@@ -83,7 +74,6 @@ const CategoryFilter = ({onFilter}) => {
             console.error('Ошибка при фильтрации данных:', error);
         }
     };
-    const displayedCategories = showAllCategories ? categories : categories.slice(0, 6);
 
     return (
         <div>
@@ -126,7 +116,6 @@ const CategoryFilter = ({onFilter}) => {
                         selectedCategories={selectedCategories}
                         setSelectedCategories={setSelectedCategories}
                         containerStyle={{ maxWidth: "300px" }}
-                        onChange={handleCategoryChange}
                     />
             {/* Кнопка для применения фильтров */}
             <Box display="flex" justifyContent="center" alignItems="center" marginBottom='4vh'>
