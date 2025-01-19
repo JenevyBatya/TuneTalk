@@ -135,6 +135,7 @@ const FollowersPage = () => {
                         <Avatar src={user.avatar} alt={user.name} />
                         <UserName>{user.name}</UserName>
                     </UserItem>
+
                 ))
             ) : (
                 <p>Нет данных для отображения</p>

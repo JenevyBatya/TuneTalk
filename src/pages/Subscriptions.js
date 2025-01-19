@@ -63,16 +63,13 @@ export const Subscriptions = () => {
                     filteredData.map((item) => (
                         <div key={item.id} className={styles.cardWrapper}>
                             <CustomCard
-                                key={index}
-                                id={index}
                                 name={item.name}
                                 description={item.description}
                                 tags={item.tags}
                                 duration={item.duration}
                                 author={item.author}
-                                subscribers={item.subscribers}
-                                cardPhoto={item.cardPhoto}
-                                type={item.type}
+                                subscribers={item.subscribes}
+                                cardPhoto={item.photo}
                             />
                         </div>
                     ))
