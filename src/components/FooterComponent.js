@@ -47,7 +47,7 @@ function FooterNavigation() {
     return (
         <BottomNavigation
             sx={{
-
+                fontFamily: 'Jost',
                 width: '100%',
                 position: 'fixed',
                 bottom: 0,
@@ -67,6 +67,7 @@ function FooterNavigation() {
                 sx={{
                     color: value === 0 ? '#FFFFFF' : '#9DB2CE',
                     gap: '8px',
+                    fontFamily: 'Jost',
                 }}
             />
             <BottomNavigationAction
@@ -76,6 +77,7 @@ function FooterNavigation() {
                 sx={{
                     color: value === 1 ? '#FFFFFF' : '#9DB2CE',
                     gap: '8px',
+                    fontFamily: 'Jost',
                 }}
             />
             <BottomNavigationAction
@@ -85,6 +87,7 @@ function FooterNavigation() {
                 sx={{
                     color: value === 2 ? '#FFFFFF' : '#9DB2CE',
                     gap: '8px',
+                    fontFamily: 'Jost',
                 }}
             />
 

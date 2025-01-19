@@ -12,7 +12,7 @@ const AudioCutterPage = () => {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [tags, setTags] = useState(["Криминал", "Секс", "Дизайн"]);
-    const [selectedTags, setSelectedTags] = useState(["Воспитание", "Образование"]);
+    const [selectedTags, setSelectedTags] = useState(tags);
     const username = localStorage.getItem("username");
 
     const handleCoverFileChange = (event) => {

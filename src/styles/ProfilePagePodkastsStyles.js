@@ -32,8 +32,7 @@ export const ProfileContainer = styled.div`
     max-width: 600px; /* Ограничение ширины блока */
     background: #fff;
     //box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    font-family: Arial, sans-serif;
-
+    font-family: Jost;
 `;
 
 export const Pic = styled.img`

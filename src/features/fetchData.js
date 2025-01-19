@@ -1,6 +1,6 @@
 import cardPhoto from "../assets/cardPhoto.svg";
 import axios from "axios";
-const BACKEND_URL = "http://26.227.27.136:80/comments"; //TODO
+const BACKEND_URL = "https://small-duck.ru"; 
 
 export const fetchData = async (page) => {
     // TODO real request
@@ -13,20 +13,32 @@ export const fetchData = async (page) => {
         tags: [{ id: 1, text: "tags" }, { id: 2, text: "tags" }, { id: 3, text: "tags" }],
         duration: "60 min",
         author: `Author ${i + 1}`,
-        subscribes: 1,
-        photo: cardPhoto
+        subscribers: Math.floor(Math.random() * 1000), // Генерация подписчиков
+        cardPhoto: cardPhoto,
+        type: i % 2 === 0 ? "audio" : "video",
     }));
     const result = serverData.slice(start, start + limit);
     return result.length > 0 ? result : null;
 };
 
-export const addCommentToBackend = async (comment) => {
-    // TODO real request
+
+// Функция для получения комментариев
+export const fetchCommentsFromBackend = async (audioId) => {
     try {
-        const response = await axios.post(BACKEND_URL, comment);
-        return response.data;
+        const response = await axios.get(BACKEND_URL+`/api/comments/${audioId}`);
+        return response.data; // axios автоматически парсит JSON
     } catch (error) {
-        console.error("Ошибка при отправке комментария:", error);
-        throw new Error("Не удалось отправить комментарий.");
+        throw new Error("Не удалось загрузить комментарии");
     }
 };
+
+// Функция для добавления нового комментария
+export const addCommentToBackend = async (commentData) => {
+    try {
+        const response = await axios.post(BACKEND_URL+"/api/comments/post", commentData);
+        return response.data; // axios автоматически парсит JSON
+    } catch (error) {
+        throw new Error("Не удалось отправить комментарий");
+    }
+};
+

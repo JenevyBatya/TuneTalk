@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useParams, useNavigate } from 'react-router-dom';
 
+
 const MainContainer = styled.div`
 padding: 20px;
 `
@@ -130,11 +131,21 @@ const FollowersPage = () => {
                 displayedUsers.map((user) => (
                     <UserItem
                         key={user.id}
-                        onClick={() => navigate(`/otherProfile/${user.id}`, { state: { user } })}
+                        onClick={() =>
+                            navigate(`/OtherProfile/${user.id}`, {
+                                state: {
+                                    user: {
+                                        ...user,
+                                        avatar: user.avatar.replace("40", "800"),
+                                    },
+                                },
+                            })
+                        }
                     >
                         <Avatar src={user.avatar} alt={user.name} />
                         <UserName>{user.name}</UserName>
                     </UserItem>
+
                 ))
             ) : (
                 <p>Нет данных для отображения</p>

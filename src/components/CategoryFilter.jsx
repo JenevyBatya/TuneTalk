@@ -47,7 +47,7 @@ const categories = [
 
 
 const CategoryFilter = ({onFilter}) => {
-    const [duration, setDuration] = useState([15, 40]); // default values
+    const [duration, setDuration] = useState([15, 40]);
     const [sortOrder, setSortOrder] = useState('date'); // Значения: 'date', 'duration', 'relevance'
     const [selectedCategories, setSelectedCategories] = useState(['Образование', 'Воспитание']);
     const [showFilters, setShowFilters] = useState(false);
@@ -62,10 +62,9 @@ const CategoryFilter = ({onFilter}) => {
     };
 
 
-    //TODO Отправка запроса на бэк
     const applyFilters = async () => {
         try {
-            const response = await axios.post('/api/filter', {
+            const response = await axios.post('https://small-duck.ru/api/filter', {
                 duration,
                 sortOrder,
                 categories: selectedCategories
