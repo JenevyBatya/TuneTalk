@@ -24,7 +24,7 @@ function Root() {
                 <Route path="/" element={<LandingPage />} />
                 <Route path="/Registration" element={<RegPage />} />
                 <Route path="/Login" element={<LoginPage />} />
-                {/*<Route element={<ProtectedRoute />}>*/}
+                <Route element={<ProtectedRoute />}>
                     <Route path="/Library" element={<Library />} />
                     <Route path="/Subscriptions" element={<Subscriptions />} />
                     <Route path="/Users/:type" element={<FollowersPage />} />
@@ -34,7 +34,7 @@ function Root() {
                     <Route path="/Audio-podcast/:id" element={<AudioPodcastPage />} />
                     <Route path="/Video-podcast/:id" element={<VideoPage/>}/>
                     <Route path="/AudioCutter" element={<AudioCutterPage/>}/>
-                 {/*</Route>*/}
+                 </Route>
             </Routes>
         </HashRouter>
     );
