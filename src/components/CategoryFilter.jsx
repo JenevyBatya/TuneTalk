@@ -47,24 +47,22 @@ const categories = [
 
 
 const CategoryFilter = ({onFilter}) => {
-    const [duration, setDuration] = useState([15, 40]); // Пример диапазона
+    const [duration, setDuration] = useState([15, 40]); 
     const [sortOrder, setSortOrder] = useState('date'); // Значения: 'date', 'duration', 'relevance'
     const [selectedCategories, setSelectedCategories] = useState(['Образование', 'Воспитание']);
     const [showFilters, setShowFilters] = useState(false);
     const [showAllCategories, setShowAllCategories] = useState(false);
 
 
-    // Обновление диапазона времени
     const handleDurationChange = (event, newValue) => {
         setDuration(newValue);
     };
 
-    // Обновление выбранной сортировки
+
     const handleSortChange = (event) => {
         setSortOrder(event.target.value);
     };
 
-    // Обработка выбора категорий
     const handleCategoryChange = (category) => {
         setSelectedCategories((prevCategories) =>
             prevCategories.includes(category)
@@ -73,10 +71,9 @@ const CategoryFilter = ({onFilter}) => {
         );
     };
 
-    //TODO Отправка запроса на бэк
     const applyFilters = async () => {
         try {
-            const response = await axios.post('/api/filter', {
+            const response = await axios.post('https://small-duck.ru/api/filter', {
                 duration,
                 sortOrder,
                 categories: selectedCategories
@@ -129,6 +126,7 @@ const CategoryFilter = ({onFilter}) => {
                         selectedCategories={selectedCategories}
                         setSelectedCategories={setSelectedCategories}
                         containerStyle={{ maxWidth: "300px" }}
+                        onChange={handleCategoryChange}
                     />
             {/* Кнопка для применения фильтров */}
             <Box display="flex" justifyContent="center" alignItems="center" marginBottom='4vh'>

@@ -4,43 +4,42 @@ import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import PauseIcon from "@mui/icons-material/Pause";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import useSound from "use-sound";
 
 const AudioPlayer = ({ audioSrc, likes, cardPhoto, name }) => {
     const [isPlaying, setIsPlaying] = useState(false);
     const [currentTime, setCurrentTime] = useState(0);
     const [trackDuration, setTrackDuration] = useState(0);
     const [isLiked, setIsLiked] = useState(false);
-    const [play, { pause, sound }] = useSound(audioSrc, {
-        onend: () => setIsPlaying(false),
-    });
+    const audioRef = React.createRef();
 
     useEffect(() => {
-        if (sound) {
-            const durationInSeconds = sound.duration();
-            setTrackDuration(durationInSeconds || 0);
-
-            const interval = setInterval(() => {
-                setCurrentTime(sound.seek() || 0);
-            }, 500);
-
-            return () => clearInterval(interval);
+        const audioElement = audioRef.current;
+        if (audioElement) {
+            audioElement.ontimeupdate = () => {
+                setCurrentTime(audioElement.currentTime);
+            };
+            audioElement.onloadedmetadata = () => {
+                setTrackDuration(audioElement.duration);
+            };
         }
-    }, [sound]);
+    }, []);
 
     const togglePlay = () => {
-        if (isPlaying) {
-            pause();
-        } else {
-            play();
+        const audioElement = audioRef.current;
+        if (audioElement) {
+            if (isPlaying) {
+                audioElement.pause();
+            } else {
+                audioElement.play();
+            }
+            setIsPlaying(!isPlaying);
         }
-        setIsPlaying(!isPlaying);
     };
 
-    // for updating time
     const handleSeek = (value) => {
-        if (sound) {
-            sound.seek(value);
+        const audioElement = audioRef.current;
+        if (audioElement) {
+            audioElement.currentTime = value;
             setCurrentTime(value);
         }
     };
@@ -134,17 +133,7 @@ const AudioPlayer = ({ audioSrc, likes, cardPhoto, name }) => {
             </Box>
 
             {/* Прогресс-дорожка и время */}
-            <Box
-                sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    // alignItems: "center",
-                    // justifyContent: "center",
-                    width: "90%",
-                    marginTop: 2,
-                    marginBottom: 2,
-                }}
-            >
+            <Box sx={{ display: "flex", flexDirection: "column", width: "90%", marginTop: 2, marginBottom: 2 }}>
                 {/* Прогресс-дорожка */}
                 <Box
                     sx={{
@@ -188,6 +177,9 @@ const AudioPlayer = ({ audioSrc, likes, cardPhoto, name }) => {
                     {`${formatTime(currentTime)} / ${formatTime(trackDuration)}`}
                 </Typography>
             </Box>
+
+            {/* Вставка аудио элемента */}
+            <audio ref={audioRef} src={audioSrc} preload="metadata" />
         </Box>
     );
 };
