@@ -1,5 +1,5 @@
-import React, { useState, useRef, useEffect } from 'react';
-import {Box, Slider, Button, Typography} from '@mui/material';
+import React, {useState, useRef, useEffect} from 'react';
+import {Box, Slider, Button, Typography, Alert, Snackbar} from '@mui/material';
 import VolumeUpIcon from '@mui/icons-material/VolumeUp';
 import {styled} from "@mui/system";
 import axios from "axios";
@@ -7,6 +7,7 @@ import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import PauseIcon from '@mui/icons-material/Pause';
 import {StyledButton} from "./CustomCard";
 import AudioWaveform from "./AudioWaveform";
+import {useNavigate} from "react-router-dom";
 
 
 export const AudioCutterStyledButton = styled(Button)(({theme}) => ({
@@ -43,7 +44,8 @@ const AudioCutter = ({coverFile, title, description, username}) => {
     const audioSourceRef = useRef(null);
     const animationRef = useRef(null);
     const fileInputRef = useRef(null);
-
+    const [openSnackbar, setOpenSnackbar] = useState(false);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const context = new (window.AudioContext || window.webkitAudioContext)();
@@ -189,14 +191,19 @@ const AudioCutter = ({coverFile, title, description, username}) => {
             formData.append('tags', tags);
             formData.append('authorEmail', authorEmail);
             formData.append('duration', duration)
-    
-           
+
+
             try {
-                await axios.post('http://138.124.127.129/api/audio/upload', formData, {
+                await axios.post('https://small-duck.ru/api/audio/upload', formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data',
                     },
                 });
+                setOpenSnackbar(true);
+                setTimeout(() => {
+                    navigate('/Profile');
+                }, 2000);
+
             } catch (error) {
                 console.error('Upload failed:', error);
             }
@@ -233,8 +240,9 @@ const AudioCutter = ({coverFile, title, description, username}) => {
             offset += 2;
         }
 
-        return new Blob([view], { type: 'audio/wav' });
+        return new Blob([view], {type: 'audio/wav'});
     }
+
     const formatTime = (time) => {
         const hours = String(Math.floor(time / 3600)).padStart(2, '0');
         const minutes = String(Math.floor((time % 3600) / 60)).padStart(2, '0');
@@ -243,13 +251,13 @@ const AudioCutter = ({coverFile, title, description, username}) => {
     };
 
     return (
-        <Box sx={{ width: '100%', maxWidth: 600, margin: '0 auto' }}>
+        <Box sx={{width: '100%', maxWidth: 600, margin: '0 auto'}}>
             <Box display="flex" justifyContent="space-between" alignItems="center" marginBottom='2vh'>
                 <AudioCutterStyledButton onClick={() => fileInputRef.current.click()} sx={{marginLeft: '20px'}}>
                     Загрузить файл +
                 </AudioCutterStyledButton>
                 {audioFile && (
-                    <Typography variant="body2" color="textSecondary" sx={{ marginLeft: '10px' }}>
+                    <Typography variant="body2" color="textSecondary" sx={{marginLeft: '10px'}}>
                         Загружен файл: {audioFile.name}
                     </Typography>
                 )}
@@ -259,7 +267,7 @@ const AudioCutter = ({coverFile, title, description, username}) => {
                 type="file"
                 accept="audio/*"
                 onChange={handleAudioFileChange}
-                style={{ display: 'none' }}
+                style={{display: 'none'}}
             />
             {audioBuffer && (
                 <Box
@@ -307,35 +315,35 @@ const AudioCutter = ({coverFile, title, description, username}) => {
                         {formatTime(playbackPosition)} / {formatTime(audioBuffer.duration)}
                     </Typography>
                     <StyledButton variant="contained" onClick={playAudio}>
-                        {isPlaying ? <PauseIcon /> : <PlayArrowIcon />}
+                        {isPlaying ? <PauseIcon/> : <PlayArrowIcon/>}
                     </StyledButton>
                     <Typography>Volume</Typography>
                     <Box display="flex" alignItems="center" gap="10px">
                         <VolumeUpIcon/>
-                    <Slider
-                        value={volume}
-                        min={0}
-                        max={1}
-                        step={0.01}
-                        onChange={handleVolumeChange}
-                        sx={{
-                            flex: 1,
-                            '& .MuiSlider-thumb': {
-                                backgroundColor: '#FF7510',
-                                width: 12,
-                                height: 12,
-                                borderRadius: '4px',
-                            },
-                            '& .MuiSlider-rail': {
-                                backgroundColor: '#ff7e00',
-                                opacity: 0.5,
-                            },
-                            '& .MuiSlider-track': {
-                                backgroundColor: '#FF7510',
-                                border: 'none',
-                            },
-                        }}
-                    />
+                        <Slider
+                            value={volume}
+                            min={0}
+                            max={1}
+                            step={0.01}
+                            onChange={handleVolumeChange}
+                            sx={{
+                                flex: 1,
+                                '& .MuiSlider-thumb': {
+                                    backgroundColor: '#FF7510',
+                                    width: 12,
+                                    height: 12,
+                                    borderRadius: '4px',
+                                },
+                                '& .MuiSlider-rail': {
+                                    backgroundColor: '#ff7e00',
+                                    opacity: 0.5,
+                                },
+                                '& .MuiSlider-track': {
+                                    backgroundColor: '#FF7510',
+                                    border: 'none',
+                                },
+                            }}
+                        />
                     </Box>
                 </Box>
             )}
@@ -360,8 +368,17 @@ const AudioCutter = ({coverFile, title, description, username}) => {
                     </StyledButton>
                 </Box>
             )}
+            <Box>
+                <Snackbar open={openSnackbar} autoHideDuration={2000}>
+                    <Alert severity="success" sx={{width: '100%'}}>
+                        Подкаст отправлен на проверку!
+                    </Alert>
+                </Snackbar>
+            </Box>
         </Box>
-    );
+
+)
+    ;
 };
 
 export default AudioCutter;

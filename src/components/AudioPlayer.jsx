@@ -105,24 +105,24 @@ const AudioPlayer = ({ audioSrc, likes, cardPhoto, name }) => {
                 {/* Кнопки поверх */}
                 <Box sx={{ display: "flex", alignItems: "center", zIndex: 2 }}>
                     {/* Перемотка назад */}
-                    <IconButton
-                        onClick={skipBackward}
-                        sx={{
-                            width: 62,
-                            height: 62,
-                            borderRadius: "50%",
-                            backgroundColor: "#fff",
-                            color: "#173E47",
-                            opacity: 0.75,
-                            boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)",
-                            "&:hover": {
-                                backgroundColor: "#f1f1f1",
-                            },
-                            marginRight: 2,
-                        }}
-                    >
-                        <FastRewindIcon sx={{ fontSize: 36 }} />
-                    </IconButton>
+                    {/*<IconButton*/}
+                    {/*    onClick={skipBackward}*/}
+                    {/*    sx={{*/}
+                    {/*        width: 62,*/}
+                    {/*        height: 62,*/}
+                    {/*        borderRadius: "50%",*/}
+                    {/*        backgroundColor: "#fff",*/}
+                    {/*        color: "#173E47",*/}
+                    {/*        opacity: 0.75,*/}
+                    {/*        boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)",*/}
+                    {/*        "&:hover": {*/}
+                    {/*            backgroundColor: "#f1f1f1",*/}
+                    {/*        },*/}
+                    {/*        marginRight: 2,*/}
+                    {/*    }}*/}
+                    {/*>*/}
+                    {/*    <FastRewindIcon sx={{ fontSize: 36 }} />*/}
+                    {/*</IconButton>*/}
                 <IconButton
                     onClick={togglePlay}
                     sx={{
@@ -141,24 +141,24 @@ const AudioPlayer = ({ audioSrc, likes, cardPhoto, name }) => {
                     {isPlaying ? <PauseIcon sx={{ fontSize: 36 }} /> : <PlayArrowIcon sx={{ fontSize: 36 }} />}
                 </IconButton>
                     {/* Перемотка вперед */}
-                    <IconButton
-                        onClick={skipForward}
-                        sx={{
-                            width: 62,
-                            height: 62,
-                            borderRadius: "50%",
-                            backgroundColor: "#fff",
-                            color: "#173E47",
-                            opacity: 0.75,
-                            boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)",
-                            "&:hover": {
-                                backgroundColor: "#f1f1f1",
-                            },
-                            marginLeft: 2,
-                        }}
-                    >
-                        <FastForwardIcon sx={{ fontSize: 36 }} />
-                    </IconButton>
+                    {/*<IconButton*/}
+                    {/*    onClick={skipForward}*/}
+                    {/*    sx={{*/}
+                    {/*        width: 62,*/}
+                    {/*        height: 62,*/}
+                    {/*        borderRadius: "50%",*/}
+                    {/*        backgroundColor: "#fff",*/}
+                    {/*        color: "#173E47",*/}
+                    {/*        opacity: 0.75,*/}
+                    {/*        boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)",*/}
+                    {/*        "&:hover": {*/}
+                    {/*            backgroundColor: "#f1f1f1",*/}
+                    {/*        },*/}
+                    {/*        marginLeft: 2,*/}
+                    {/*    }}*/}
+                    {/*>*/}
+                    {/*    <FastForwardIcon sx={{ fontSize: 36 }} />*/}
+                    {/*</IconButton>*/}
                 </Box>
             </Box>
 

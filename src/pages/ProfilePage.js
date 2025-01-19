@@ -95,7 +95,7 @@ const ProfilePageNew = () => {
                 {content.map((item, index) => (
                     <CustomCard
                         key={index}
-                        id={index}
+                        id={2}
                         name={item.name}
                         description={item.description}
                         tags={item.tags}

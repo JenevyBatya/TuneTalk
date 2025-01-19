@@ -88,7 +88,7 @@ const OtherProfilePage = () => {
                 {content.map((item, index) => (
                     <CustomCard
                         key={index}
-                        id={index}
+                        id={item.id}
                         name={item.name}
                         description={item.description}
                         tags={item.tags}
