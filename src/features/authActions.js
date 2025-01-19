@@ -5,7 +5,7 @@ const API_URL = process.env.REACT_APP_BACKEND_URL;
 
 export const login = createAsyncThunk("auth/login", async (credentials, thunkAPI) => {
     try {
-        const response = await axios.post(`${API_URL}/login`, {
+        const response = await axios.post(`${API_URL}/auth/login`, {
             email: credentials.identifier,
             password: credentials.password,
         });
@@ -19,7 +19,7 @@ export const login = createAsyncThunk("auth/login", async (credentials, thunkAPI
 
 export const register = createAsyncThunk("auth/register", async (userData, thunkAPI) => {
     try {
-        const response = await axios.post(`${API_URL}/register`, userData);
+        const response = await axios.post(`${API_URL}/auth/register`, userData);
         return response.data;
     } catch (error) {
         const errorMessage = error.response?.data?.message || "Registration failed";

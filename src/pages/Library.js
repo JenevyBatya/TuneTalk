@@ -121,8 +121,8 @@ export const Library = () => {
                         filteredData.map((item) => (
                             <div key={item.id} className="cardWrapper">
                                 <CustomCard
-                                    key={index}
-                                    id={index} //Это тоже новое
+                                    // key={index}
+                                    id={item.id} //Это тоже новое
                                     name={item.title}
                                     description={item.description}
                                     tags={item.categories.map((tag) => ({id: tag, text: tag}))}
