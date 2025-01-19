@@ -7,18 +7,21 @@
             "duration": "15:30",
             "author": "Иван Иванов",
             "subscribers": 123,
-            "cardPhoto": "https://yt3.googleusercontent.com/ytc/AIdro_mt2aOXxKukOiu-uqOZUIhs012_KmlvEFKij3chZ810hA=s900-c-k-c0x00ffffff-no-rj"
+            "cardPhoto": "https://yt3.googleusercontent.com/ytc/AIdro_mt2aOXxKukOiu-uqOZUIhs012_KmlvEFKij3chZ810hA=s900-c-k-c0x00ffffff-no-rj",
+            "type": "audio"
         },
         {
-            "name": "Подкаст о науке",
-            "description": "Глубокий анализ научных открытий.",
-            "tags": [{"text": "наука"}, {"text": "исследования"}],
+            "name": "Видео-подкаст о дизайне",
+            "description": "Разбираем современные тренды в UI/UX.",
+            "tags": [{"text": "дизайн"}, {"text": "UI/UX"}],
             "duration": "20:45",
-            "author": "Мария Петрова",
-            "subscribers": 234,
-            "cardPhoto": "https://yt3.googleusercontent.com/ytc/AIdro_mt2aOXxKukOiu-uqOZUIhs012_KmlvEFKij3chZ810hA=s900-c-k-c0x00ffffff-no-rj"
+            "author": "Анна Смирнова",
+            "subscribers": 456,
+            "cardPhoto": "https://yt3.googleusercontent.com/ytc/AIdro_dhjKJML27mku-BAXEFpJQPdtzQzYlmGrhz0Nwo=s900-c-k-c0x00ffffff-no-rj",
+            "type": "video"
         }
     ],
+
     "playlists": [
         {
             "name": "Музыкальный плейлист",

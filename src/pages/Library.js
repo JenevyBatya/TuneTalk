@@ -104,13 +104,16 @@ export const Library = () => {
                         filteredData.map((item) => (
                             <div key={item.id} className={styles.cardWrapper}>
                                 <CustomCard
+                                    key={index}
+                                    id={index} //Это тоже новое
                                     name={item.title}
                                     description={item.description}
                                     tags={item.categories.map((tag) => ({ id: tag, text: tag }))}
                                     duration={item.duration}
                                     author={item.username}
                                     subscribers={Math.floor(Math.random() * 100)} // Заглушка для подписчиков
-                                    cardPhoto={item.coverURL} 
+                                    cardPhoto={item.coverURL}
+                                    type={item.type} //Тип теперь есть везде, так что нужно менять бэк
                                 />
                             </div>
                         ))

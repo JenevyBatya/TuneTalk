@@ -7,6 +7,7 @@ export const StyledButton = styled(Button)(({theme}) => ({
     backgroundColor: '#173E47',
     color: '#fff',
     borderRadius: '10px',
+    width: '150px',
     marginTop: theme.spacing(2),
     '&:hover': {
         backgroundColor: '#173E47',
@@ -27,8 +28,13 @@ const TagChip = styled(Chip)(({theme}) => ({
     border: 'none',
     color: '#FF6600',
 }));
-const CustomCard = ({id,name, description, tags=[], duration, author, subscribers, cardPhoto}) => {
+const CustomCard = ({id, name, description, tags = [], duration, author, subscribers, cardPhoto, type}) => {
     const navigate = useNavigate();
+
+    const handleNavigate = () => {
+        const route = type === "audio" ? `/Audio-podcast/${id}` : `/Video-podcast/${id}`;
+        navigate(route);
+    };
 
     return (
         <GreenSquare>
@@ -43,7 +49,6 @@ const CustomCard = ({id,name, description, tags=[], duration, author, subscriber
                     overflow: 'hidden',
                 }}
             >
-                {/* Левая часть - информация */}
                 <CardContent sx={{flex: 1, textAlign: 'left'}}>
                     <div>
                         <Typography variant="h6" component="div" style={{fontWeight: 'bold'}}>
@@ -52,21 +57,16 @@ const CustomCard = ({id,name, description, tags=[], duration, author, subscriber
                         <Typography variant="body2" color="text.secondary">
                             {description}
                         </Typography>
-
-                        {/* Теги */}
                         <Box sx={{display: 'flex', marginTop: 0}}>
-                            {tags.map((tag) =>
-                                <TagChip label={'#' + tag.text}/>
-                            )}
+                            {tags.map((tag, index) => (
+                                <TagChip key={index} label={'#' + tag.text} />
+                            ))}
                         </Box>
-
-                        {/* Время */}
                         <Typography sx={{marginTop: 0}} variant="body2" color="text.secondary">
                             {duration}
                         </Typography>
                     </div>
                     <Box sx={{display: 'flex', flexDirection: 'column', marginTop: 1}}>
-                        {/* Профиль автора */}
                         <Box sx={{display: 'flex', marginBottom: 0}}>
                             <Avatar sx={{bgcolor: '#757575'}}></Avatar>
                             <Box sx={{marginLeft: 1}}>
@@ -78,11 +78,15 @@ const CustomCard = ({id,name, description, tags=[], duration, author, subscriber
                                 </Typography>
                             </Box>
                         </Box>
-                        <StyledButton variant="contained" sx={{marginLeft: 2, width: '62%'}} onClick={() => navigate(`/Audio-podcast/${id}`)}>Слушать</StyledButton>
+                        <StyledButton
+                            variant="contained"
+                            sx={{marginLeft: 2}}
+                            onClick={handleNavigate}
+                        >
+                            {type === "audio" ? "Слушать" : "Смотреть"}
+                        </StyledButton>
                     </Box>
                 </CardContent>
-
-                {/* Правая часть - картинка */}
                 <Box
                     sx={{
                         flex: 1,
@@ -91,7 +95,7 @@ const CustomCard = ({id,name, description, tags=[], duration, author, subscriber
                         display: 'flex',
                         justifyContent: 'center',
                         alignItems: 'center',
-                        borderRadius: '5px'
+                        borderRadius: '5px',
                     }}
                 >
                     <img
@@ -104,5 +108,6 @@ const CustomCard = ({id,name, description, tags=[], duration, author, subscriber
         </GreenSquare>
     );
 };
+
 
 export default CustomCard;
