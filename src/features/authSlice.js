@@ -1,32 +1,6 @@
-import {createSlice, createAsyncThunk} from "@reduxjs/toolkit";
-import axios from "axios";
+import {createSlice} from "@reduxjs/toolkit";
+import {login, register} from "./authActions";
 
-const API_URL = "http://138.124.127.129/api";
-
-export const login = createAsyncThunk("auth/login", async (credentials, thunkAPI) => {
-    try {
-        const response = await axios.post(`${API_URL}/login`, {
-            email: credentials.identifier,
-            password: credentials.password,
-        });
-        return response.data; // Возвращаем данные при успехе
-    } catch (error) {
-        const errorMessage = error.response?.data?.message || "Login failed";
-        const errorStatus = error.response?.status || 500;
-        return thunkAPI.rejectWithValue({message: errorMessage, status: errorStatus});
-    }
-});
-
-export const register = createAsyncThunk("auth/register", async (userData, thunkAPI) => {
-    try {
-        const response = await axios.post(`${API_URL}/register`, userData);
-        return response.data;
-    } catch (error) {
-        const errorMessage = error.response?.data?.message || "Registration failed";
-        const errorStatus = error.response?.status || 500;
-        return thunkAPI.rejectWithValue({message: errorMessage, status: errorStatus});
-    }
-});
 
 const authSlice = createSlice({
     name: "auth",
@@ -38,11 +12,11 @@ const authSlice = createSlice({
     reducers: {
         logout: (state) => {
             state.user = null;
+            localStorage.removeItem("username");
         },
     },
     extraReducers: (builder) => {
         builder
-            // Login reducers
             .addCase(login.pending, (state) => {
                 state.isLoading = true;
                 state.error = null;
@@ -56,7 +30,6 @@ const authSlice = createSlice({
                 state.isLoading = false;
                 state.error = action.payload;
             })
-            // Register reducers
             .addCase(register.pending, (state) => {
                 state.isLoading = true;
                 state.error = null;
@@ -72,6 +45,7 @@ const authSlice = createSlice({
             });
     },
 });
+////
 
 export const {logout} = authSlice.actions;
 export default authSlice.reducer;

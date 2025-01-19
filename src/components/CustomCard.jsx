@@ -55,8 +55,8 @@ const CustomCard = ({id,name, description, tags=[], duration, author, subscriber
 
                         {/* Теги */}
                         <Box sx={{display: 'flex', marginTop: 0}}>
-                            {tags.map((tag) =>
-                                <TagChip label={'#' + tag.text}/>
+                            {tags.map((tag, index) =>
+                                <TagChip key={tag.id || index} label={'#' + tag.text}/>
                             )}
                         </Box>
 

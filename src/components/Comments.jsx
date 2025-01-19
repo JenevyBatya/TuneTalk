@@ -30,8 +30,8 @@ const Comments = ({ comments, setComments }) => {
         <Box>
             <Box
                 sx={{
-                    maxHeight: "300px", // Ограничение высоты (регулируйте по необходимости)
-                    overflowY: "auto", // Включаем прокрутку
+                    maxHeight: "300px",
+                    overflowY: "auto",
                     padding: 1,
                     marginBottom: 2,
                     backgroundColor: "#f9f9f9",
