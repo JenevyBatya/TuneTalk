@@ -29,6 +29,7 @@ import HeaderComponent from "../components/HeaderComponent";
 const images = [photo1, photo2, photo3];
 const authors = [auth1, auth2, auth3];
 const LandingPage = () => {
+    const user = localStorage.getItem("username");
     const settings = {
         dots: true,
         infinite: true,
@@ -43,63 +44,69 @@ const LandingPage = () => {
     return (
         <MainContainer>
             <div>
-            {/*<HeaderBlock></HeaderBlock>*/}
+                {/*<HeaderBlock></HeaderBlock>*/}
                 <HeaderComponent/>
-            <RecBlock>
-                <HeadingText1>
-                    Хостинг подкастов
-                </HeadingText1>
-                <Text1>
-                    Все русскоязычные подкасты на одной платформе. Возможность переключаться между аудио и видео
-                    форматами в один клик. Удобный поиск. Эксклюзивные подборки.
-                </Text1>
-                <PhotoDiv>
-                    <Slider {...settings}>
-                        {images.map((src, index) => (
-                            <Photo key={index} src={src} alt={`photo ${index + 1}`}
-                                   style={{width: '100%', height: 'auto'}}/>
-                        ))}
-                    </Slider>
+                <RecBlock>
+                    <HeadingText1>
+                        Хостинг подкастов
+                    </HeadingText1>
+                    <Text1>
+                        Все русскоязычные подкасты на одной платформе. Возможность переключаться между аудио и видео
+                        форматами в один клик. Удобный поиск. Эксклюзивные подборки.
+                    </Text1>
+                    <PhotoDiv>
+                        <Slider {...settings}>
+                            {images.map((src, index) => (
+                                <Photo key={index} src={src} alt={`photo ${index + 1}`}
+                                       style={{width: '100%', height: 'auto'}}/>
+                            ))}
+                        </Slider>
 
 
-                </PhotoDiv>
-                <RecommendDiv>
-                    Рекомендуем посмотреть
-                </RecommendDiv>
-            </RecBlock>
-            <RegBlock>
-                <HeadingText2>
-                    Любимые авторы в одном месте
-                </HeadingText2>
-                <Text2>
-                    Мы собрали всех ваших любимых авторов, чтобы вы наслаждались ими без лишних сложностей.
-                </Text2>
-                <PhotoDiv>
-                    <Slider {...settings}>
-                        {authors.map((src, index) => (
-                            <Photo
-                                key={index}
-                                src={src}
-                                alt={`auth ${index + 1}`}
-                                style={{
-                                    width: '100%',
-                                    height: 'auto',
-                                    objectFit: 'cover'
-                                }}
-                            />
-                        ))}
-                    </Slider>
+                    </PhotoDiv>
+                    <RecommendDiv>
+                        Рекомендуем посмотреть
+                    </RecommendDiv>
+                </RecBlock>
+                <RegBlock>
+                    <HeadingText2>
+                        Любимые авторы в одном месте
+                    </HeadingText2>
+                    <Text2>
+                        Мы собрали всех ваших любимых авторов, чтобы вы наслаждались ими без лишних сложностей.
+                    </Text2>
+                    <PhotoDiv>
+                        <Slider {...settings}>
+                            {authors.map((src, index) => (
+                                <Photo
+                                    key={index}
+                                    src={src}
+                                    alt={`auth ${index + 1}`}
+                                    style={{
+                                        width: '100%',
+                                        height: 'auto',
+                                        objectFit: 'cover'
+                                    }}
+                                />
+                            ))}
+                        </Slider>
 
-                </PhotoDiv>
-                <RecommendDiv>
-                <StyledButton as={Link} to="/Registration" onClick={() =>{
-                    ym(99501749,'reachGoal','landing-reg')
-                }}>
-                    Зарегистрироваться
-                </StyledButton>
-                </RecommendDiv>
+                    </PhotoDiv>
+                    <RecommendDiv>
+                        {user ? (
+                            <StyledButton as={Link} to="/Library">
+                                Вы уже с нами!
+                            </StyledButton>
+                        ) : (
+                            <StyledButton as={Link} to="/Registration" onClick={() => {
+                                ym(99501749, 'reachGoal', 'landing-reg');
+                            }}>
+                                Зарегистрироваться
+                            </StyledButton>
+                        )}
+                    </RecommendDiv>
 
-            </RegBlock>
+                </RegBlock>
             </div>
         </MainContainer>
     );
