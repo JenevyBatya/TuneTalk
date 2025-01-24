@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/TuneTalk/static/css/main.7ffc8c10.css",
-    "main.js": "/TuneTalk/static/js/main.c64541b8.js",
+    "main.js": "/TuneTalk/static/js/main.4d6ee12e.js",
     "static/media/SLAVA SKRIPKA Бобр.mp3": "/TuneTalk/static/media/SLAVA SKRIPKA Бобр.7a999ef916477038b6e4.mp3",
     "static/media/cardPhoto.svg": "/TuneTalk/static/media/cardPhoto.d62e7078a1fe70b9947cf62ec4e0a338.svg",
     "static/media/auth3.jpg": "/TuneTalk/static/media/auth3.287f32aa54aa37ee24d1.jpg",
@@ -28,6 +28,6 @@
   },
   "entrypoints": [
     "static/css/main.7ffc8c10.css",
-    "static/js/main.c64541b8.js"
+    "static/js/main.4d6ee12e.js"
   ]
 }
